@@ -19,6 +19,11 @@ module.exports = {
         '@core': path.resolve(__dirname, 'src/@core'),
         '@validations': path.resolve(__dirname, 'src/@core/utils/validations/validations.js'),
         '@axios': path.resolve(__dirname, 'src/libs/axios'),
+
+        // WORKAROUND HERE:
+        // https://github.com/nuxt-community/composition-api/pull/517#issuecomment-882248097
+        // https://github.com/vueuse/vue-demi/issues/76#issuecomment-882249216
+        '@vue/composition-api/dist/vue-composition-api.mjs': path.resolve('./node_modules/@vue/composition-api/dist/vue-composition-api.esm.js'),
       },
     },
   },
