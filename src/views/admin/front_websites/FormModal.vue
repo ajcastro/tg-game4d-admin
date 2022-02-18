@@ -2,7 +2,7 @@
   <div>
     <b-modal
       ref="bModal"
-      title="Add Client"
+      title="Add Front Website"
       hide-footer
     >
       <b-form @submit.prevent>
@@ -20,27 +20,52 @@
             </b-form-group>
           </b-col>
 
-          <!-- remarks -->
-          <!-- <b-col cols="12">
-            <b-form-group
-              label="Remarks"
-              label-for="v-remarks"
-            >
-              <b-form-input
-                id="v-remarks"
-              />
-            </b-form-group>
-          </b-col> -->
-
-          <!-- percentage_share -->
+          <!-- ip_address -->
           <b-col cols="12">
             <b-form-group
-              label="Percentage Share"
-              label-for="v-percentage_share"
+              label="IP Address"
+              label-for="v-ip_address"
             >
               <b-form-input
-                id="v-percentage_share"
-                type="number"
+                id="v-ip_address"
+              />
+            </b-form-group>
+          </b-col>
+
+          <!-- domain_name -->
+          <b-col cols="12">
+            <b-form-group
+              label="Domain Name"
+              label-for="v-domain_name"
+            >
+              <b-form-input
+                id="v-domain_name"
+              />
+            </b-form-group>
+          </b-col>
+
+          <!-- checkbox -->
+          <b-col cols="12">
+            <b-form-group>
+              <b-form-checkbox
+                id="is_active"
+                name="is_active"
+                value="is_active"
+              >
+                Is Active
+              </b-form-checkbox>
+            </b-form-group>
+          </b-col>
+
+          <!-- checkbox -->
+          <b-col cols="12">
+            <b-form-group
+              label="Assigned Client"
+              label-for="v-assigned_client"
+            >
+              <b-form-select
+                v-model="selected"
+                :options="clientOptions"
               />
             </b-form-group>
           </b-col>
@@ -82,7 +107,7 @@
 <script>
 import Ripple from 'vue-ripple-directive'
 import {
-  BRow, BCol, BFormGroup, BFormInput, BForm, BButton, BFormTextarea,
+  BRow, BCol, BFormGroup, BFormInput, BFormCheckbox, BForm, BButton, BFormSelect, BFormTextarea,
 } from 'bootstrap-vue'
 
 export default {
@@ -93,10 +118,20 @@ export default {
     BFormInput,
     BForm,
     BButton,
+    BFormCheckbox,
+    BFormSelect,
     BFormTextarea,
   },
   directives: {
     Ripple,
+  },
+  data() {
+    return {
+      clientOptions: [
+        'John Doe',
+        'Peter Smith',
+      ],
+    }
   },
 }
 </script>
