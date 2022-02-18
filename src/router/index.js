@@ -11,6 +11,7 @@ import pages from './routes/pages'
 import chartsMaps from './routes/charts-maps'
 import formsTable from './routes/forms-tables'
 import others from './routes/others'
+import admin from './routes/admin'
 
 Vue.use(VueRouter)
 
@@ -21,7 +22,8 @@ const router = new VueRouter({
     return { x: 0, y: 0 }
   },
   routes: [
-    { path: '/', redirect: { name: 'dashboard-ecommerce' } },
+    { path: '/', redirect: { name: 'clients' } },
+    ...admin,
     ...apps,
     ...dashboard,
     ...pages,
