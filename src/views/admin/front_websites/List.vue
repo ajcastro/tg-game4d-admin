@@ -168,7 +168,6 @@ import {
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
 import axios from '@axios'
-import TableOptions from './TableOptions'
 import FormModal from './FormModal.vue'
 
 export default {
