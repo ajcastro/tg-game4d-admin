@@ -661,7 +661,7 @@ const data = {
 // ------------------------------------------------
 // GET: Return Users
 // ------------------------------------------------
-mock.onGet('/apps/user/users').reply(config => {
+mock.onGet('/apps/user/users').reply(async config => {
   // eslint-disable-next-line object-curly-newline
   const {
     q = '',
@@ -688,6 +688,8 @@ mock.onGet('/apps/user/users').reply(config => {
 
   const sortedData = filteredData.sort(sortCompare(sortBy))
   if (sortDesc) sortedData.reverse()
+
+  await new Promise(resolve => setTimeout(resolve, 3000))
 
   return [
     200,
