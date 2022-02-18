@@ -83,13 +83,13 @@
             </b-dropdown-item> -->
 
             <b-dropdown-item
-              :to="{ name: 'apps-users-edit', params: { id: data.item.id } }"
+              @click="edit(data.item, data)"
             >
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">Edit</span>
             </b-dropdown-item>
 
-            <b-dropdown-item>
+            <b-dropdown-item @click="remove(data.item, data)">
               <feather-icon icon="TrashIcon" />
               <span class="align-middle ml-50">Delete</span>
             </b-dropdown-item>
@@ -195,6 +195,10 @@ export default {
         { key: 'code', sortable: true },
         { key: 'remarks', sortable: false },
         { key: 'percentage_share', sortable: true },
+        { key: 'created_by', sortable: true },
+        { key: 'updated_by', sortable: true },
+        { key: 'created_at', sortable: true },
+        { key: 'updated_at', sortable: true },
         { key: 'actions' },
       ],
       filter: { search: '' },
@@ -264,7 +268,13 @@ export default {
         percentage_share: 29.0,
       }]
 
-      return list
+      return list.map(item => ({
+        ...item,
+        created_by: 'John Doe',
+        updated_by: 'Peter Smith',
+        created_at: '02/18/2022 02:00 pm',
+        updated_at: '02/18/2022 02:00 pm',
+      }))
 
       // const res = await this.$http.get('/api/admin/clients')
       // return Promise.resolve()
@@ -275,8 +285,28 @@ export default {
     add() {
       this.$refs.formModal.$refs.bModal.show()
     },
-    edit(row) {
+    edit(item) {
+      console.log('🚀 ~ file: List.vue ~ line 289 ~ edit ~ item', item)
       this.$refs.formModal.$refs.bModal.show()
+    },
+    remove(item) {
+      this.$bvModal.msgBoxConfirm('Are you sure to delete this item?', {
+        title: 'Please Confirm',
+        size: 'sm',
+        buttonSize: 'sm',
+        okVariant: 'danger',
+        okTitle: 'YES',
+        cancelTitle: 'NO',
+        footerClass: 'p-2',
+        hideHeaderClose: false,
+        centered: true,
+      })
+        .then(confirmed => {
+          if (confirmed) { console.log(confirmed, 'deleting...', item) }
+        })
+        .catch(err => {
+          // An error occurred
+        })
     },
   },
 }

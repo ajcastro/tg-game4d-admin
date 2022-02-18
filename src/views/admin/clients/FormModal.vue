@@ -28,7 +28,6 @@
             >
               <b-form-input
                 id="v-remarks"
-                type="remarks"
               />
             </b-form-group>
           </b-col>
