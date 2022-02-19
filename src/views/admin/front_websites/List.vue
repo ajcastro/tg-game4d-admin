@@ -322,6 +322,7 @@ export default {
 
       return list.map(item => ({
         ...item,
+        assigned_client: 'ABC123',
         remarks: 'lorem ipsum dolor sit amet',
         created_at: '02/18/2022 02:00 pm',
         updated_at: '02/18/2022 02:00 pm',

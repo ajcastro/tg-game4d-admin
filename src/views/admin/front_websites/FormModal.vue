@@ -128,8 +128,8 @@ export default {
   data() {
     return {
       clientOptions: [
-        'John Doe',
-        'Peter Smith',
+        'ABC123',
+        'XYZ456',
       ],
     }
   },
