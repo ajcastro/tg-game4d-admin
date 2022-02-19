@@ -57,9 +57,12 @@
         :fields="columns"
         :items="fetchRows"
         :sort-by.sync="sortBy"
-        :sort-desc.sync="isSortDirDesc"
+        :sort-desc.sync="sortDesc"
         :filter="filter"
         :no-local-sorting="true"
+        :filter-debounce="600"
+        :per-page="perPage"
+        :current-page="currentPage"
       >
         <!-- Column: Actions -->
         <template #cell(actions)="data">
@@ -167,8 +170,7 @@ import {
   BPagination,
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
-import axios from '@axios'
-import TableOptions from './TableOptions'
+import { makeTable, ctxToParams } from '@/helpers/table'
 import FormModal from './FormModal.vue'
 
 export default {
@@ -189,98 +191,51 @@ export default {
   },
   data() {
     return {
-      // ...TableOptions.make(),
-      columns: [
-        { key: 'id', sortable: true },
-        { key: 'code', sortable: true },
-        { key: 'remarks', sortable: false },
-        { key: 'percentage_share', sortable: true },
-        { key: 'created_by', sortable: true },
-        { key: 'updated_by', sortable: true },
-        { key: 'created_at', sortable: true },
-        { key: 'updated_at', sortable: true },
-        { key: 'actions' },
-      ],
-      filter: { search: '' },
-      currentPage: 1,
-      perPage: 10,
-      perPageOptions: [10, 25, 50, 100],
-      isSortDirDesc: false,
-      sortBy: null,
-      totalRows: 0,
-      meta: [],
+      ...makeTable({
+        columns: [
+          { key: 'id', sortable: true },
+          { key: 'code', sortable: true },
+          { key: 'remarks', sortable: false },
+          { key: 'percentage_share', sortable: true },
+          {
+            key: 'created_by',
+            sortable: true,
+            formatter: (value, key, item) => item.created_by.name,
+          },
+          {
+            key: 'updated_by',
+            sortable: true,
+            formatter: (value, key, item) => item.updated_by.name,
+          },
+          { key: 'created_at', sortable: true },
+          { key: 'updated_at', sortable: true },
+          { key: 'actions' },
+        ],
+      }),
     }
   },
   methods: {
-    fetchRows(ctx) {
-      console.log('called fetch rows..')
-      console.log('🚀 ~ file: List.vue ~ line 192 ~ fetchRows ~ ctx', ctx)
+    async fetchRows(ctx) {
+      console.log('🚀 ~ file: List.vue ~ line 224 ~ fetchRows ~ ctx', ctx)
 
-      const list = [{
-        id: 1,
-        code: 'Comb duck',
-        remarks: 'projection',
-        percentage_share: 21.98,
-      }, {
-        id: 2,
-        code: "Francolin, swainson's",
-        remarks: 'focus group',
-        percentage_share: 84.26,
-      }, {
-        id: 3,
-        code: 'Chacma baboon',
-        remarks: 'Business-focused',
-        percentage_share: 25.18,
-      }, {
-        id: 4,
-        code: 'Downy woodpecker',
-        remarks: 'optimal',
-        percentage_share: 87.55,
-      }, {
-        id: 5,
-        code: 'Skink, african',
-        remarks: 'optimal',
-        percentage_share: 21.28,
-      }, {
-        id: 6,
-        code: 'Baboon, gelada',
-        remarks: 'Proactive',
-        percentage_share: 77.83,
-      }, {
-        id: 7,
-        code: 'Lemming, arctic',
-        remarks: 'client-driven',
-        percentage_share: 66.23,
-      }, {
-        id: 8,
-        code: 'Cheetah',
-        remarks: 'Exclusive',
-        percentage_share: 15.17,
-      }, {
-        id: 9,
-        code: 'Fox, grey',
-        remarks: 'Cross-platform',
-        percentage_share: 84.28,
-      }, {
-        id: 10,
-        code: 'Blue crane',
-        remarks: 'web-enabled',
-        percentage_share: 29.0,
-      }]
+      const res = await this.$http.get('/api/admin/clients', {
+        params: {
+          include: 'created_by,updated_by',
+          'fields[created_by]': 'id,name',
+          'fields[updated_by]': 'id,name',
+          ...ctxToParams(ctx),
+        },
+      })
 
-      return list.map(item => ({
-        ...item,
-        created_by: 'John Doe',
-        updated_by: 'Peter Smith',
-        created_at: '02/18/2022 02:00 pm',
-        updated_at: '02/18/2022 02:00 pm',
-      }))
+      this.meta = {
+        from: res.data.meta.from,
+        to: res.data.meta.to,
+        of: res.data.meta.total,
+      }
 
-      // const res = await this.$http.get('/api/admin/clients')
-      // return Promise.resolve()
-      // return axios.get('/api/admin/clients', {
-      //   params: TableOptions.toQueryParams(ctx),
-      // })
+      this.totalRows = res.data.meta.total
+
+      return res.data.data
     },
     add() {
       this.$refs.formModal.$refs.bModal.show()

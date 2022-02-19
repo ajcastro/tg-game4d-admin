@@ -19,6 +19,7 @@ module.exports = {
         '@core': path.resolve(__dirname, 'src/@core'),
         '@validations': path.resolve(__dirname, 'src/@core/utils/validations/validations.js'),
         '@axios': path.resolve(__dirname, 'src/libs/axios'),
+        '@env': path.resolve(__dirname, 'env.js'),
 
         // WORKAROUND HERE:
         // https://github.com/nuxt-community/composition-api/pull/517#issuecomment-882248097
