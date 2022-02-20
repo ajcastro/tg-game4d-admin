@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 import { ctxToParams } from '@/helpers/table'
 
 export default {
