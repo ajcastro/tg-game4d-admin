@@ -93,6 +93,7 @@
 </template>
 
 <script>
+/* eslint-disable new-cap */
 import Ripple from 'vue-ripple-directive'
 import {
   BRow, BCol, BFormGroup, BFormInput, BForm, BButton, BFormTextarea,
@@ -128,6 +129,7 @@ export default {
       loading: false,
       form: {},
       errors: {},
+      model: Client,
     }
   },
   computed: {
@@ -137,7 +139,7 @@ export default {
   },
   methods: {
     newModel(attributes) {
-      return new Client(attributes)
+      return new this.model(attributes)
     },
     resetForm() {
       this.$emit('update:resource-id', null)
@@ -149,7 +151,7 @@ export default {
       if (!this.resourceId) return
 
       this.loading = true
-      const res = await Client.find(this.resourceId)
+      const res = await this.model.find(this.resourceId)
       this.form = { ...res.data }
       this.loading = false
     },

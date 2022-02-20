@@ -162,6 +162,7 @@
 </template>
 
 <script>
+/* eslint-disable new-cap */
 import {
   BCard,
   BRow,
@@ -197,6 +198,7 @@ export default {
   data() {
     return {
       resourceId: null,
+      model: Client,
       ...makeTable({
         columns: [
           { key: 'id', sortable: true },
@@ -247,7 +249,6 @@ export default {
       this.$refs.formModal.$refs.bModal.show()
     },
     async edit(item) {
-      console.log('🚀 ~ file: List.vue ~ line 289 ~ edit ~ item', item)
       this.resourceId = item.id
       await this.$nextTick()
       this.$refs.formModal.$refs.bModal.show()
@@ -268,7 +269,7 @@ export default {
 
         if (!confirmed) return
 
-        const model = new Client(item)
+        const model = new this.model(item)
         await model.delete()
 
         this.$refs.resourceTable.refresh()
