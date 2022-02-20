@@ -153,7 +153,10 @@
       </div>
     </b-card>
 
-    <form-modal ref="formModal" />
+    <form-modal
+      ref="formModal"
+      :resource-id.sync="resourceId"
+    />
   </div>
 </template>
 
@@ -191,6 +194,7 @@ export default {
   },
   data() {
     return {
+      resourceId: null,
       ...makeTable({
         columns: [
           { key: 'id', sortable: true },
@@ -240,8 +244,10 @@ export default {
     add() {
       this.$refs.formModal.$refs.bModal.show()
     },
-    edit(item) {
+    async edit(item) {
       console.log('🚀 ~ file: List.vue ~ line 289 ~ edit ~ item', item)
+      this.resourceId = item.id
+      await this.$nextTick()
       this.$refs.formModal.$refs.bModal.show()
     },
     remove(item) {
@@ -260,7 +266,7 @@ export default {
           if (confirmed) { console.log(confirmed, 'deleting...', item) }
         })
         .catch(err => {
-          // An error occurred
+          console.log('🚀 ~ file: List.vue ~ line 269 ~ remove ~ err', err)
         })
     },
   },

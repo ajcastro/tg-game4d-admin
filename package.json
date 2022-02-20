@@ -38,6 +38,7 @@
     "vee-validate": "3.4.5",
     "vue": "2.x",
     "vue-apexcharts": "1.6.0",
+    "vue-api-query": "^1.9.1",
     "vue-autosuggest": "2.2.0",
     "vue-awesome-swiper": "4.1.1",
     "vue-chartjs": "3.5.0",
