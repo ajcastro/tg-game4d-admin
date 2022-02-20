@@ -6,7 +6,9 @@ export default {
     async fetchRows(ctx) {
       console.log('🚀 ~ file: List.vue ~ line 224 ~ fetchRows ~ ctx', ctx)
 
-      const res = await this.$http.get('/api/admin/clients', {
+      const resource = (new this.model()).resource()
+
+      const res = await this.$http.get(`/api/admin/${resource}`, {
         params: {
           include: 'created_by,updated_by',
           'fields[created_by]': 'id,name',

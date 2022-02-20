@@ -6,6 +6,14 @@ export default {
       default: null,
     },
   },
+  data() {
+    return {
+      loading: false,
+      form: {},
+      errors: {},
+      model: null, // this is required, please assign your model in your component
+    }
+  },
   computed: {
     isCreating() {
       return !this.resourceId

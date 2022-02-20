@@ -48,7 +48,7 @@
       </div>
 
       <b-table
-        ref="refListTable"
+        ref="resourceTable"
         class="position-relative"
         responsive
         primary-key="id"
@@ -57,9 +57,12 @@
         :fields="columns"
         :items="fetchRows"
         :sort-by.sync="sortBy"
-        :sort-desc.sync="isSortDirDesc"
+        :sort-desc.sync="sortDesc"
         :filter="filter"
         :no-local-sorting="true"
+        :filter-debounce="600"
+        :per-page="perPage"
+        :current-page="currentPage"
       >
         <!-- Column: Actions -->
         <template #cell(actions)="data">
@@ -150,7 +153,11 @@
       </div>
     </b-card>
 
-    <form-modal ref="formModal" />
+    <form-modal
+      ref="formModal"
+      :resource-id.sync="resourceId"
+      @save="$refs.resourceTable.refresh()"
+    />
   </div>
 </template>
 
@@ -167,7 +174,9 @@ import {
   BPagination,
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
-import axios from '@axios'
+import { makeTable } from '@/helpers/table'
+import Website from '@/models/Website'
+import resourceTable from '@/mixins/resource/resource-table'
 import FormModal from './FormModal.vue'
 
 export default {
@@ -186,180 +195,38 @@ export default {
 
     FormModal,
   },
+  mixins: [
+    resourceTable,
+  ],
   data() {
     return {
-      // ...TableOptions.make(),
-      columns: [
-        { key: 'id', sortable: true },
-        { key: 'code', sortable: true },
-        { key: 'assigned_client', sortable: true },
-        { key: 'ip_address', sortable: true },
-        { key: 'domain_name', sortable: true },
-        { key: 'is_active', sortable: true },
-        { key: 'remarks', sortable: false },
-        { key: 'created_by', sortable: true },
-        { key: 'updated_by', sortable: true },
-        { key: 'created_at', sortable: true },
-        { key: 'updated_at', sortable: true },
-        { key: 'actions' },
-      ],
-      filter: { search: '' },
-      currentPage: 1,
-      perPage: 10,
-      perPageOptions: [10, 25, 50, 100],
-      isSortDirDesc: false,
-      sortBy: null,
-      totalRows: 0,
-      meta: [],
+      resourceId: null,
+      model: Website,
+      ...makeTable({
+        columns: [
+          { key: 'id', sortable: true },
+          { key: 'code', sortable: true },
+          { key: 'assigned_client', sortable: false }, // TODO: change to sortable: true
+          { key: 'ip_address', sortable: true },
+          { key: 'domain_name', sortable: true },
+          { key: 'is_active', sortable: true },
+          { key: 'remarks', sortable: false },
+          {
+            key: 'created_by',
+            sortable: true,
+            formatter: (value, key, item) => item.created_by.name,
+          },
+          {
+            key: 'updated_by',
+            sortable: true,
+            formatter: (value, key, item) => item.updated_by.name,
+          },
+          { key: 'created_at', sortable: true },
+          { key: 'updated_at', sortable: true },
+          { key: 'actions' },
+        ],
+      }),
     }
-  },
-  methods: {
-    fetchRows(ctx) {
-      console.log('called fetch rows..')
-      console.log('🚀 ~ file: List.vue ~ line 192 ~ fetchRows ~ ctx', ctx)
-
-      const list = [{
-        id: 1,
-        code: '76237-145',
-        remarks: 'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.',
-        assigned_client: 'Gay Breche',
-        ip_address: '126.28.51.251',
-        domain_name: 'mapy.cz',
-        is_active: true,
-        created_by: 'Lorrayne Jillions',
-        updated_by: 'Ali Braunlein',
-      }, {
-        id: 2,
-        code: '68258-7013',
-        remarks: 'In blandit ultrices enim.',
-        assigned_client: 'Carolan Drysdall',
-        ip_address: '154.252.241.132',
-        domain_name: 'etsy.com',
-        is_active: false,
-        created_by: 'Drusi Belfitt',
-        updated_by: 'Leon McCard',
-      }, {
-        id: 3,
-        code: '62111-0212',
-        remarks: 'Proin eu mi.',
-        assigned_client: 'Micah Klamman',
-        ip_address: '10.245.42.144',
-        domain_name: 'disqus.com',
-        is_active: false,
-        created_by: 'Billye Oneile',
-        updated_by: 'Arlie Peacocke',
-      }, {
-        id: 4,
-        code: '0268-0625',
-        remarks: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.',
-        assigned_client: 'Annadiane Biskupek',
-        ip_address: '139.127.58.121',
-        domain_name: 'vistaprint.com',
-        is_active: false,
-        created_by: 'Malena Mendonca',
-        updated_by: 'Alma Alpine',
-      }, {
-        id: 5,
-        code: '49348-039',
-        remarks: 'Nullam molestie nibh in lectus. Pellentesque at nulla.',
-        assigned_client: 'Sophie Yeaman',
-        ip_address: '200.33.51.54',
-        domain_name: 'census.gov',
-        is_active: false,
-        created_by: 'Karol Dumingo',
-        updated_by: 'Alfredo Woodbridge',
-      }, {
-        id: 6,
-        code: '55505-103',
-        remarks: 'Nulla tellus. In sagittis dui vel nisl.',
-        assigned_client: 'Melvin Antonutti',
-        ip_address: '95.16.87.146',
-        domain_name: 'bing.com',
-        is_active: true,
-        created_by: 'Rosabel Rebillard',
-        updated_by: 'Colly Oxherd',
-      }, {
-        id: 7,
-        code: '52685-335',
-        remarks: 'Donec posuere metus vitae ipsum.',
-        assigned_client: 'Yetta Doubleday',
-        ip_address: '37.180.202.14',
-        domain_name: 'acquirethisname.com',
-        is_active: false,
-        created_by: 'Irvine Heinish',
-        updated_by: 'Trever Abbotts',
-      }, {
-        id: 8,
-        code: '64950-901',
-        remarks: 'Aenean sit amet justo. Morbi ut odio.',
-        assigned_client: 'Riccardo Hardesty',
-        ip_address: '132.62.225.164',
-        domain_name: 'buzzfeed.com',
-        is_active: true,
-        created_by: 'Greer Richemont',
-        updated_by: 'Ossie Bister',
-      }, {
-        id: 9,
-        code: '44087-0188',
-        remarks: 'Etiam vel augue.',
-        assigned_client: 'Farr Kings',
-        ip_address: '48.252.50.15',
-        domain_name: 'uol.com.br',
-        is_active: false,
-        created_by: 'Rolland Cardello',
-        updated_by: 'Ferrell Doggart',
-      }, {
-        id: 10,
-        code: '53499-7172',
-        remarks: 'Vivamus vestibulum sagittis sapien.',
-        assigned_client: 'Tallie Sappy',
-        ip_address: '96.72.15.60',
-        domain_name: 'miibeian.gov.cn',
-        is_active: true,
-        created_by: 'Katherine Blaasch',
-        updated_by: 'Andreas Truter',
-      }]
-
-      return list.map(item => ({
-        ...item,
-        assigned_client: 'ABC123',
-        remarks: 'lorem ipsum dolor sit amet',
-        created_at: '02/18/2022 02:00 pm',
-        updated_at: '02/18/2022 02:00 pm',
-      }))
-
-      // const res = await this.$http.get('/api/admin/clients')
-      // return Promise.resolve()
-      // return axios.get('/api/admin/clients', {
-      //   params: TableOptions.toQueryParams(ctx),
-      // })
-    },
-    add() {
-      this.$refs.formModal.$refs.bModal.show()
-    },
-    edit(item) {
-      console.log('🚀 ~ file: List.vue ~ line 289 ~ edit ~ item', item)
-      this.$refs.formModal.$refs.bModal.show()
-    },
-    remove(item) {
-      this.$bvModal.msgBoxConfirm('Are you sure to delete this item?', {
-        title: 'Please Confirm',
-        size: 'sm',
-        buttonSize: 'sm',
-        okVariant: 'danger',
-        okTitle: 'YES',
-        cancelTitle: 'NO',
-        footerClass: 'p-2',
-        hideHeaderClose: false,
-        centered: true,
-      })
-        .then(confirmed => {
-          if (confirmed) { console.log(confirmed, 'deleting...', item) }
-        })
-        .catch(err => {
-          // An error occurred
-        })
-    },
   },
 }
 </script>

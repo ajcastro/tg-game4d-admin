@@ -2,10 +2,12 @@
   <div>
     <b-modal
       ref="bModal"
-      title="Add Front Website"
+      :title="(isCreating ? 'Add' : 'Edit') + ' Front Website'"
       hide-footer
+      @hidden="resetForm()"
+      @show="getResource()"
     >
-      <b-form @submit.prevent>
+      <b-form @submit.prevent="save">
         <b-row>
 
           <!-- code -->
@@ -16,7 +18,9 @@
             >
               <b-form-input
                 id="v-code"
+                v-model="form.code"
               />
+              <input-errors :errors="errors.code" />
             </b-form-group>
           </b-col>
 
@@ -28,7 +32,9 @@
             >
               <b-form-input
                 id="v-ip_address"
+                v-model="form.ip_address"
               />
+              <input-errors :errors="errors.ip_address" />
             </b-form-group>
           </b-col>
 
@@ -40,7 +46,9 @@
             >
               <b-form-input
                 id="v-domain_name"
+                v-model="form.domain_name"
               />
+              <input-errors :errors="errors.domain_name" />
             </b-form-group>
           </b-col>
 
@@ -49,8 +57,8 @@
             <b-form-group>
               <b-form-checkbox
                 id="is_active"
+                v-model="form.is_active"
                 name="is_active"
-                value="is_active"
               >
                 Is Active
               </b-form-checkbox>
@@ -64,9 +72,10 @@
               label-for="v-assigned_client"
             >
               <b-form-select
-                v-model="selected"
+                v-model="form.assigned_client_id"
                 :options="clientOptions"
               />
+              <input-errors :errors="errors.assigned_client_id" />
             </b-form-group>
           </b-col>
 
@@ -78,6 +87,7 @@
             >
               <b-form-textarea
                 id="v-remarks"
+                v-model="form.remarks"
                 placeholder=""
                 rows="2"
               />
@@ -91,10 +101,16 @@
           >
             <b-button
               v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+              :disabled="loading"
               type="submit"
               variant="primary"
               class=""
             >
+              <b-spinner
+                v-if="loading"
+                small
+                class="mr-1"
+              />
               Save
             </b-button>
           </b-col>
@@ -107,8 +123,11 @@
 <script>
 import Ripple from 'vue-ripple-directive'
 import {
-  BRow, BCol, BFormGroup, BFormInput, BFormCheckbox, BForm, BButton, BFormSelect, BFormTextarea,
+  BRow, BCol, BFormGroup, BFormInput, BFormCheckbox, BForm, BButton, BFormSelect, BFormTextarea, BSpinner,
 } from 'bootstrap-vue'
+import Website from '@/models/Website'
+import InputErrors from '@/components/InputErrors'
+import resourceFormModal from '@/mixins/resource/resource-form-modal'
 
 export default {
   components: {
@@ -121,12 +140,21 @@ export default {
     BFormCheckbox,
     BFormSelect,
     BFormTextarea,
+    InputErrors,
+    BSpinner,
   },
   directives: {
     Ripple,
   },
+  mixins: [
+    resourceFormModal,
+  ],
   data() {
     return {
+      loading: false,
+      form: {},
+      errors: {},
+      model: Website,
       clientOptions: [
         'ABC123',
         'XYZ456',
