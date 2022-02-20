@@ -48,7 +48,7 @@
       </div>
 
       <b-table
-        ref="refListTable"
+        ref="resourceTable"
         class="position-relative"
         responsive
         primary-key="id"
@@ -156,6 +156,7 @@
     <form-modal
       ref="formModal"
       :resource-id.sync="resourceId"
+      @save="$refs.resourceTable.refresh()"
     />
   </div>
 </template>
@@ -174,6 +175,7 @@ import {
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
 import { makeTable, ctxToParams } from '@/helpers/table'
+import Client from '@/models/Client'
 import FormModal from './FormModal.vue'
 
 export default {
@@ -250,24 +252,29 @@ export default {
       await this.$nextTick()
       this.$refs.formModal.$refs.bModal.show()
     },
-    remove(item) {
-      this.$bvModal.msgBoxConfirm('Are you sure to delete this item?', {
-        title: 'Please Confirm',
-        size: 'sm',
-        buttonSize: 'sm',
-        okVariant: 'danger',
-        okTitle: 'YES',
-        cancelTitle: 'NO',
-        footerClass: 'p-2',
-        hideHeaderClose: false,
-        centered: true,
-      })
-        .then(confirmed => {
-          if (confirmed) { console.log(confirmed, 'deleting...', item) }
+    async remove(item) {
+      try {
+        const confirmed = await this.$bvModal.msgBoxConfirm('Are you sure to delete this item?', {
+          title: 'Please Confirm',
+          size: 'sm',
+          buttonSize: 'sm',
+          okVariant: 'danger',
+          okTitle: 'YES',
+          cancelTitle: 'NO',
+          footerClass: 'p-2',
+          hideHeaderClose: false,
+          centered: true,
         })
-        .catch(err => {
-          console.log('🚀 ~ file: List.vue ~ line 269 ~ remove ~ err', err)
-        })
+
+        if (!confirmed) return
+
+        const model = new Client(item)
+        await model.delete()
+
+        this.$refs.resourceTable.refresh()
+      } catch (err) {
+        console.log('🚀 ~ file: List.vue ~ line 274 ~ remove ~ err', err)
+      }
     },
   },
 }

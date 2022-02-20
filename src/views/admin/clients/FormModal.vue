@@ -154,19 +154,17 @@ export default {
       this.loading = false
     },
     async save() {
-      this.loading = true
-      const model = this.newModel({
-        id: this.resourceId,
-        ...this.form,
-      })
       try {
+        this.loading = true
+        const model = this.newModel({
+          id: this.resourceId,
+          ...this.form,
+        })
         const res = await model.save()
         this.$emit('update:resource-id', res.id)
-        console.log('🚀 ~ file: FormModal.vue ~ line 138 ~ save ~ res', res)
-        console.log('🚀 ~ file: FormModal.vue ~ line 138 ~ save ~ model', model)
         this.$notifySuccess('Successfully Saved!')
+        this.$emit('save', res)
       } catch (err) {
-        console.log('🚀 ~ file: FormModal.vue ~ line 150 ~ save ~ err', err.response)
         if (!err.response) return
         if (err.response.status === 422) {
           this.errors = { ...err.response.data.errors }
