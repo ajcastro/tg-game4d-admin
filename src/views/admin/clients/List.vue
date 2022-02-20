@@ -177,7 +177,7 @@ import {
 import vSelect from 'vue-select'
 import { makeTable } from '@/helpers/table'
 import Client from '@/models/Client'
-import resourceList from '@/mixins/resource/resource-list'
+import resourceTable from '@/mixins/resource/resource-table'
 import FormModal from './FormModal.vue'
 
 export default {
@@ -197,7 +197,7 @@ export default {
     FormModal,
   },
   mixins: [
-    resourceList,
+    resourceTable,
   ],
   data() {
     return {
