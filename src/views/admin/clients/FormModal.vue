@@ -100,7 +100,7 @@ import {
   BSpinner,
 } from 'bootstrap-vue'
 import Client from '@/models/Client'
-import InputErrors from '@/components/InputErrors'
+import InputErrors from '@/components/InputErrors.vue'
 import resourceFormModal from '@/mixins/resource/resource-form-modal'
 
 export default {

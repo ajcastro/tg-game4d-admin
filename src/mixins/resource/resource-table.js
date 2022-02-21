@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable new-cap */
 import { ctxToParams } from '@/helpers/table'
 
@@ -35,29 +36,54 @@ export default {
       await this.$nextTick()
       this.$refs.formModal.$refs.bModal.show()
     },
+    confirm(confirmMessage = 'Are you sure?') {
+      return this.$bvModal.msgBoxConfirm(confirmMessage, {
+        title: 'Please Confirm',
+        size: 'sm',
+        buttonSize: 'sm',
+        okVariant: 'danger',
+        okTitle: 'YES',
+        cancelTitle: 'NO',
+        footerClass: 'p-2',
+        hideHeaderClose: false,
+        centered: true,
+      })
+    },
+    refreshResourceTable() {
+      this.$refs.resourceTable.refresh()
+    },
     async remove(item) {
       try {
-        const confirmed = await this.$bvModal.msgBoxConfirm('Are you sure to delete this item?', {
-          title: 'Please Confirm',
-          size: 'sm',
-          buttonSize: 'sm',
-          okVariant: 'danger',
-          okTitle: 'YES',
-          cancelTitle: 'NO',
-          footerClass: 'p-2',
-          hideHeaderClose: false,
-          centered: true,
-        })
+        const confirmed = await this.confirm('Are you sure to delete this item?')
 
         if (!confirmed) return
 
         const model = new this.model(item)
         await model.delete()
-
-        this.$refs.resourceTable.refresh()
+        this.refreshResourceTable()
       } catch (err) {
         console.log('🚀 ~ file: List.vue ~ line 274 ~ remove ~ err', err)
       }
+    },
+    async setActive(item, is_active) {
+      const confirmMessage = is_active
+        ? 'Are you sure to set this to active?'
+        : 'Are you sure to set this to inactive?'
+
+      const confirmed = await this.confirm(confirmMessage)
+
+      if (!confirmed) return
+
+      const resource = (new this.model()).resource()
+
+      await this.$http.post(`/api/admin/${resource}/${item.id}/set_active`, {
+        is_active,
+      })
+
+      this.refreshResourceTable()
+    },
+    resolveIsActiveVariant(is_active) {
+      return is_active ? 'success' : 'secondary'
     },
   },
 }

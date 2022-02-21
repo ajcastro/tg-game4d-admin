@@ -64,6 +64,17 @@
         :per-page="perPage"
         :current-page="currentPage"
       >
+        <!-- Column: Status -->
+        <template #cell(is_active)="data">
+          <b-badge
+            pill
+            :variant="`light-${resolveIsActiveVariant(data.item.is_active)}`"
+            class="text-capitalize"
+          >
+            {{ data.item.is_active ? 'Active' : 'Inactive' }}
+          </b-badge>
+        </template>
+
         <!-- Column: Actions -->
         <template #cell(actions)="data">
           <b-dropdown
@@ -92,9 +103,25 @@
               <span class="align-middle ml-50">Edit</span>
             </b-dropdown-item>
 
-            <b-dropdown-item @click="remove(data.item, data)">
+            <!-- <b-dropdown-item @click="remove(data.item, data)">
               <feather-icon icon="TrashIcon" />
               <span class="align-middle ml-50">Delete</span>
+            </b-dropdown-item> -->
+
+            <b-dropdown-item
+              v-if="!data.item.is_active"
+              @click="setActive(data.item, true)"
+            >
+              <feather-icon icon="CheckSquareIcon" />
+              <span class="align-middle ml-50">Set Active</span>
+            </b-dropdown-item>
+
+            <b-dropdown-item
+              v-if="data.item.is_active"
+              @click="setActive(data.item, false)"
+            >
+              <feather-icon icon="XSquareIcon" />
+              <span class="align-middle ml-50">Set Inactive</span>
             </b-dropdown-item>
           </b-dropdown>
         </template>
@@ -173,11 +200,13 @@ import {
   BDropdown,
   BDropdownItem,
   BPagination,
+  BBadge,
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
 import { makeTable } from '@/helpers/table'
 import Client from '@/models/Client'
 import resourceTable from '@/mixins/resource/resource-table'
+import dayjs from 'dayjs'
 import FormModal from './FormModal.vue'
 
 export default {
@@ -191,6 +220,7 @@ export default {
     BDropdown,
     BDropdownItem,
     BPagination,
+    BBadge,
 
     vSelect,
 
@@ -209,6 +239,7 @@ export default {
           { key: 'code', sortable: true },
           { key: 'remarks', sortable: false },
           { key: 'percentage_share', sortable: true },
+          { key: 'is_active', sortable: true },
           {
             key: 'created_by',
             sortable: true,
@@ -219,8 +250,16 @@ export default {
             sortable: true,
             formatter: (value, key, item) => item.updated_by.name,
           },
-          { key: 'created_at', sortable: true },
-          { key: 'updated_at', sortable: true },
+          {
+            key: 'created_at',
+            sortable: true,
+            formatter: value => dayjs(value).format('DD MMM YYYY, hh:mm a'),
+          },
+          {
+            key: 'updated_at',
+            sortable: true,
+            formatter: value => dayjs(value).format('DD MMM YYYY, hh:mm a'),
+          },
           { key: 'actions' },
         ],
       }),

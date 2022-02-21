@@ -54,19 +54,6 @@
 
           <!-- checkbox -->
           <b-col cols="12">
-            <b-form-group>
-              <b-form-checkbox
-                id="is_active"
-                v-model="form.is_active"
-                name="is_active"
-              >
-                Is Active
-              </b-form-checkbox>
-            </b-form-group>
-          </b-col>
-
-          <!-- checkbox -->
-          <b-col cols="12">
             <b-form-group
               label="Assigned Client"
               label-for="v-assigned_client"
@@ -123,10 +110,10 @@
 <script>
 import Ripple from 'vue-ripple-directive'
 import {
-  BRow, BCol, BFormGroup, BFormInput, BFormCheckbox, BForm, BButton, BFormSelect, BFormTextarea, BSpinner,
+  BRow, BCol, BFormGroup, BFormInput, BForm, BButton, BFormSelect, BFormTextarea, BSpinner,
 } from 'bootstrap-vue'
 import Website from '@/models/Website'
-import InputErrors from '@/components/InputErrors'
+import InputErrors from '@/components/InputErrors.vue'
 import resourceFormModal from '@/mixins/resource/resource-form-modal'
 
 export default {
@@ -137,7 +124,6 @@ export default {
     BFormInput,
     BForm,
     BButton,
-    BFormCheckbox,
     BFormSelect,
     BFormTextarea,
     InputErrors,
