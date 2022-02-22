@@ -47,6 +47,7 @@ export default {
         const res = await model.save()
         this.$emit('update:resource-id', res.id)
         this.$notifySuccess('Successfully Saved!')
+        this.errors = {}
         this.$emit('save', res)
       } catch (err) {
         if (!err.response) return

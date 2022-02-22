@@ -236,7 +236,11 @@ export default {
         columns: [
           { key: 'id', sortable: true },
           { key: 'code', sortable: true },
-          { key: 'assigned_client', sortable: false }, // TODO: change to sortable: true
+          {
+            key: 'assigned_client',
+            sortable: true,
+            formatter: (value, key, item) => item.assigned_client.code,
+          },
           { key: 'ip_address', sortable: true },
           { key: 'domain_name', sortable: true },
           { key: 'is_active', sortable: true },
@@ -265,6 +269,16 @@ export default {
         ],
       }),
     }
+  },
+  methods: {
+    fetchRowsParams() {
+      return {
+        include: 'assigned_client,created_by,updated_by',
+        'fields[assigned_client]': 'id,code',
+        'fields[created_by]': 'id,name',
+        'fields[updated_by]': 'id,name',
+      }
+    },
   },
 }
 </script>

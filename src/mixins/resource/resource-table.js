@@ -4,6 +4,13 @@ import { ctxToParams } from '@/helpers/table'
 
 export default {
   methods: {
+    fetchRowsParams() {
+      return {
+        include: 'created_by,updated_by',
+        'fields[created_by]': 'id,name',
+        'fields[updated_by]': 'id,name',
+      }
+    },
     async fetchRows(ctx) {
       console.log('🚀 ~ file: List.vue ~ line 224 ~ fetchRows ~ ctx', ctx)
 
@@ -11,9 +18,7 @@ export default {
 
       const res = await this.$http.get(`/api/admin/${resource}`, {
         params: {
-          include: 'created_by,updated_by',
-          'fields[created_by]': 'id,name',
-          'fields[updated_by]': 'id,name',
+          ...this.fetchRowsParams(),
           ...ctxToParams(ctx),
         },
       })

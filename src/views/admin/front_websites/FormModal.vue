@@ -58,9 +58,13 @@
               label="Assigned Client"
               label-for="v-assigned_client"
             >
-              <b-form-select
+              <v-select
                 v-model="form.assigned_client_id"
+                id-for="v-assigned_client"
+                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+                label="title"
                 :options="clientOptions"
+                :reduce="(item) => item.id"
               />
               <input-errors :errors="errors.assigned_client_id" />
             </b-form-group>
@@ -110,11 +114,12 @@
 <script>
 import Ripple from 'vue-ripple-directive'
 import {
-  BRow, BCol, BFormGroup, BFormInput, BForm, BButton, BFormSelect, BFormTextarea, BSpinner,
+  BRow, BCol, BFormGroup, BFormInput, BForm, BButton, BFormTextarea, BSpinner,
 } from 'bootstrap-vue'
 import Website from '@/models/Website'
 import InputErrors from '@/components/InputErrors.vue'
 import resourceFormModal from '@/mixins/resource/resource-form-modal'
+import vSelect from 'vue-select'
 
 export default {
   components: {
@@ -124,10 +129,10 @@ export default {
     BFormInput,
     BForm,
     BButton,
-    BFormSelect,
     BFormTextarea,
     InputErrors,
     BSpinner,
+    vSelect,
   },
   directives: {
     Ripple,
@@ -141,11 +146,22 @@ export default {
       form: {},
       errors: {},
       model: Website,
-      clientOptions: [
-        'ABC123',
-        'XYZ456',
-      ],
+      clientOptions: [],
     }
+  },
+  mounted() {
+    this.getClients()
+  },
+  methods: {
+    async getClients() {
+      const res = await this.$http.get('/api/admin/clients', {
+        params: {
+          'fields[clients]': 'id,code',
+          paginate: false,
+        },
+      })
+      this.clientOptions = res.data.data.map(item => ({ ...item, title: item.code }))
+    },
   },
 }
 </script>
