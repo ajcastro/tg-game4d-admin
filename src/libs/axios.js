@@ -10,6 +10,7 @@ const axiosIns = axios.create({
   baseURL: env.baseURL,
   // timeout: 1000,
   // headers: {'X-Custom-Header': 'foobar'}
+  headers: { Accept: 'application/json' },
 })
 
 Vue.prototype.$http = axiosIns

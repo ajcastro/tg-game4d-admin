@@ -36,7 +36,7 @@ Vue.prototype.$notifySuccess = (message, props) => {
 }
 
 Vue.prototype.$notifyError = (message, props) => {
-  $notify(message, { ...props, variant: 'danger' })
+  $notify(message, { ...props, variant: 'danger', icon: 'XIcon' })
 }
 
 Vue.prototype.$notifyInfo = (message, props) => {
