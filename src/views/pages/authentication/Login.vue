@@ -84,16 +84,40 @@
               >
                 <validation-provider
                   #default="{ errors }"
-                  name="Email"
+                  name="email"
                   vid="email"
                   rules="required|email"
                 >
                   <b-form-input
                     id="login-email"
-                    v-model="userEmail"
+                    v-model.trim="userEmail"
                     :state="errors.length > 0 ? false:null"
                     name="login-email"
-                    placeholder="john@example.com"
+                    placeholder="Email"
+                    @input="invalidCredentials=false"
+                  />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+
+              <!-- parent group -->
+              <b-form-group
+                label="Parent Group"
+                label-for="parent-group"
+              >
+                <validation-provider
+                  #default="{ errors }"
+                  name="parent group"
+                  vid="parent-group"
+                  rules="required"
+                >
+                  <b-form-input
+                    id="parent-group"
+                    v-model.trim="parentGroup"
+                    :state="errors.length > 0 ? false:null"
+                    name="parent-group"
+                    placeholder="Parent Group"
+                    @input="invalidCredentials=false"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
@@ -125,6 +149,7 @@
                       :type="passwordFieldType"
                       name="login-password"
                       placeholder="Password"
+                      @input="invalidCredentials=false"
                     />
                     <b-input-group-append is-text>
                       <feather-icon
@@ -158,6 +183,13 @@
               >
                 Sign in
               </b-button>
+              <small
+                v-if="invalidCredentials"
+                class="text-danger"
+              >
+                Invalid Credentials
+              </small>
+
             </b-form>
           </validation-observer>
 
@@ -253,7 +285,9 @@ export default {
       status: '',
       password: 'admin',
       userEmail: 'admin@demo.com',
+      parentGroup: '1234',
       sideImg: require('@/assets/images/pages/login-v2.svg'),
+      invalidCredentials: false,
 
       // validation rules
       required,
@@ -282,15 +316,15 @@ export default {
             password: this.password,
           })
             .then(response => {
-              const { userData } = response.data
-              useJwt.setToken(response.data.accessToken)
-              useJwt.setRefreshToken(response.data.refreshToken)
+              const userData = response.data.data.user
+              useJwt.setToken(response.data.data.access_token)
+              // useJwt.setRefreshToken(response.data.data.refreshToken)
               localStorage.setItem('userData', JSON.stringify(userData))
               this.$ability.update(userData.ability)
 
               // ? This is just for demo purpose as well.
               // ? Because we are showing eCommerce app's cart items count in navbar
-              this.$store.commit('app-ecommerce/UPDATE_CART_ITEMS_COUNT', userData.extras.eCommerceCartItemsCount)
+              // this.$store.commit('app-ecommerce/UPDATE_CART_ITEMS_COUNT', userData.extras.eCommerceCartItemsCount)
 
               // ? This is just for demo purpose. Don't think CASL is role based in this case, we used role in if condition just for ease
               this.$router.replace(getHomeRouteForLoggedInUser(userData.role))
@@ -299,7 +333,7 @@ export default {
                     component: ToastificationContent,
                     position: 'top-right',
                     props: {
-                      title: `Welcome ${userData.fullName || userData.username}`,
+                      title: `Welcome ${userData.name || userData.username}`,
                       icon: 'CoffeeIcon',
                       variant: 'success',
                       text: `You have successfully logged in as ${userData.role}. Now you can start to explore!`,
@@ -308,7 +342,10 @@ export default {
                 })
             })
             .catch(error => {
-              this.$refs.loginForm.setErrors(error.response.data.error)
+              if (error.response.status === 401) {
+                this.invalidCredentials = true
+                this.$notifyError('Invalid credentials')
+              }
             })
         }
       })

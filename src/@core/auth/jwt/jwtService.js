@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import jwtDefaultConfig from './jwtDefaultConfig'
 
 export default class JwtService {
@@ -34,41 +35,41 @@ export default class JwtService {
     )
 
     // Add request/response interceptor
-    this.axiosIns.interceptors.response.use(
-      response => response,
-      error => {
-        // const { config, response: { status } } = error
-        const { config, response } = error
-        const originalRequest = config
+    // this.axiosIns.interceptors.response.use(
+    //   response => response,
+    //   error => {
+    //     // const { config, response: { status } } = error
+    //     const { config, response } = error
+    //     const originalRequest = config
 
-        // if (status === 401) {
-        if (response && response.status === 401) {
-          if (!this.isAlreadyFetchingAccessToken) {
-            this.isAlreadyFetchingAccessToken = true
-            this.refreshToken().then(r => {
-              this.isAlreadyFetchingAccessToken = false
+    //     // if (status === 401) {
+    //     if (response && response.status === 401) {
+    //       if (!this.isAlreadyFetchingAccessToken) {
+    //         this.isAlreadyFetchingAccessToken = true
+    //         this.refreshToken().then(r => {
+    //           this.isAlreadyFetchingAccessToken = false
 
-              // Update accessToken in localStorage
-              this.setToken(r.data.accessToken)
-              this.setRefreshToken(r.data.refreshToken)
+    //           // Update accessToken in localStorage
+    //           this.setToken(r.data.accessToken)
+    //           this.setRefreshToken(r.data.refreshToken)
 
-              this.onAccessTokenFetched(r.data.accessToken)
-            })
-          }
-          const retryOriginalRequest = new Promise(resolve => {
-            this.addSubscriber(accessToken => {
-              // Make sure to assign accessToken according to your response.
-              // Check: https://pixinvent.ticksy.com/ticket/2413870
-              // Change Authorization header
-              originalRequest.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`
-              resolve(this.axiosIns(originalRequest))
-            })
-          })
-          return retryOriginalRequest
-        }
-        return Promise.reject(error)
-      },
-    )
+    //           this.onAccessTokenFetched(r.data.accessToken)
+    //         })
+    //       }
+    //       const retryOriginalRequest = new Promise(resolve => {
+    //         this.addSubscriber(accessToken => {
+    //           // Make sure to assign accessToken according to your response.
+    //           // Check: https://pixinvent.ticksy.com/ticket/2413870
+    //           // Change Authorization header
+    //           originalRequest.headers.Authorization = `${this.jwtConfig.tokenType} ${accessToken}`
+    //           resolve(this.axiosIns(originalRequest))
+    //         })
+    //       })
+    //       return retryOriginalRequest
+    //     }
+    //     return Promise.reject(error)
+    //   },
+    // )
   }
 
   onAccessTokenFetched(accessToken) {
@@ -99,13 +100,17 @@ export default class JwtService {
     return this.axiosIns.post(this.jwtConfig.loginEndpoint, ...args)
   }
 
+  logout(...args) {
+    return this.axiosIns.post(this.jwtConfig.logoutEndpoint, ...args)
+  }
+
   register(...args) {
     return this.axiosIns.post(this.jwtConfig.registerEndpoint, ...args)
   }
 
   refreshToken() {
-    return this.axiosIns.post(this.jwtConfig.refreshEndpoint, {
-      refreshToken: this.getRefreshToken(),
-    })
+    // return this.axiosIns.post(this.jwtConfig.refreshEndpoint, {
+    //   refreshToken: this.getRefreshToken(),
+    // })
   }
 }
