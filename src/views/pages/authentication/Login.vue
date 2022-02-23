@@ -84,7 +84,7 @@
               >
                 <validation-provider
                   #default="{ errors }"
-                  name="Email"
+                  name="email"
                   vid="email"
                   rules="required|email"
                 >
@@ -93,7 +93,30 @@
                     v-model.trim="userEmail"
                     :state="errors.length > 0 ? false:null"
                     name="login-email"
-                    placeholder="john@example.com"
+                    placeholder="Email"
+                    @input="invalidCredentials=false"
+                  />
+                  <small class="text-danger">{{ errors[0] }}</small>
+                </validation-provider>
+              </b-form-group>
+
+              <!-- parent group -->
+              <b-form-group
+                label="Parent Group"
+                label-for="parent-group"
+              >
+                <validation-provider
+                  #default="{ errors }"
+                  name="parent group"
+                  vid="parent-group"
+                  rules="required"
+                >
+                  <b-form-input
+                    id="parent-group"
+                    v-model.trim="parentGroup"
+                    :state="errors.length > 0 ? false:null"
+                    name="parent-group"
+                    placeholder="Parent Group"
                     @input="invalidCredentials=false"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
@@ -262,12 +285,13 @@ export default {
       status: '',
       password: 'admin',
       userEmail: 'admin@demo.com',
+      parentGroup: '1234',
       sideImg: require('@/assets/images/pages/login-v2.svg'),
+      invalidCredentials: false,
 
       // validation rules
       required,
       email,
-      invalidCredentials: false,
     }
   },
   computed: {
