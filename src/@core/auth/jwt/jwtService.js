@@ -34,6 +34,26 @@ export default class JwtService {
       error => Promise.reject(error),
     )
 
+    this.axiosIns.interceptors.response.use(
+      response => response,
+      error => {
+        const { response } = error
+
+        if (response && response.status === 401) {
+          localStorage.removeItem(this.jwtConfig.storageTokenKeyName)
+          localStorage.removeItem(this.jwtConfig.storageRefreshTokenKeyName)
+
+          // Remove userData from localStorage
+          localStorage.removeItem('userData')
+
+          // Redirect to login page
+          this.$router.push({ name: 'auth-login' })
+        }
+
+        return Promise.reject(error)
+      },
+    )
+
     // Add request/response interceptor
     // this.axiosIns.interceptors.response.use(
     //   response => response,
