@@ -136,8 +136,10 @@ export default {
     BAvatar,
   },
   data() {
+    const userData = localStorage.getItem('userData')
+
     return {
-      userData: JSON.parse(localStorage.getItem('userData')),
+      userData: userData ? JSON.parse(userData) : {},
       avatarText,
     }
   },
