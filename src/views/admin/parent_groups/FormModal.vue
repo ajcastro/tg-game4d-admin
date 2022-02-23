@@ -24,6 +24,24 @@
             </b-form-group>
           </b-col>
 
+          <!-- assigned_client -->
+          <b-col cols="12">
+            <b-form-group
+              label="Assigned Client"
+              label-for="v-assigned_client"
+            >
+              <v-select
+                v-model="form.assigned_client_id"
+                id-for="v-assigned_client"
+                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+                label="title"
+                :options="clientOptions"
+                :reduce="(item) => item.id"
+              />
+              <input-errors :errors="errors.assigned_client_id" />
+            </b-form-group>
+          </b-col>
+
           <!-- remarks -->
           <b-col cols="12">
             <b-form-group
@@ -76,6 +94,7 @@ import {
 import ParentGroup from '@/models/ParentGroup'
 import InputErrors from '@/components/InputErrors.vue'
 import resourceFormModal from '@/mixins/resource/resource-form-modal'
+import vSelect from 'vue-select'
 
 export default {
   components: {
@@ -89,6 +108,8 @@ export default {
     BSpinner,
 
     InputErrors,
+
+    vSelect,
   },
   directives: {
     Ripple,
@@ -102,7 +123,22 @@ export default {
       form: {},
       errors: {},
       model: ParentGroup,
+      clientOptions: [],
     }
+  },
+  mounted() {
+    this.getClients()
+  },
+  methods: {
+    async getClients() {
+      const res = await this.$http.get('/api/admin/clients', {
+        params: {
+          'fields[clients]': 'id,code',
+          paginate: false,
+        },
+      })
+      this.clientOptions = res.data.data.map(item => ({ ...item, title: item.code }))
+    },
   },
 }
 </script>

@@ -52,7 +52,7 @@
             </b-form-group>
           </b-col>
 
-          <!-- checkbox -->
+          <!-- assigned_client -->
           <b-col cols="12">
             <b-form-group
               label="Assigned Client"

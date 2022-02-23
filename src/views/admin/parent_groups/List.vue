@@ -237,6 +237,11 @@ export default {
         columns: [
           { key: 'id', sortable: true },
           { key: 'code', sortable: true },
+          {
+            key: 'client',
+            sortable: true,
+            formatter: (value, key, item) => 'John Doe',
+          },
           { key: 'remarks', sortable: false },
           {
             key: 'created_by',
