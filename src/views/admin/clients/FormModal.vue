@@ -4,6 +4,7 @@
       ref="bModal"
       :title="(isCreating ? 'Add' : 'Edit') + ' Client'"
       hide-footer
+      no-close-on-backdrop
       @hidden="resetForm()"
       @show="getResource()"
     >
@@ -23,18 +24,6 @@
               <input-errors :errors="errors.code" />
             </b-form-group>
           </b-col>
-
-          <!-- remarks -->
-          <!-- <b-col cols="12">
-            <b-form-group
-              label="Remarks"
-              label-for="v-remarks"
-            >
-              <b-form-input
-                id="v-remarks"
-              />
-            </b-form-group>
-          </b-col> -->
 
           <!-- percentage_share -->
           <b-col cols="12">
@@ -96,8 +85,7 @@
 /* eslint-disable new-cap */
 import Ripple from 'vue-ripple-directive'
 import {
-  BRow, BCol, BFormGroup, BFormInput, BForm, BButton, BFormTextarea,
-  BSpinner,
+  BRow, BCol, BFormGroup, BFormInput, BForm, BButton, BFormTextarea, BSpinner,
 } from 'bootstrap-vue'
 import Client from '@/models/Client'
 import InputErrors from '@/components/InputErrors.vue'

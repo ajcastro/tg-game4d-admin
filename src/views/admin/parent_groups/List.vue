@@ -108,7 +108,7 @@
               <span class="align-middle ml-50">Delete</span>
             </b-dropdown-item> -->
 
-            <b-dropdown-item
+            <!-- <b-dropdown-item
               v-if="!data.item.is_active"
               @click="setActive(data.item, true)"
             >
@@ -122,7 +122,7 @@
             >
               <feather-icon icon="XSquareIcon" />
               <span class="align-middle ml-50">Set Inactive</span>
-            </b-dropdown-item>
+            </b-dropdown-item> -->
           </b-dropdown>
         </template>
       </b-table>
@@ -240,7 +240,7 @@ export default {
           {
             key: 'client',
             sortable: true,
-            formatter: (value, key, item) => 'John Doe',
+            formatter: (value, key, item) => item.client.code,
           },
           { key: 'remarks', sortable: false },
           {
@@ -267,6 +267,16 @@ export default {
         ],
       }),
     }
+  },
+  methods: {
+    fetchRowsParams() {
+      return {
+        include: 'client,created_by,updated_by',
+        'fields[client]': 'id,code',
+        'fields[created_by]': 'id,name',
+        'fields[updated_by]': 'id,name',
+      }
+    },
   },
 }
 </script>

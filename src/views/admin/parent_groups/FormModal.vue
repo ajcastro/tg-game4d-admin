@@ -4,6 +4,7 @@
       ref="bModal"
       :title="(isCreating ? 'Add' : 'Edit') + ' Parent Group'"
       hide-footer
+      no-close-on-backdrop
       @hidden="resetForm()"
       @show="getResource()"
     >
@@ -24,21 +25,21 @@
             </b-form-group>
           </b-col>
 
-          <!-- assigned_client -->
+          <!-- client -->
           <b-col cols="12">
             <b-form-group
               label="Assigned Client"
-              label-for="v-assigned_client"
+              label-for="v-client"
             >
               <v-select
-                v-model="form.assigned_client_id"
-                id-for="v-assigned_client"
+                v-model="form.client_id"
+                id-for="v-client"
                 :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
                 label="title"
                 :options="clientOptions"
                 :reduce="(item) => item.id"
               />
-              <input-errors :errors="errors.assigned_client_id" />
+              <input-errors :errors="errors.client_id" />
             </b-form-group>
           </b-col>
 

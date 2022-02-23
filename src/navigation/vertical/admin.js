@@ -1,12 +1,12 @@
 export default [
   {
-    title: 'Parent Groups',
-    route: 'parent_groups',
+    title: 'Clients',
+    route: 'clients',
     // icon: 'UserIcon',
   },
   {
-    title: 'Clients',
-    route: 'clients',
+    title: 'Parent Groups',
+    route: 'parent_groups',
     // icon: 'UserIcon',
   },
   {

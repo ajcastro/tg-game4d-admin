@@ -4,6 +4,7 @@
       ref="bModal"
       :title="(isCreating ? 'Add' : 'Edit') + ' Front Website'"
       hide-footer
+      no-close-on-backdrop
       @hidden="resetForm()"
       @show="getResource()"
     >
