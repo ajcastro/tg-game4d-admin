@@ -34,7 +34,7 @@
               <b-form-input
                 v-model="filter.search"
                 class="d-inline-block mr-1"
-                placeholder="Search..."
+                placeholder="Search by username, email or phone number..."
               />
               <!-- <b-button
                 variant="primary"
@@ -100,12 +100,13 @@
                 class="align-middle text-body"
               />
             </template>
-            <!-- <b-dropdown-item
-              :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
+
+            <b-dropdown-item
+              @click="view(data.item, data)"
             >
-              <feather-icon icon="FileTextIcon" />
-              <span class="align-middle ml-50">Details</span>
-            </b-dropdown-item> -->
+              <feather-icon icon="EyeIcon" />
+              <span class="align-middle ml-50">View Detail</span>
+            </b-dropdown-item>
 
             <b-dropdown-item
               v-if="data.item.warning_status == 0"
@@ -114,6 +115,7 @@
               <feather-icon icon="AlertCircleIcon" />
               <span class="align-middle ml-50">Suspend</span>
             </b-dropdown-item>
+
             <b-dropdown-item
               v-if="data.item.warning_status === 1"
               @click="removeSuspension(data.item, data)"
@@ -275,6 +277,8 @@ export default {
             formatter: (value, key, item) => item.website.code,
           },
           { key: 'username', sortable: true },
+          { key: 'email', sortable: true },
+          { key: 'phone_number', sortable: true },
           {
             key: 'member_level',
             sortable: true,
@@ -286,11 +290,11 @@ export default {
             sortable: true,
             formatter: (value, key, item) => this.$options.filters.currency(item.balance_amount),
           },
-          {
-            key: 'banks',
-            sortable: false,
-            formatter: () => 'TODO',
-          },
+          // {
+          //   key: 'banks',
+          //   sortable: false,
+          //   formatter: () => 'TODO',
+          // },
           {
             key: 'created_at',
             label: 'Join Date',

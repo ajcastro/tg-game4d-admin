@@ -37,6 +37,13 @@ export default {
       this.$refs.formModal.$refs.bModal.show()
     },
     async edit(item) {
+      this.$refs.formModal.setFormDisabled(false)
+      this.resourceId = item.id
+      await this.$nextTick()
+      this.$refs.formModal.$refs.bModal.show()
+    },
+    async view(item) {
+      this.$refs.formModal.setFormDisabled(true)
       this.resourceId = item.id
       await this.$nextTick()
       this.$refs.formModal.$refs.bModal.show()

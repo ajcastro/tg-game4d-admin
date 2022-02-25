@@ -8,8 +8,10 @@ export default {
   },
   data() {
     return {
+      formDisabled: false,
       loading: false,
       form: {},
+      formOriginal: {},
       errors: {},
       model: null, // this is required, please assign your model in your component
     }
@@ -19,13 +21,19 @@ export default {
       return !this.resourceId
     },
   },
+  created() {
+    this.formOriginal = { ...this.form }
+  },
   methods: {
+    setFormDisabled(disabled = true) {
+      this.formDisabled = disabled
+    },
     newModel(attributes) {
       return new this.model(attributes)
     },
     resetForm() {
       this.$emit('update:resource-id', null)
-      this.form = {}
+      this.form = { ...this.formOriginal }
       this.loading = false
       this.errors = {}
     },
