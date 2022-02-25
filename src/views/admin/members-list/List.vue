@@ -36,12 +36,12 @@
                 class="d-inline-block mr-1"
                 placeholder="Search..."
               />
-              <b-button
+              <!-- <b-button
                 variant="primary"
                 @click="add()"
               >
                 <span class="text-nowrap">Add Parent Group</span>
-              </b-button>
+              </b-button> -->
             </div>
           </b-col>
         </b-row>
@@ -97,13 +97,13 @@
             </b-dropdown-item> -->
 
             <b-dropdown-item
-              @click="edit(data.item, data)"
+              @click="suspend(data.item, data)"
             >
               <feather-icon icon="AlertCircleIcon" />
               <span class="align-middle ml-50">Suspend</span>
             </b-dropdown-item>
             <b-dropdown-item
-              @click="edit(data.item, data)"
+              @click="blacklist(data.item, data)"
             >
               <feather-icon icon="XIcon" />
               <span class="align-middle ml-50">Blacklist</span>
@@ -191,6 +191,10 @@
       :resource-id.sync="resourceId"
       @save="$refs.resourceTable.refresh()"
     />
+
+    <ask-reason
+      ref="askReason"
+    />
   </div>
 </template>
 
@@ -213,6 +217,7 @@ import { makeTable } from '@/helpers/table'
 import resourceTable from '@/mixins/resource/resource-table'
 import dayjs from 'dayjs'
 import Member from '@/models/Member'
+import AskReason from '@/components/AskReason.vue'
 import FormModal from './FormModal.vue'
 
 export default {
@@ -227,10 +232,9 @@ export default {
     BDropdownItem,
     BPagination,
     BBadge,
-
     vSelect,
-
     FormModal,
+    AskReason,
   },
   mixins: [
     resourceTable,
@@ -301,6 +305,24 @@ export default {
         'fields[upline_referral]': 'id,referral_number',
         append: 'member_level_display,warning_status_display',
       }
+    },
+    async suspend(item) {
+      const reason = await this.$refs.askReason.ask('Suspend')
+      this.$refs.askReason.setLoading(true)
+      await this.$http.post(`/api/admin/members/${item.id}/suspend`, { reason })
+      this.$refs.askReason.setLoading(false)
+      this.$refs.askReason.hide(false)
+      this.$notifySuccess('Member has been suspended.')
+      this.$refs.resourceTable.refresh()
+    },
+    async blacklist(item) {
+      const reason = await this.$refs.askReason.ask('Blacklist')
+      this.$refs.askReason.setLoading(true)
+      await this.$http.post(`/api/admin/members/${item.id}/blacklist`, { reason })
+      this.$refs.askReason.setLoading(false)
+      this.$refs.askReason.hide(false)
+      this.$notifySuccess('Member has been blacklisted.')
+      this.$refs.resourceTable.refresh()
     },
   },
 }
