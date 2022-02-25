@@ -97,12 +97,22 @@
             </b-dropdown-item> -->
 
             <b-dropdown-item
+              v-if="data.item.warning_status != 1"
               @click="suspend(data.item, data)"
             >
               <feather-icon icon="AlertCircleIcon" />
               <span class="align-middle ml-50">Suspend</span>
             </b-dropdown-item>
             <b-dropdown-item
+              v-else
+              @click="removeSuspension(data.item, data)"
+            >
+              <feather-icon icon="RotateCcwIcon" />
+              <span class="align-middle ml-50">Remove Suspension</span>
+            </b-dropdown-item>
+
+            <b-dropdown-item
+              v-if="data.item.warning_status != 2"
               @click="blacklist(data.item, data)"
             >
               <feather-icon icon="XIcon" />
@@ -218,6 +228,7 @@ import resourceTable from '@/mixins/resource/resource-table'
 import dayjs from 'dayjs'
 import Member from '@/models/Member'
 import AskReason from '@/components/AskReason.vue'
+import confirm from '@/mixins/confirm'
 import FormModal from './FormModal.vue'
 
 export default {
@@ -237,6 +248,7 @@ export default {
     AskReason,
   },
   mixins: [
+    confirm,
     resourceTable,
   ],
   data() {
@@ -314,6 +326,14 @@ export default {
       this.$refs.askReason.hide(false)
       this.$notifySuccess('Member has been suspended.')
       this.$refs.resourceTable.refresh()
+    },
+    async removeSuspension(item) {
+      const confirmed = await this.$confirm('Are you sure to remove suspension for this member?')
+      if (!confirmed) return
+
+      await this.$http.delete(`api/admin/members/${item.id}/suspend`)
+      this.$refs.resourceTable.refresh()
+      this.$notifySuccess('Member has been removed from suspension')
     },
     async blacklist(item) {
       const reason = await this.$refs.askReason.ask('Blacklist')
