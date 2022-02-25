@@ -6,9 +6,13 @@
     ok-only
     ok-title="Done"
     size="xl"
-    @hidden="(resetForm(), modalSize='md')"
+    @hidden="resetForm()"
     @show="getResource()"
   >
+    <b-breadcrumb
+      :items="[{text: 'john.doe'}, {text: 'peter.doe'}, { text: 'jane.smith', active: true}]"
+      class="mb-1"
+    />
     <b-tabs
       content-class="pt-1"
       fill
@@ -16,7 +20,6 @@
       <b-tab
         active
         title="Profile"
-        @click="modalSize = 'md'"
       >
         <b-form @submit.prevent="save">
           <b-row>
@@ -90,7 +93,6 @@
       <b-tab
         title="Banks"
         lazy
-        @click="modalSize = 'md'"
       >
         <b-card
           v-for="(bank, index) in form.banks"
@@ -112,7 +114,7 @@
       </b-tab>
       <b-tab
         title="Deposit History"
-        @click="modalSize = 'xl'"
+        lazy
       >
         <b-table
           responsive="sm"
@@ -121,7 +123,7 @@
       </b-tab>
       <b-tab
         title="Withdrawal History"
-        @click="modalSize = 'xl'"
+        lazy
       >
         <b-table
           responsive="sm"
@@ -130,7 +132,7 @@
       </b-tab>
       <b-tab
         title="Adjustment History"
-        @click="modalSize = 'xl'"
+        lazy
       >
         <b-table
           responsive="sm"
@@ -139,12 +141,28 @@
       </b-tab>
       <b-tab
         title="Login History"
-        @click="modalSize = 'xl'"
+        lazy
       >
         <b-table
           responsive="sm"
           :items="loginHistory"
         />
+      </b-tab>
+      <b-tab
+        title="Referral List"
+        lazy
+      >
+        <b-table
+          responsive="sm"
+          :items="referrals"
+        >
+          <template #cell(actions)="data">
+            <b-button size="sm">
+              View
+            </b-button>
+          </template>
+
+        </b-table>
       </b-tab>
     </b-tabs>
   </b-modal>
@@ -154,12 +172,12 @@
 /* eslint-disable new-cap */
 import Ripple from 'vue-ripple-directive'
 import {
-  BRow, BCol, BFormGroup, BFormInput, BForm, BButton, BFormTextarea,
+  BRow, BCol, BFormGroup, BFormInput, BForm, BButton,
+  BBreadcrumb,
   BCard,
   BCardText,
   BTab, BTabs,
   BTable,
-  BSpinner,
 } from 'bootstrap-vue'
 import Member from '@/models/Member'
 import InputErrors from '@/components/InputErrors.vue'
@@ -173,14 +191,13 @@ export default {
     BFormGroup,
     BFormInput,
     BForm,
-    BButton,
-    BFormTextarea,
-    BSpinner,
     BTab,
     BTabs,
     BCard,
     BCardText,
     BTable,
+    BButton,
+    BBreadcrumb,
 
     InputErrors,
   },
@@ -192,7 +209,6 @@ export default {
   ],
   data() {
     return {
-      modalSize: 'md',
       formDisabled: false,
       loading: false,
       form: {
@@ -333,6 +349,25 @@ export default {
           login_date: '02 Feb 2021, 08:10 PM',
           ip: '192.168.9.1',
           device_info: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+        },
+      ],
+      referrals: [
+        {
+          username: 'johndoe',
+          join_date: '02 Feb 2022, 08:30 AM',
+          actions: '',
+        }, {
+          username: 'janedoe',
+          join_date: '02 Feb 2022, 08:30 AM',
+          actions: '',
+        }, {
+          username: 'peterdoe',
+          join_date: '02 Feb 2022, 08:30 AM',
+          actions: '',
+        }, {
+          username: 'jenylopez',
+          join_date: '02 Feb 2022, 08:30 AM',
+          actions: '',
         },
       ],
     }
