@@ -97,7 +97,7 @@
             </b-dropdown-item> -->
 
             <b-dropdown-item
-              v-if="data.item.warning_status != 1"
+              v-if="data.item.warning_status == 0"
               @click="suspend(data.item, data)"
             >
               <feather-icon icon="AlertCircleIcon" />
