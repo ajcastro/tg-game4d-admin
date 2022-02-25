@@ -14,4 +14,9 @@ export default [
     name: 'front_websites',
     component: () => import('@/views/admin/front_websites/List.vue'),
   },
+  {
+    path: '/members/list',
+    name: 'members.list',
+    component: () => import('@/views/admin/members-list/List.vue'),
+  },
 ]

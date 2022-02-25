@@ -20,6 +20,7 @@ import '@/libs/toastification'
 import '@/libs/sweet-alerts'
 import '@/libs/vue-select'
 import '@/libs/tour'
+import '@/libs/vue2-filters'
 
 // Axios Mock Adapter
 import '@/@fake-db/db'
