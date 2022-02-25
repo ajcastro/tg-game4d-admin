@@ -75,6 +75,17 @@
           </b-badge>
         </template>
 
+        <!-- Column: warning_status -->
+        <template #cell(warning_status)="data">
+          <b-badge
+            pill
+            :variant="`light-${resolveWarningStatusVariant(data.item.warning_status)}`"
+            class="text-capitalize"
+          >
+            {{ data.item.warning_status_display }}
+          </b-badge>
+        </template>
+
         <!-- Column: Actions -->
         <template #cell(actions)="data">
           <b-dropdown
@@ -317,6 +328,11 @@ export default {
         'fields[upline_referral]': 'id,referral_number',
         append: 'member_level_display,warning_status_display',
       }
+    },
+    resolveWarningStatusVariant(status) {
+      if (status === 1) return 'warning'
+      if (status === 2) return 'danger'
+      return ''
     },
     async suspend(item) {
       const reason = await this.$refs.askReason.ask('Suspend')
