@@ -104,7 +104,7 @@
               <span class="align-middle ml-50">Suspend</span>
             </b-dropdown-item>
             <b-dropdown-item
-              v-else
+              v-if="data.item.warning_status === 1"
               @click="removeSuspension(data.item, data)"
             >
               <feather-icon icon="RotateCcwIcon" />
