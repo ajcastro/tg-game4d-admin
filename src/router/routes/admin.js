@@ -29,4 +29,9 @@ export default [
     name: 'members.referrals',
     component: () => import('@/views/admin/members-referrals/List.vue'),
   },
+  {
+    path: '/members/blacklist',
+    name: 'members.blacklist',
+    component: () => import('@/views/admin/members-blacklist/List.vue'),
+  },
 ]
