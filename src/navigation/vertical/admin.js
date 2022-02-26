@@ -29,7 +29,7 @@ export default [
       },
       {
         title: 'Referral List',
-        route: 'members.referral-list',
+        route: 'members.referrals',
       },
       {
         title: 'Blacklist',

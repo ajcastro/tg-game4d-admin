@@ -24,4 +24,9 @@ export default [
     name: 'members.online',
     component: () => import('@/views/admin/members-online/List.vue'),
   },
+  {
+    path: '/members/referrals',
+    name: 'members.referrals',
+    component: () => import('@/views/admin/members-referrals/List.vue'),
+  },
 ]
