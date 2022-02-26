@@ -19,4 +19,9 @@ export default [
     name: 'members.list',
     component: () => import('@/views/admin/members-list/List.vue'),
   },
+  {
+    path: '/members/online',
+    name: 'members.online',
+    component: () => import('@/views/admin/members-online/List.vue'),
+  },
 ]
