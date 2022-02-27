@@ -1,5 +1,10 @@
 <template>
   <div>
+    <member-list-filters
+      v-show="showFilter"
+      v-model="filter"
+    />
+
     <!-- Table Container Card -->
     <b-card
       no-body
@@ -36,6 +41,13 @@
                 class="d-inline-block mr-1"
                 placeholder="Search by username, email or phone number..."
               />
+              <b-button
+                variant="primary"
+                class="btn-icon"
+                @click="showFilter = !showFilter"
+              >
+                <feather-icon icon="FilterIcon" />
+              </b-button>
               <!-- <b-button
                 variant="primary"
                 @click="add()"
@@ -242,6 +254,7 @@ import dayjs from 'dayjs'
 import Member from '@/models/Member'
 import AskReason from '@/components/AskReason.vue'
 import confirm from '@/mixins/confirm'
+import MemberListFilters from '@/components/MemberListFilters.vue'
 import FormModal from './FormModal.vue'
 
 export default {
@@ -259,6 +272,7 @@ export default {
     vSelect,
     FormModal,
     AskReason,
+    MemberListFilters,
   },
   mixins: [
     confirm,
@@ -268,7 +282,13 @@ export default {
     return {
       resourceId: null,
       model: Member,
+      showFilter: false,
       ...makeTable({
+        filter: {
+          search: '',
+          join_date: '',
+          warning_status: null,
+        },
         columns: [
           { key: 'id', sortable: true },
           {
@@ -324,7 +344,9 @@ export default {
     }
   },
   methods: {
-    fetchRowsParams() {
+    fetchRowsParams(ctx) {
+      console.log('🚀 ~ file: List.vue ~ line 340 ~ fetchRowsParams ~ ctx', ctx)
+
       return {
         include: 'website,banks,upline_referral',
         'fields[website]': 'id,code',

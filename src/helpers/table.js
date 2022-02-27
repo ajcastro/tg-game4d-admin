@@ -19,7 +19,7 @@ export function makeTable(props) {
 
 export function ctxToParams(ctx) {
   return {
-    'filter[search]': ctx.filter.search,
+    filter: { ...ctx.filter },
     sort: buildSort(ctx),
     per_page: ctx.perPage,
     page: ctx.currentPage,

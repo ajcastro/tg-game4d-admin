@@ -18,7 +18,7 @@ export default {
 
       const res = await this.$http.get(`/api/admin/${resource}`, {
         params: {
-          ...this.fetchRowsParams(),
+          ...this.fetchRowsParams(ctx),
           ...ctxToParams(ctx),
         },
       })
