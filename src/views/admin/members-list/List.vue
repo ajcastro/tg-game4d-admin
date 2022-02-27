@@ -282,7 +282,7 @@ export default {
     return {
       resourceId: null,
       model: Member,
-      showFilter: false,
+      showFilter: true,
       ...makeTable({
         filter: {
           search: '',
