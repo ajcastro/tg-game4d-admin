@@ -1,5 +1,10 @@
 <template>
   <div>
+    <member-list-filters
+      v-show="showFilter"
+      v-model="filter"
+      :except="['warning_status']"
+    />
     <!-- Table Container Card -->
     <b-card
       no-body
@@ -162,6 +167,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import Member from '@/models/Member'
 import AskReason from '@/components/AskReason.vue'
 import confirm from '@/mixins/confirm'
+import MemberListFilters from '@/components/MemberListFilters.vue'
 import FormModal from './FormModal.vue'
 
 dayjs.extend(relativeTime)
@@ -178,6 +184,7 @@ export default {
     vSelect,
     FormModal,
     AskReason,
+    MemberListFilters,
   },
   mixins: [
     confirm,
@@ -187,7 +194,13 @@ export default {
     return {
       resourceId: null,
       model: Member,
+      showFilter: true,
       ...makeTable({
+        filter: {
+          search: '',
+          join_date: '',
+          warning_status: null,
+        },
         columns: [
           { key: 'id', sortable: true },
           {

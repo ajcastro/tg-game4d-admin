@@ -21,6 +21,7 @@
           />
         </b-col>
         <b-col
+          v-show="showWarningStatusFilter"
           cols="12"
           md="4"
           class="mb-md-0 mb-2"
@@ -79,6 +80,10 @@ export default {
       type: Object,
       required: true,
     },
+    except: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -99,6 +104,11 @@ export default {
         },
       ],
     }
+  },
+  computed: {
+    showWarningStatusFilter() {
+      return !this.except.includes('warning_status')
+    },
   },
   methods: {
     async reset() {
