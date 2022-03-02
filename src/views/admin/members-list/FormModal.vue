@@ -21,7 +21,7 @@
         {{ item.text }}
       </b-breadcrumb-item>
     </b-breadcrumb>
-    {{ memberBreadcrumbs }}
+
     <b-tabs
       content-class="pt-1"
       fill
