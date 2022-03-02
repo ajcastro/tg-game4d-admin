@@ -7,7 +7,7 @@
     ok-title="Done"
     size="xl"
     @hidden="resetForm()"
-    @show="getResource()"
+    @show="(getResource(), getReferrals())"
   >
     <b-breadcrumb
       :items="[{text: 'john.doe'}, {text: 'peter.doe'}, { text: 'jane.smith', active: true}]"
@@ -182,6 +182,7 @@ import {
 import Member from '@/models/Member'
 import InputErrors from '@/components/InputErrors.vue'
 import resourceFormModal from '@/mixins/resource/resource-form-modal'
+import dayjs from 'dayjs'
 
 let runningBalance = 0
 export default {
@@ -392,6 +393,25 @@ export default {
         },
       }
       this.loading = false
+    },
+    async getReferrals() {
+      const res = await this.$http.get('api/admin/members', {
+        params: {
+          filter: {
+            upline_referral_id: this.resourceId,
+          },
+          fields: {
+            members: 'id,username,created_at',
+          },
+        },
+      })
+
+      this.referrals = res.data.data.map(member => ({
+        id: member.id,
+        username: member.username,
+        join_date: dayjs(member.created_at).format('DD MMM YYYY, hh:mm a'),
+        actions: '',
+      }))
     },
   },
 }
