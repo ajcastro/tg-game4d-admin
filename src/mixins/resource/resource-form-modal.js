@@ -8,7 +8,7 @@ export default {
   },
   data() {
     return {
-      closeOnSave: false,
+      closeOnSave: true,
       formDisabled: false,
       loading: false,
       form: {},
