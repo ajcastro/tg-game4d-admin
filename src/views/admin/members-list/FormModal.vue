@@ -155,6 +155,8 @@
         <b-table
           responsive="sm"
           :items="referrals"
+          show-empty
+          empty-text="No referrals"
         >
           <template #cell(actions)="data">
             <b-button size="sm">
