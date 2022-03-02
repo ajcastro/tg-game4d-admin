@@ -7,12 +7,21 @@
     ok-title="Done"
     size="xl"
     @hidden="resetForm()"
-    @show="(getResource(), getReferrals())"
   >
+    <!-- @show="getAllResourceData()" -->
     <b-breadcrumb
-      :items="[{text: 'john.doe'}, {text: 'peter.doe'}, { text: 'jane.smith', active: true}]"
       class="mb-1"
-    />
+    >
+      <b-breadcrumb-item
+        v-for="(item, index) in memberBreadcrumbs"
+        :key="item.id"
+        :active="item.active"
+        @click="selectFromMemberBreadcrumbs(index+1)"
+      >
+        {{ item.text }}
+      </b-breadcrumb-item>
+    </b-breadcrumb>
+    {{ memberBreadcrumbs }}
     <b-tabs
       content-class="pt-1"
       fill
@@ -159,7 +168,10 @@
           empty-text="No referrals"
         >
           <template #cell(actions)="data">
-            <b-button size="sm">
+            <b-button
+              size="sm"
+              @click="viewMember(data.item.id)"
+            >
               View
             </b-button>
           </template>
@@ -175,7 +187,7 @@
 import Ripple from 'vue-ripple-directive'
 import {
   BRow, BCol, BFormGroup, BFormInput, BForm, BButton,
-  BBreadcrumb,
+  BBreadcrumb, BBreadcrumbItem,
   BCard,
   BCardText,
   BTab, BTabs,
@@ -201,6 +213,7 @@ export default {
     BTable,
     BButton,
     BBreadcrumb,
+    BBreadcrumbItem,
 
     InputErrors,
   },
@@ -210,8 +223,11 @@ export default {
   mixins: [
     resourceFormModal,
   ],
+  props: {
+  },
   data() {
     return {
+      memberBreadcrumbs: [],
       formDisabled: false,
       loading: false,
       form: {
@@ -375,12 +391,28 @@ export default {
       ],
     }
   },
+  watch: {
+    resourceId() {
+      this.getAllResourceData()
+    },
+  },
   mounted() {
   },
   methods: {
+    resetForm() {
+      this.$emit('update:resource-id', null)
+      this.form = { ...this.formOriginal }
+      this.loading = false
+      this.errors = {}
+      this.memberBreadcrumbs = []
+    },
     getRunningBalance(item) {
       runningBalance += parseFloat(parseFloat(item.amount).toFixed(2))
       return runningBalance
+    },
+    getAllResourceData() {
+      this.getResource()
+      this.getReferrals()
     },
     async getResource() {
       if (!this.resourceId) return
@@ -395,6 +427,8 @@ export default {
         },
       }
       this.loading = false
+
+      this.addToMemberBreadcrumbs({ ...this.form })
     },
     async getReferrals() {
       const res = await this.$http.get('api/admin/members', {
@@ -414,6 +448,24 @@ export default {
         join_date: dayjs(member.created_at).format('DD MMM YYYY, hh:mm a'),
         actions: '',
       }))
+    },
+    selectFromMemberBreadcrumbs(index) {
+      this.memberBreadcrumbs.splice(index)
+      const item = this.memberBreadcrumbs.at(-1)
+      item.active = true
+      this.viewMember(item.id)
+    },
+    addToMemberBreadcrumbs(member) {
+      const exists = this.memberBreadcrumbs.map(i => i.id).includes(member.id)
+      if (exists) return
+      this.memberBreadcrumbs = this.memberBreadcrumbs.map(item => ({ ...item, active: false })).concat({
+        id: member.id,
+        text: member.username,
+        active: true,
+      })
+    },
+    viewMember(id) {
+      this.$emit('update:resource-id', id)
     },
   },
 }
