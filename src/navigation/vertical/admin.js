@@ -4,6 +4,16 @@ export default [
     icon: 'UsersIcon',
     children: [
       {
+        title: 'Users',
+        icon: 'MinusIcon',
+        route: 'users',
+      },
+      {
+        title: 'Roles',
+        icon: 'MinusIcon',
+        route: 'roles',
+      },
+      {
         title: 'Clients',
         icon: 'MinusIcon',
         route: 'clients',

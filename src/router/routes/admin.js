@@ -1,5 +1,15 @@
 export default [
   {
+    path: '/users',
+    name: 'users',
+    component: () => import('@/views/admin/users/List.vue'),
+  },
+  {
+    path: '/roles',
+    name: 'roles',
+    component: () => import('@/views/admin/users-roles/List.vue'),
+  },
+  {
     path: '/parent_groups',
     name: 'parent_groups',
     component: () => import('@/views/admin/parent_groups/List.vue'),

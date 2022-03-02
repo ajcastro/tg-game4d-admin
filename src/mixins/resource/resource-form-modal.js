@@ -8,6 +8,7 @@ export default {
   },
   data() {
     return {
+      closeOnSave: false,
       formDisabled: false,
       loading: false,
       form: {},
@@ -57,6 +58,9 @@ export default {
         this.$notifySuccess('Successfully Saved!')
         this.errors = {}
         this.$emit('save', res)
+        if (this.closeOnSave) {
+          this.$refs.bModal.hide()
+        }
       } catch (err) {
         if (!err.response) return
         if (err.response.status === 422) {
