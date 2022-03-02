@@ -103,6 +103,13 @@
               <span class="align-middle ml-50">Edit</span>
             </b-dropdown-item>
 
+            <b-dropdown-item
+              @click="$notifyError('Under construction')"
+            >
+              <feather-icon icon="CheckSquareIcon" />
+              <span class="align-middle ml-50">Set Permissions</span>
+            </b-dropdown-item>
+
             <!-- <b-dropdown-item @click="remove(data.item, data)">
               <feather-icon icon="TrashIcon" />
               <span class="align-middle ml-50">Delete</span>
