@@ -37,7 +37,7 @@
               <b-form-input
                 v-model="filter.search"
                 class="d-inline-block mr-1"
-                placeholder="Search by name or email..."
+                placeholder="Search by username or email..."
               />
               <b-button
                 variant="primary"
@@ -246,7 +246,7 @@ export default {
         },
         columns: [
           { key: 'id', sortable: true },
-          { key: 'name', sortable: true },
+          // { key: 'name', sortable: true },
           { key: 'username', sortable: true },
           { key: 'email', sortable: true },
           {
