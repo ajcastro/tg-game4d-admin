@@ -1,5 +1,6 @@
 <template>
   <div>
+    <role-list-filters v-model="filter" />
     <!-- Table Container Card -->
     <b-card
       no-body
@@ -214,6 +215,7 @@ import { makeTable } from '@/helpers/table'
 import resourceTable from '@/mixins/resource/resource-table'
 import dayjs from 'dayjs'
 import Role from '@/models/Role'
+import RoleListFilters from '@/components/RoleListFilters.vue'
 import FormModal from './FormModal.vue'
 
 export default {
@@ -228,9 +230,9 @@ export default {
     BDropdownItem,
     BPagination,
     BBadge,
-
     vSelect,
 
+    RoleListFilters,
     FormModal,
   },
   mixins: [
