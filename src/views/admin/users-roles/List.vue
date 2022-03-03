@@ -243,12 +243,18 @@ export default {
       ...makeTable({
         columns: [
           { key: 'id', sortable: true },
+          {
+            key: 'parent_group_code',
+            label: 'Parent Code',
+            sortable: true,
+            formatter: (value, key, item) => item.parent_group.code,
+          },
           { key: 'name', sortable: true },
           { key: 'is_active', sortable: true },
           {
-            key: 'created_at',
+            key: 'updated_by',
             sortable: true,
-            formatter: value => dayjs(value).format('DD MMM YYYY, hh:mm a'),
+            formatter: (value, key, item) => item.updated_by.name,
           },
           {
             key: 'updated_at',
@@ -262,7 +268,13 @@ export default {
   },
   methods: {
     fetchRowsParams() {
-      return {}
+      return {
+        include: 'updated_by,parent_group',
+        fields: {
+          updated_by: 'id,name',
+          parent_group: 'id,code',
+        },
+      }
     },
   },
 }

@@ -249,14 +249,14 @@ export default {
             formatter: (value, key, item) => item.created_by.name,
           },
           {
-            key: 'updated_by',
-            sortable: true,
-            formatter: (value, key, item) => item.updated_by.name,
-          },
-          {
             key: 'created_at',
             sortable: true,
             formatter: value => dayjs(value).format('DD MMM YYYY, hh:mm a'),
+          },
+          {
+            key: 'updated_by',
+            sortable: true,
+            formatter: (value, key, item) => item.updated_by.name,
           },
           {
             key: 'updated_at',
