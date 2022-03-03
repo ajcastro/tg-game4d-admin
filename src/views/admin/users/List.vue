@@ -241,6 +241,7 @@ export default {
       ...makeTable({
         filter: {
           search: '',
+          parent_group_id: this.$route.query['filter[parent_group_id]'] || null,
           role_id: null,
           is_active: null,
         },

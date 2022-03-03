@@ -82,6 +82,10 @@ export default {
     this.getParentGroupOptions()
   },
   methods: {
+    async reset() {
+      await this.$nextTick()
+      this.$emit('input', { ...this.originalFilters })
+    },
     async getParentGroupOptions() {
       const res = await this.$http.get('api/admin/parent_groups', { params: { paginate: false } })
       this.parentGroupOptions = res.data.data

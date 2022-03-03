@@ -9,7 +9,23 @@
       <b-row>
         <b-col
           cols="12"
-          md="4"
+          md="3"
+          class="mb-md-0 mb-2"
+        >
+          <label>Parent Code</label>
+          <v-select
+            :value="value.parent_group_id"
+            id-for="v-parent_group"
+            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+            label="code"
+            :options="parentGroupOptions"
+            :reduce="(item) => item.id"
+            @input="(val) => $emit('input', {...value, parent_group_id: val})"
+          />
+        </b-col>
+        <b-col
+          cols="12"
+          md="3"
           class="mb-md-0 mb-2"
         >
           <label>Role</label>
@@ -25,7 +41,7 @@
         </b-col>
         <b-col
           cols="12"
-          md="4"
+          md="3"
           class="mb-md-0 mb-2"
         >
           <label>Is Active</label>
@@ -40,7 +56,7 @@
         </b-col>
         <b-col
           cols="12"
-          md="4"
+          md="3"
           class="mb-md-0 mb-2"
         >
           <label> &nbsp; </label>
@@ -87,7 +103,10 @@ export default {
   },
   data() {
     return {
-      originalFilters: this.value,
+      originalFilters: {
+        parent_group_id: null, role_id: null, is_active: null, search: '',
+      },
+      parentGroupOptions: [],
       roleOptions: [],
       isActiveOptions: [
         {
@@ -105,14 +124,18 @@ export default {
   },
   mounted() {
     this.getRoleOptions()
+    this.getParentGroupOptions()
   },
   methods: {
+    async getParentGroupOptions() {
+      const res = await this.$http.get('api/admin/parent_groups', { params: { paginate: false } })
+      this.parentGroupOptions = res.data.data
+    },
     async getRoleOptions() {
       const res = await this.$http.get('api/admin/roles', { params: { paginate: false } })
       this.roleOptions = res.data.data
     },
     async reset() {
-      this.joinDateRange = null
       await this.$nextTick()
       this.$emit('input', { ...this.originalFilters })
     },
