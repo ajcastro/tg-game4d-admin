@@ -47,7 +47,7 @@ export default class JwtService {
           localStorage.removeItem('userData')
 
           // Redirect to login page
-          this.$router.push({ name: 'auth-login' })
+          // this.$router.push({ name: 'auth-login' }) // this is bug this.$router is not accessible
         }
 
         return Promise.reject(error)

@@ -47,7 +47,7 @@
             Please sign-in to your account and start the adventure
           </b-card-text>
 
-          <b-alert
+          <!-- <b-alert
             variant="primary"
             show
           >
@@ -66,7 +66,7 @@
               class="position-absolute"
               style="top: 10; right: 10;"
             />
-          </b-alert>
+          </b-alert> -->
 
           <!-- form -->
           <validation-observer
@@ -77,46 +77,46 @@
               class="auth-login-form mt-2"
               @submit.prevent="login"
             >
-              <!-- email -->
+              <!-- access group -->
               <b-form-group
-                label="Email"
-                label-for="login-email"
+                label="Access Group"
+                label-for="parent-group"
               >
                 <validation-provider
                   #default="{ errors }"
-                  name="email"
-                  vid="email"
-                  rules="required|email"
+                  name="access group"
+                  vid="parent-group"
+                  rules="required"
                 >
                   <b-form-input
-                    id="login-email"
-                    v-model.trim="userEmail"
+                    id="parent-group"
+                    v-model.trim="parentGroupCode"
                     :state="errors.length > 0 ? false:null"
-                    name="login-email"
-                    placeholder="Email"
+                    name="parent-group"
+                    placeholder="Access Group"
                     @input="invalidCredentials=false"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
 
-              <!-- parent group -->
+              <!-- username -->
               <b-form-group
-                label="Parent Group"
-                label-for="parent-group"
+                label="Username"
+                label-for="login-username"
               >
                 <validation-provider
                   #default="{ errors }"
-                  name="parent group"
-                  vid="parent-group"
+                  name="username"
+                  vid="username"
                   rules="required"
                 >
                   <b-form-input
-                    id="parent-group"
-                    v-model.trim="parentGroup"
+                    id="login-username"
+                    v-model.trim="username"
                     :state="errors.length > 0 ? false:null"
-                    name="parent-group"
-                    placeholder="Parent Group"
+                    name="login-username"
+                    placeholder="Username"
                     @input="invalidCredentials=false"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
@@ -208,7 +208,7 @@
           </div>
 
           <!-- social buttons -->
-          <div class="auth-footer-btn d-flex justify-content-center">
+          <!-- <div class="auth-footer-btn d-flex justify-content-center">
             <b-button
               variant="facebook"
               href="javascript:void(0)"
@@ -233,7 +233,7 @@
             >
               <feather-icon icon="GithubIcon" />
             </b-button>
-          </div>
+          </div> -->
         </b-col>
       </b-col>
     <!-- /Login-->
@@ -249,7 +249,7 @@ import {
   BRow, BCol, BLink, BFormGroup, BFormInput, BInputGroupAppend, BInputGroup, BFormCheckbox, BCardText, BCardTitle, BImg, BForm, BButton, BAlert, VBTooltip,
 } from 'bootstrap-vue'
 import useJwt from '@/auth/jwt/useJwt'
-import { required, email } from '@validations'
+import { required } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
 import { getHomeRouteForLoggedInUser } from '@/auth/utils'
@@ -283,15 +283,14 @@ export default {
   data() {
     return {
       status: '',
-      password: 'admin',
-      userEmail: 'admin@demo.com',
-      parentGroup: '1234',
+      username: 'admin',
+      password: 'password',
+      parentGroupCode: 'default',
       sideImg: require('@/assets/images/pages/login-v2.svg'),
       invalidCredentials: false,
 
       // validation rules
       required,
-      email,
     }
   },
   computed: {
@@ -312,7 +311,8 @@ export default {
       this.$refs.loginForm.validate().then(success => {
         if (success) {
           useJwt.login({
-            email: this.userEmail,
+            parent_group_code: this.parentGroupCode,
+            username: this.username,
             password: this.password,
           })
             .then(response => {
