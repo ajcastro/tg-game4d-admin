@@ -201,11 +201,11 @@
           </b-card-text>
 
           <!-- divider -->
-          <div class="divider my-2">
+          <!-- <div class="divider my-2">
             <div class="divider-text">
               or
             </div>
-          </div>
+          </div> -->
 
           <!-- social buttons -->
           <!-- <div class="auth-footer-btn d-flex justify-content-center">
