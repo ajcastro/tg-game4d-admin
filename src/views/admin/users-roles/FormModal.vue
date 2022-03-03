@@ -6,10 +6,29 @@
       hide-footer
       no-close-on-backdrop
       @hidden="resetForm()"
-      @show="getResource()"
+      @show="(getResource(), getParentGroupOptions())"
     >
       <b-form @submit.prevent="save">
         <b-row>
+          <!-- parent_group -->
+          <b-col cols="12">
+            <b-form-group
+              label="Parent Code"
+              label-for="v-parent_group"
+            >
+              <v-select
+                v-model="form.parent_group_id"
+                id-for="v-parent_group"
+                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+                label="code"
+                :options="parentGroupOptions"
+                :reduce="(item) => item.id"
+                @input="errors.parent_group_id = []"
+              />
+              <input-errors :errors="errors.parent_group_id" />
+            </b-form-group>
+          </b-col>
+
           <!-- name -->
           <b-col cols="12">
             <b-form-group
@@ -60,6 +79,7 @@ import {
 import Role from '@/models/Role'
 import InputErrors from '@/components/InputErrors.vue'
 import resourceFormModal from '@/mixins/resource/resource-form-modal'
+import vSelect from 'vue-select'
 
 export default {
   components: {
@@ -70,6 +90,7 @@ export default {
     BForm,
     BButton,
     BSpinner,
+    vSelect,
 
     InputErrors,
   },
@@ -86,7 +107,15 @@ export default {
       form: {},
       errors: {},
       model: Role,
+
+      parentGroupOptions: [],
     }
+  },
+  methods: {
+    async getParentGroupOptions() {
+      const res = await this.$http.get('api/admin/parent_groups', { params: { paginate: false } })
+      this.parentGroupOptions = res.data.data
+    },
   },
 }
 </script>
