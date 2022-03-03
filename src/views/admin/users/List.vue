@@ -247,7 +247,14 @@ export default {
         columns: [
           { key: 'id', sortable: true },
           { key: 'name', sortable: true },
+          { key: 'username', sortable: true },
           { key: 'email', sortable: true },
+          {
+            key: 'parent_group_code',
+            label: 'Parent Code',
+            sortable: true,
+            formatter: (value, key, item) => item.parent_group.code,
+          },
           {
             key: 'role',
             sortable: true,
@@ -282,10 +289,13 @@ export default {
   methods: {
     fetchRowsParams() {
       return {
-        include: 'role,created_by,updated_by',
-        'fields[role]': 'id,name',
-        'fields[created_by]': 'id,name',
-        'fields[updated_by]': 'id,name',
+        include: 'role,created_by,updated_by,parent_group',
+        fields: {
+          role: 'id,name',
+          created_by: 'id,name',
+          updated_by: 'id,name',
+          parent_group: 'id,code',
+        },
       }
     },
   },

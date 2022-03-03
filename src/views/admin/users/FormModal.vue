@@ -6,7 +6,7 @@
       hide-footer
       no-close-on-backdrop
       @hidden="resetForm()"
-      @show="(getResource(), getRoleOptions())"
+      @show="(getResource(), getRoleOptions(), getParentGroupOptions())"
     >
       <b-form @submit.prevent="save">
         <b-row>
@@ -23,6 +23,22 @@
                 @input="errors.name = []"
               />
               <input-errors :errors="errors.name" />
+            </b-form-group>
+          </b-col>
+
+          <!-- username -->
+          <b-col cols="12">
+            <b-form-group
+              label="Username"
+              label-for="v-username"
+            >
+              <b-form-input
+                id="v-username"
+                v-model="form.username"
+                :state="null"
+                @input="errors.username = []"
+              />
+              <input-errors :errors="errors.username" />
             </b-form-group>
           </b-col>
 
@@ -59,6 +75,25 @@
                 @input="errors.role_id = []"
               />
               <input-errors :errors="errors.role_id" />
+            </b-form-group>
+          </b-col>
+
+          <!-- parent_group -->
+          <b-col cols="12">
+            <b-form-group
+              label="Parent Code"
+              label-for="v-parent_group"
+            >
+              <v-select
+                v-model="form.parent_group_id"
+                id-for="v-parent_group"
+                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+                label="code"
+                :options="parentGroupOptions"
+                :reduce="(item) => item.id"
+                @input="errors.parent_group_id = []"
+              />
+              <input-errors :errors="errors.parent_group_id" />
             </b-form-group>
           </b-col>
 
@@ -161,12 +196,17 @@ export default {
       model: User,
 
       roleOptions: [],
+      parentGroupOptions: [],
     }
   },
   methods: {
     async getRoleOptions() {
       const res = await this.$http.get('api/admin/roles', { params: { paginate: false } })
       this.roleOptions = res.data.data
+    },
+    async getParentGroupOptions() {
+      const res = await this.$http.get('api/admin/parent_groups', { params: { paginate: false } })
+      this.parentGroupOptions = res.data.data
     },
   },
 }
