@@ -105,7 +105,7 @@
             </b-dropdown-item>
 
             <b-dropdown-item
-              @click="$notifyError('Under construction')"
+              @click="setPermission(data.item)"
             >
               <feather-icon icon="CheckSquareIcon" />
               <span class="align-middle ml-50">Set Permissions</span>
@@ -193,6 +193,10 @@
       :resource-id.sync="resourceId"
       @save="$refs.resourceTable.refresh()"
     />
+
+    <set-permissions-modal
+      ref="setPermissionModal"
+    />
   </div>
 </template>
 
@@ -217,6 +221,7 @@ import dayjs from 'dayjs'
 import Role from '@/models/Role'
 import RoleListFilters from '@/components/RoleListFilters.vue'
 import FormModal from './FormModal.vue'
+import SetPermissionsModal from './SetPermissionsModal.vue'
 
 export default {
   components: {
@@ -234,6 +239,7 @@ export default {
 
     RoleListFilters,
     FormModal,
+    SetPermissionsModal,
   },
   mixins: [
     resourceTable,
@@ -277,6 +283,10 @@ export default {
           parent_group: 'id,code',
         },
       }
+    },
+    setPermission(role) {
+      this.$refs.setPermissionModal.setRole(role)
+      this.$refs.setPermissionModal.$refs.bModal.show()
     },
   },
 }
