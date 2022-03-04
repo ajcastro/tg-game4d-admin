@@ -10,6 +10,24 @@ export default [
     component: () => import('@/views/admin/users-roles/List.vue'),
   },
   {
+    path: '/roles/:id/set_permissions',
+    name: 'roles.set_permissions',
+    component: () => import('@/views/admin/users-roles/SetPermissions.vue'),
+    meta: {
+      pageTitle: 'Set Permissions',
+      breadcrumb: [
+        {
+          text: 'Roles',
+          to: '/roles',
+        },
+        {
+          text: 'Set Permissions',
+          active: true,
+        },
+      ],
+    },
+  },
+  {
     path: '/parent_groups',
     name: 'parent_groups',
     component: () => import('@/views/admin/parent_groups/List.vue'),

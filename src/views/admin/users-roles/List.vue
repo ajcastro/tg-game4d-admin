@@ -195,6 +195,7 @@
       @created="setPermission($event)"
     />
 
+    <!-- TODO: For removal, in favor of SetPermissions.vue page -->
     <set-permissions-modal
       ref="setPermissionModal"
     />
@@ -286,8 +287,7 @@ export default {
       }
     },
     setPermission(role) {
-      this.$refs.setPermissionModal.setRole(role)
-      this.$refs.setPermissionModal.$refs.bModal.show()
+      this.$router.push({ name: 'roles.set_permissions', params: { id: role.id } })
     },
   },
 }
