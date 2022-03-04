@@ -192,6 +192,7 @@
       ref="formModal"
       :resource-id.sync="resourceId"
       @save="$refs.resourceTable.refresh()"
+      @created="setPermission($event)"
     />
 
     <set-permissions-modal

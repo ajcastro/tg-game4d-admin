@@ -61,6 +61,9 @@ export default {
         if (this.closeOnSave) {
           this.$refs.bModal.hide()
         }
+        if (this.isCreating) {
+          this.$emit('created', res)
+        }
       } catch (err) {
         if (!err.response) return
         if (err.response.status === 422) {
