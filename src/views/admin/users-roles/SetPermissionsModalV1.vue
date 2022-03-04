@@ -4,7 +4,7 @@
       ref="bModal"
       :title="`Set Permissions for ${role.name} (${(role.parent_group||{}).code})`"
       hide-footer
-      size="xl"
+      size="md"
       no-close-on-backdrop
       @hidden="reset()"
       @show="getAllRequiredData()"
@@ -34,8 +34,6 @@
           <b-row>
             <b-col class="font-weight-bolder">
               {{ groupDisplay }}
-              -
-              {{ countSelectedPermissionsPerGroup(groupDisplay) }} / {{ countPermissionsPerGroup(groupDisplay) }}
             </b-col>
             <b-col class="text-right">
               <b-button
@@ -107,7 +105,6 @@ import {
 import groupBy from 'lodash/groupBy'
 import isEqual from 'lodash/isEqual'
 import difference from 'lodash/difference'
-import intersection from 'lodash/intersection'
 
 export default {
   components: {
@@ -144,18 +141,14 @@ export default {
     setRole(role) {
       this.role = role
     },
-    getPermissionsOfGroup(group) {
-      return (this.groupedPermissions[group] || [])
-    },
     isAllSelectedGroup(group) {
-      const permissions = this.getPermissionsOfGroup(group)
+      const permissions = this.groupedPermissions[group] || []
       const diff = difference(permissions.map(i => i.id), this.selectedPermissions)
 
       return diff.length === 0
     },
-
     toggleSelectAllGroup(group) {
-      const permissionIds = this.getPermissionsOfGroup(group).map(i => i.id)
+      const permissionIds = (this.groupedPermissions[group] || []).map(i => i.id)
       if (this.isAllSelectedGroup(group)) {
         this.selectedPermissions = this.selectedPermissions.filter(id => !permissionIds.includes(id))
       } else {
@@ -164,15 +157,6 @@ export default {
           ...permissionIds,
         ]
       }
-    },
-    countPermissionsPerGroup(group) {
-      return this.getPermissionsOfGroup(group).length
-    },
-    countSelectedPermissionsPerGroup(group) {
-      const permissions = this.getPermissionsOfGroup(group)
-      const intersect = intersection(permissions.map(i => i.id), this.selectedPermissions)
-
-      return intersect.length
     },
     toggleSelectAll() {
       if (this.isAllSelected) {
