@@ -114,6 +114,13 @@
             </template>
 
             <b-dropdown-item
+              @click="cancel(data.item)"
+            >
+              <feather-icon icon="XCircleIcon" />
+              <span class="align-middle ml-50">Cancel Deposit</span>
+            </b-dropdown-item>
+
+            <b-dropdown-item
               @click="enterRemarks(data.item)"
             >
               <feather-icon icon="Edit2Icon" />
@@ -321,6 +328,14 @@ export default {
       if (status === 1) return 'Approved'
       if (status === 2) return 'Rejected'
       return ''
+    },
+    async cancel(item) {
+      const confirmed = await this.$confirm('Are you to sure to cancel this deposit?')
+      if (!confirmed) return
+
+      // this.$notifySuccess('Successfully Cancelled Deposit!')
+      this.$notifyInfo('What happens to cancelled deposits, where should it go?')
+      this.$refs.resourceTable.refresh()
     },
   },
 }
