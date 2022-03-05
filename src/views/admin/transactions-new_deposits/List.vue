@@ -114,56 +114,26 @@
             </template>
 
             <b-dropdown-item
-              @click="view(data.item, data)"
+              @click="approve(data.item)"
             >
-              <feather-icon icon="EyeIcon" />
-              <span class="align-middle ml-50">View Detail</span>
+              <feather-icon icon="CheckIcon" />
+              <span class="align-middle ml-50">Approve</span>
             </b-dropdown-item>
 
             <b-dropdown-item
-              v-if="data.item.warning_status == 0"
-              @click="suspend(data.item, data)"
-            >
-              <feather-icon icon="AlertCircleIcon" />
-              <span class="align-middle ml-50">Suspend</span>
-            </b-dropdown-item>
-
-            <b-dropdown-item
-              v-if="data.item.warning_status === 1"
-              @click="removeSuspension(data.item, data)"
-            >
-              <feather-icon icon="RotateCcwIcon" />
-              <span class="align-middle ml-50">Remove Suspension</span>
-            </b-dropdown-item>
-
-            <b-dropdown-item
-              v-if="data.item.warning_status != 2"
-              @click="blacklist(data.item, data)"
+              @click="reject(data.item)"
             >
               <feather-icon icon="XIcon" />
-              <span class="align-middle ml-50">Blacklist</span>
-            </b-dropdown-item>
-
-            <!-- <b-dropdown-item @click="remove(data.item, data)">
-              <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">Delete</span>
-            </b-dropdown-item> -->
-
-            <!-- <b-dropdown-item
-              v-if="!data.item.is_active"
-              @click="setActive(data.item, true)"
-            >
-              <feather-icon icon="CheckSquareIcon" />
-              <span class="align-middle ml-50">Set Active</span>
+              <span class="align-middle ml-50">Reject</span>
             </b-dropdown-item>
 
             <b-dropdown-item
-              v-if="data.item.is_active"
-              @click="setActive(data.item, false)"
+              @click="enterRemarks(data.item)"
             >
-              <feather-icon icon="XSquareIcon" />
-              <span class="align-middle ml-50">Set Inactive</span>
-            </b-dropdown-item> -->
+              <feather-icon icon="Edit2Icon" />
+              <span class="align-middle ml-50">Enter Remarks</span>
+            </b-dropdown-item>
+
           </b-dropdown>
         </template>
       </b-table>
@@ -227,8 +197,8 @@
       @save="$refs.resourceTable.refresh()"
     />
 
-    <ask-reason
-      ref="askReason"
+    <ask-for-remarks
+      ref="askForRemarks"
     />
   </div>
 </template>
@@ -252,8 +222,9 @@ import { makeTable } from '@/helpers/table'
 import resourceTable from '@/mixins/resource/resource-table'
 import dayjs from 'dayjs'
 import MemberTransaction from '@/models/MemberTransaction'
-import AskReason from '@/components/AskReason.vue'
+import AskForRemarks from '@/components/AskForRemarks.vue'
 import confirm from '@/mixins/confirm'
+import newTransactions from '@/mixins/transactions/new-transactions'
 import MemberTransactionNewFilters from '@/components/MemberTransactionNewFilters.vue'
 import FormModal from './FormModal.vue'
 
@@ -271,11 +242,12 @@ export default {
     BBadge,
     vSelect,
     FormModal,
-    AskReason,
+    AskForRemarks,
     MemberTransactionNewFilters,
   },
   mixins: [
     confirm,
+    newTransactions,
     resourceTable,
   ],
   data() {
