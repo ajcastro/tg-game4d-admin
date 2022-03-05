@@ -16,10 +16,17 @@ export default {
 
       const resource = (new this.model()).resource()
 
+      const fetchRowParams = this.fetchRowsParams(ctx)
+      const ctxParams = ctxToParams(ctx)
+
       const res = await this.$http.get(`/api/admin/${resource}`, {
         params: {
-          ...this.fetchRowsParams(ctx),
-          ...ctxToParams(ctx),
+          ...fetchRowParams,
+          ...ctxParams,
+          filter: {
+            ...fetchRowParams.filter,
+            ...ctxParams.filter,
+          },
         },
       })
 
