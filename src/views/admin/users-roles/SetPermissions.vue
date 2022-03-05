@@ -1,5 +1,7 @@
 <template>
-  <div class="mb-4">
+  <div
+    class="mb-4 col-md-6 mx-auto"
+  >
     <h5 v-if="role.id">
       Set Permissions for {{ role.name }} ({{ (role.parent_group||{}).code }})
     </h5>
