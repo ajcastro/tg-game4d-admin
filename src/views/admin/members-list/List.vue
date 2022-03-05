@@ -365,7 +365,7 @@ export default {
       this.$refs.askReason.setLoading(true)
       await this.$http.post(`/api/admin/members/${item.id}/suspend`, { reason })
       this.$refs.askReason.setLoading(false)
-      this.$refs.askReason.hide(false)
+      this.$refs.askReason.hide()
       this.$notifySuccess('Member has been suspended.')
       this.$refs.resourceTable.refresh()
     },
@@ -382,7 +382,7 @@ export default {
       this.$refs.askReason.setLoading(true)
       await this.$http.post(`/api/admin/members/${item.id}/blacklist`, { reason })
       this.$refs.askReason.setLoading(false)
-      this.$refs.askReason.hide(false)
+      this.$refs.askReason.hide()
       this.$notifySuccess('Member has been blacklisted.')
       this.$refs.resourceTable.refresh()
     },
