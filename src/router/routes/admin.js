@@ -67,4 +67,9 @@ export default [
     name: 'transactions.new_deposits',
     component: () => import('@/views/admin/transactions-new_deposits/List.vue'),
   },
+  {
+    path: '/transactions/new_withdrawals',
+    name: 'transactions.new_withdrawals',
+    component: () => import('@/views/admin/transactions-new_withdrawals/List.vue'),
+  },
 ]
