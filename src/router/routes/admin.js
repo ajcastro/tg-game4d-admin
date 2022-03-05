@@ -72,4 +72,14 @@ export default [
     name: 'transactions.new_withdrawals',
     component: () => import('@/views/admin/transactions-new_withdrawals/List.vue'),
   },
+  {
+    path: '/transactions/deposit_list',
+    name: 'transactions.deposit_list',
+    component: () => import('@/views/admin/transactions-deposit_list/List.vue'),
+  },
+  {
+    path: '/transactions/withdrawal_list',
+    name: 'transactions.withdrawal_list',
+    component: () => import('@/views/admin/transactions-withdrawal_list/List.vue'),
+  },
 ]
