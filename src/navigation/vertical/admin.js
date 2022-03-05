@@ -57,4 +57,35 @@ export default [
       },
     ],
   },
+  {
+    title: 'Transactions',
+    icon: 'BookOpenIcon',
+    children: [
+      {
+        title: 'New Deposits',
+        icon: 'MinusIcon',
+        route: 'transactions.new_deposits',
+      },
+      {
+        title: 'Deposit List',
+        icon: 'MinusIcon',
+        route: 'transactions.deposit_list',
+      },
+      {
+        title: 'New Withdrawals',
+        icon: 'MinusIcon',
+        route: 'transactions.new_withdrawals',
+      },
+      {
+        title: 'Withdrawal List',
+        icon: 'MinusIcon',
+        route: 'transactions.withdrawal_list',
+      },
+      {
+        title: 'Adjustments',
+        icon: 'MinusIcon',
+        route: 'transactions.adjustments',
+      },
+    ],
+  },
 ]

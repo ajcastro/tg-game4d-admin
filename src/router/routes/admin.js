@@ -62,4 +62,9 @@ export default [
     name: 'members.blacklist',
     component: () => import('@/views/admin/members-blacklist/List.vue'),
   },
+  {
+    path: '/transactions/new_deposits',
+    name: 'transactions.new_deposits',
+    component: () => import('@/views/admin/transactions-new_deposits/List.vue'),
+  },
 ]
