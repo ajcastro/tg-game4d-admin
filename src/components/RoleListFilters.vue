@@ -25,6 +25,21 @@
         </b-col>
         <b-col
           cols="12"
+          md="3"
+          class="mb-md-0 mb-2"
+        >
+          <label>Is Active</label>
+          <v-select
+            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+            :value="value.is_active"
+            :options="isActiveOptions"
+            :reduce="val => val.value"
+            class="w-100"
+            @input="(val) => $emit('input', {...value, is_active: val})"
+          />
+        </b-col>
+        <b-col
+          cols="12"
           md="4"
           class="mb-md-0 mb-2"
         >
@@ -74,6 +89,16 @@ export default {
     return {
       originalFilters: this.value,
       parentGroupOptions: [],
+      isActiveOptions: [
+        {
+          value: 0,
+          label: 'Inactive',
+        },
+        {
+          value: 1,
+          label: 'Active',
+        },
+      ],
     }
   },
   computed: {
