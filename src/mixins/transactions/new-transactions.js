@@ -1,5 +1,10 @@
 /* eslint-disable new-cap */
+import enterRemarks from './enter-remarks'
+
 export default {
+  mixins: [
+    enterRemarks,
+  ],
   methods: {
     async approve(item) {
       const confirmed = await this.$confirm('Are you sure to approve this transaction?')
@@ -15,15 +20,6 @@ export default {
 
       await this.$http.post(`api/admin/member_transactions/${item.id}/reject`)
       this.$notifySuccess('Successfully Approved!')
-      this.$refs.resourceTable.refresh()
-    },
-    async enterRemarks(item) {
-      const remarks = await this.$refs.askForRemarks.ask(item.remarks)
-      this.$refs.askForRemarks.setLoading(true)
-      await this.$http.post(`api/admin/member_transactions/${item.id}/enter_remarks`, { remarks })
-      this.$refs.askForRemarks.setLoading(false)
-      this.$refs.askForRemarks.hide()
-      this.$notifySuccess('Remarks has been saved.')
       this.$refs.resourceTable.refresh()
     },
   },
