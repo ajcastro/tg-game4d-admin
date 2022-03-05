@@ -19,7 +19,7 @@ export default {
       if (!confirmed) return
 
       await this.$http.post(`api/admin/member_transactions/${item.id}/reject`)
-      this.$notifySuccess('Successfully Approved!')
+      this.$notifySuccess('Successfully Rejected!')
       this.$refs.resourceTable.refresh()
     },
   },
