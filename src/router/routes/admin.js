@@ -82,4 +82,9 @@ export default [
     name: 'transactions.withdrawal_list',
     component: () => import('@/views/admin/transactions-withdrawal_list/List.vue'),
   },
+  {
+    path: '/transactions/adjustments',
+    name: 'transactions.adjustments',
+    component: () => import('@/views/admin/transactions-adjustments/List.vue'),
+  },
 ]
