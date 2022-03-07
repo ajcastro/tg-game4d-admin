@@ -48,12 +48,12 @@
               >
                 <feather-icon icon="FilterIcon" />
               </b-button> -->
-              <!-- <b-button
+              <b-button
                 variant="primary"
                 @click="add()"
               >
-                <span class="text-nowrap">Add Parent Group</span>
-              </b-button> -->
+                <span class="text-nowrap">Export</span>
+              </b-button>
             </div>
           </b-col>
         </b-row>
@@ -304,6 +304,9 @@ export default {
     }
   },
   methods: {
+    add() {
+      this.$notifyError('Under construction')
+    },
     fetchRowsParams(ctx) {
       return {
         include: 'website,member,approved_by',
