@@ -26,7 +26,7 @@
     <b-navbar-nav class="nav align-items-center ml-auto">
       <!-- <locale /> -->
       <dark-Toggler class="d-none d-lg-block" />
-      <!-- <search-bar /> -->
+      <search-bar />
       <!-- <cart-dropdown /> -->
       <notification-dropdown />
       <user-dropdown />
@@ -40,7 +40,7 @@ import {
 } from 'bootstrap-vue'
 // import Bookmarks from './components/Bookmarks.vue'
 // import Locale from './components/Locale.vue'
-// import SearchBar from './components/SearchBar.vue'
+import SearchBar from './components/SearchBar.vue'
 import DarkToggler from './components/DarkToggler.vue'
 // import CartDropdown from './components/CartDropdown.vue'
 import NotificationDropdown from './components/NotificationDropdown.vue'
@@ -54,7 +54,7 @@ export default {
     BNavbarNav,
     // Bookmarks,
     // Locale,
-    // SearchBar,
+    SearchBar,
     DarkToggler,
     // CartDropdown,
     NotificationDropdown,
