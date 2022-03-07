@@ -12,7 +12,7 @@
           md="4"
           class="mb-md-0 mb-2"
         >
-          <label>Branch</label>
+          <label>Website</label>
           <v-select
             :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
             :value="value.website_id"
