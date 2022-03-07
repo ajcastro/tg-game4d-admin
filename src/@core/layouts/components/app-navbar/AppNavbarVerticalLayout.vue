@@ -17,8 +17,8 @@
     </ul>
 
     <!-- Left Col -->
-    <div class="bookmark-wrapper align-items-center flex-grow-1 d-none d-lg-flex">
-
+    <div class="bookmark-wrapper align-items-center flex-grow-1">
+      <website-selector />
       <!-- Bookmarks Container -->
       <!-- <bookmarks /> -->
     </div>
@@ -40,6 +40,7 @@ import {
 } from 'bootstrap-vue'
 // import Bookmarks from './components/Bookmarks.vue'
 // import Locale from './components/Locale.vue'
+import WebsiteSelector from '@/components/WebsiteSelector.vue'
 import SearchBar from './components/SearchBar.vue'
 import DarkToggler from './components/DarkToggler.vue'
 // import CartDropdown from './components/CartDropdown.vue'
@@ -59,6 +60,8 @@ export default {
     // CartDropdown,
     NotificationDropdown,
     UserDropdown,
+
+    WebsiteSelector,
   },
   props: {
     toggleVerticalMenuActive: {

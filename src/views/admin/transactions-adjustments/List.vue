@@ -308,6 +308,11 @@ export default {
       }),
     }
   },
+  mounted() {
+    this.$root.$on('selected-website', () => {
+      this.$refs.resourceTable.refresh()
+    })
+  },
   methods: {
     add() {
       this.$notifyError('Under construction')

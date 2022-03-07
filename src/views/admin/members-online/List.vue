@@ -284,6 +284,11 @@ export default {
       }),
     }
   },
+  mounted() {
+    this.$root.$on('selected-website', () => {
+      this.$refs.resourceTable.refresh()
+    })
+  },
   methods: {
     fetchRowsParams() {
       return {

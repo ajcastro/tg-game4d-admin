@@ -343,6 +343,11 @@ export default {
       }),
     }
   },
+  mounted() {
+    this.$root.$on('selected-website', () => {
+      this.$refs.resourceTable.refresh()
+    })
+  },
   methods: {
     fetchRowsParams(ctx) {
       console.log('🚀 ~ file: List.vue ~ line 340 ~ fetchRowsParams ~ ctx', ctx)
