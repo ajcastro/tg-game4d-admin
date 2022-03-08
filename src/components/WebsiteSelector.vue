@@ -61,7 +61,8 @@ export default {
 
 .website-selector.vs--single .vs__selected,
 .website-selector.vs--single .vs__actions .vs__clear svg,
-.website-selector.vs--single .vs__search::placeholder {
+.website-selector.vs--single .vs__search::placeholder,
+.dark-layout .website-selector.v-select.vs--single .vs__selected {
   color: #ffffff !important;
 }
 </style>
