@@ -255,6 +255,8 @@ export default {
       model: MemberTransaction,
       showFilter: true,
       ...makeTable({
+        sortDesc: false,
+        sortBy: 'ticket_id',
         filter: {
           search: '',
         },
