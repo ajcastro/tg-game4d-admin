@@ -35,27 +35,38 @@
               label-for="v-member_id"
               busy
             >
-              <div
-                v-if="loadingMembers"
-                class="d-flex align-items-center"
+              <template
+                v-if="!hasSelectedWebsite"
               >
-                Loading...
-                <b-spinner
-                  class="ml-auto"
-                  small
+                <div
+                  class="d-flex align-items-center text-danger"
+                >
+                  Please select a website first...
+                </div>
+              </template>
+              <template v-else>
+                <div
+                  v-if="loadingMembers"
+                  class="d-flex align-items-center"
+                >
+                  Loading...
+                  <b-spinner
+                    class="ml-auto"
+                    small
+                  />
+                </div>
+                <v-select
+                  v-else
+                  v-model="form.member_id"
+                  id-for="v-member_id"
+                  :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+                  :options="memberOptions"
+                  :reduce="(item) => item.id"
+                  label="username"
+                  @input="errors.member_id = []"
                 />
-              </div>
-              <v-select
-                v-else
-                v-model="form.member_id"
-                id-for="v-member_id"
-                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                :options="memberOptions"
-                :reduce="(item) => item.id"
-                label="username"
-                @input="errors.member_id = []"
-              />
-              <input-errors :errors="errors.member_id" />
+                <input-errors :errors="errors.member_id" />
+              </template>
             </b-form-group>
           </b-col>
 
@@ -127,6 +138,7 @@ import MemberTransaction from '@/models/MemberTransaction'
 import InputErrors from '@/components/InputErrors.vue'
 import resourceFormModal from '@/mixins/resource/resource-form-modal'
 import vSelect from 'vue-select'
+import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -163,6 +175,14 @@ export default {
       loadingMembers: false,
       memberOptions: [],
     }
+  },
+  computed: {
+    ...mapState({
+      selectedWebsiteId: state => state.websiteSelector.selectedWebsiteId,
+    }),
+    hasSelectedWebsite() {
+      return !!this.selectedWebsiteId
+    },
   },
   methods: {
     async getMembers() {
