@@ -7,21 +7,6 @@
     </b-card-header>
     <b-card-body>
       <b-row>
-        <b-col
-          cols="12"
-          md="4"
-          class="mb-md-0 mb-2"
-        >
-          <label>Website</label>
-          <v-select
-            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-            :value="value.website_id"
-            :options="websiteOptions"
-            class="w-100"
-            label="code"
-            :reduce="val => val.id"
-            @input="(val) => $emit('input', {...value, website_id: val})"
-          />
         </b-col>
         <b-col
           cols="12"
