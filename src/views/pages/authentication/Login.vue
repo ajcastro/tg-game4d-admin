@@ -16,7 +16,9 @@
       <b-col
         lg="8"
         class="d-none d-lg-flex align-items-center p-5"
+        style="background-color: rgb(63 53 64);"
       >
+        <!--  -->
         <div class="w-100 d-lg-flex align-items-center justify-content-center px-5">
           <b-img
             fluid
@@ -289,7 +291,7 @@ export default {
       username: 'admin',
       password: 'password',
       parentGroupCode: 'default',
-      sideImg: require('@/assets/images/pages/login-v2.svg'),
+      sideImg: require('@/assets/images/pages/login-tg.jpg'),
       invalidCredentials: false,
 
       // validation rules
@@ -303,7 +305,7 @@ export default {
     imgUrl() {
       if (store.state.appConfig.layout.skin === 'dark') {
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.sideImg = require('@/assets/images/pages/login-v2-dark.svg')
+        this.sideImg = require('@/assets/images/pages/login-tg.jpg')
         return this.sideImg
       }
       return this.sideImg
