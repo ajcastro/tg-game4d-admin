@@ -267,7 +267,7 @@ export default {
           search: '',
         },
         columns: [
-          { key: 'id', sortable: true },
+          { key: 'ticket_id', sortable: true },
           {
             key: 'website',
             sortable: true,
@@ -319,6 +319,7 @@ export default {
     },
     fetchRowsParams(ctx) {
       return {
+        append: 'ticket_id',
         include: 'website,member,approved_by',
         fields: {
           website: 'id,code',

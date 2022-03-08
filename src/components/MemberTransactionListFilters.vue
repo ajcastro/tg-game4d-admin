@@ -28,6 +28,18 @@
           md="4"
           class="mb-md-0 mb-2"
         >
+          <label>Ticket ID</label>
+          <b-form-input
+            :value="value.ticket_id"
+            placeholder="D0001-0000001"
+            @input="(val) => $emit('input', {...value, ticket_id: val})"
+          />
+        </b-col>
+        <b-col
+          cols="12"
+          md="4"
+          class="mb-md-0 mb-2"
+        >
           <label>Created Date</label>
           <flat-pickr
             v-model="dateRange"
@@ -73,7 +85,7 @@
 
 <script>
 import {
-  BCard, BCardHeader, BCardBody, BRow, BCol, BButton,
+  BCard, BCardHeader, BCardBody, BRow, BCol, BButton, BFormInput,
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
 import dayjs from 'dayjs'
@@ -87,6 +99,7 @@ export default {
     BCardHeader,
     BCardBody,
     BButton,
+    BFormInput,
     vSelect,
     flatPickr,
   },
