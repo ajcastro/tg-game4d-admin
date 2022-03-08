@@ -346,8 +346,6 @@ export default {
       const confirmed = await this.$confirm('Are you sure to approve this transaction?')
       if (!confirmed) return
 
-      this.$notifyInfo('TODO: Show modal window to select Company Bank (Bank Origin).')
-
       await this.$http.post(`api/admin/member_transactions/${item.id}/approve`)
       this.$notifySuccess('Successfully Approved!')
       this.$refs.resourceTable.refresh()
