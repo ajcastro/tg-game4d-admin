@@ -38,6 +38,11 @@ export default {
       this.loading = false
       this.errors = {}
     },
+    close() {
+      if (this.$refs.bModal) {
+        this.$refs.bModal.hide()
+      }
+    },
     async getResource() {
       if (!this.resourceId) return
 
@@ -59,7 +64,7 @@ export default {
         this.errors = {}
         this.$emit('save', res)
         if (this.closeOnSave) {
-          this.$refs.bModal.hide()
+          this.close()
         }
         if (this.isCreating) {
           this.$emit('created', res)

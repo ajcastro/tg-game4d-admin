@@ -6,7 +6,7 @@
       hide-footer
       no-close-on-backdrop
       @hidden="resetForm()"
-      @show="(getResource(), getWebsites())"
+      @show="(getResource(), getMembers())"
     >
       <b-form @submit.prevent="save">
         <b-row>
@@ -25,25 +25,6 @@
                 @input="errors.type = []"
               />
               <input-errors :errors="errors.type" />
-            </b-form-group>
-          </b-col>
-
-          <!-- website_id -->
-          <b-col cols="12">
-            <b-form-group
-              label="Website"
-              label-for="v-website_id"
-            >
-              <v-select
-                v-model="form.website_id"
-                id-for="v-website_id"
-                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                :options="websiteOptions"
-                :reduce="(item) => item.id"
-                label="code"
-                @input="(errors.website_id = [], getMembers($event))"
-              />
-              <input-errors :errors="errors.website_id" />
             </b-form-group>
           </b-col>
 
@@ -75,81 +56,6 @@
                 @input="errors.member_id = []"
               />
               <input-errors :errors="errors.member_id" />
-            </b-form-group>
-          </b-col>
-
-          <!-- account_code -->
-          <b-col cols="12">
-            <b-form-group
-              label="Account Code"
-              label-for="v-account_code"
-            >
-              <b-form-input
-                id="v-account_code"
-                v-model="form.account_code"
-                :state="null"
-              />
-              <input-errors :errors="errors.account_code" />
-            </b-form-group>
-          </b-col>
-
-          <!-- account_name -->
-          <b-col cols="12">
-            <b-form-group
-              label="Account Name"
-              label-for="v-account_name"
-            >
-              <b-form-input
-                id="v-account_name"
-                v-model="form.account_name"
-                :state="null"
-              />
-              <input-errors :errors="errors.account_name" />
-            </b-form-group>
-          </b-col>
-
-          <!-- account_number -->
-          <b-col cols="12">
-            <b-form-group
-              label="Account Number"
-              label-for="v-account_number"
-            >
-              <b-form-input
-                id="v-account_number"
-                v-model="form.account_number"
-                :state="null"
-              />
-              <input-errors :errors="errors.account_number" />
-            </b-form-group>
-          </b-col>
-
-          <!-- company_bank -->
-          <b-col cols="12">
-            <b-form-group
-              label="Company Bank"
-              label-for="v-company_bank"
-            >
-              <b-form-input
-                id="v-company_bank"
-                v-model="form.company_bank"
-                :state="null"
-              />
-              <input-errors :errors="errors.company_bank" />
-            </b-form-group>
-          </b-col>
-
-          <!-- company_bank_factor -->
-          <b-col cols="12">
-            <b-form-group
-              label="Company Bank Rate"
-              label-for="v-company_bank_factor"
-            >
-              <b-form-input
-                id="v-company_bank_factor"
-                v-model="form.company_bank_factor"
-                :state="null"
-              />
-              <input-errors :errors="errors.company_bank_factor" />
             </b-form-group>
           </b-col>
 
@@ -247,6 +153,8 @@ export default {
       loading: false,
       form: {
         is_adjustment: true,
+        company_bank: 'None',
+        company_bank_factor: 1,
       },
       errors: {},
       model: MemberTransaction,
@@ -257,11 +165,7 @@ export default {
     }
   },
   methods: {
-    async getWebsites() {
-      const res = await this.$http.get('api/admin/websites', { params: { paginate: false } })
-      this.websiteOptions = res.data.data
-    },
-    async getMembers(website_id) {
+    async getMembers() {
       this.memberOptions = []
       this.loadingMembers = true
       this.form = { ...this.form, member_id: null }
@@ -270,9 +174,6 @@ export default {
           paginate: false,
           fields: {
             members: 'id,username',
-          },
-          filter: {
-            website_id,
           },
         },
       })
