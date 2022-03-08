@@ -24,15 +24,16 @@
               class="navbar-brand"
               to="/"
             >
-              <span class="brand-logo">
+              <!-- <span class="brand-logo">
                 <b-img
                   :src="appLogoImage"
                   alt="logo"
                 />
-              </span>
-              <h2 class="brand-text">
+              </span> -->
+              <!-- <h2 class="brand-text">
                 {{ appName }}
-              </h2>
+              </h2> -->
+              <app-name />
             </b-link>
           </li>
 
@@ -87,6 +88,7 @@ import { BLink, BImg } from 'bootstrap-vue'
 import { provide, computed, ref } from '@vue/composition-api'
 import useAppConfig from '@core/app-config/useAppConfig'
 import { $themeConfig } from '@themeConfig'
+import AppName from '@/components/AppName.vue'
 import VerticalNavMenuItems from './components/vertical-nav-menu-items/VerticalNavMenuItems.vue'
 import useVerticalNavMenu from './useVerticalNavMenu'
 
@@ -96,6 +98,7 @@ export default {
     VerticalNavMenuItems,
     BLink,
     BImg,
+    AppName,
   },
   props: {
     isVerticalMenuActive: {

@@ -4,10 +4,11 @@
 
       <!-- Brand logo-->
       <b-link class="brand-logo">
-        <vuexy-logo />
+        <!-- <vuexy-logo />
         <h2 class="brand-text text-primary ml-1">
           Vuexy
-        </h2>
+        </h2> -->
+        <app-name />
       </b-link>
       <!-- /Brand logo-->
 
@@ -41,10 +42,10 @@
             class="mb-1 font-weight-bold"
             title-tag="h2"
           >
-            Welcome to Vuexy! 👋
+            Welcome to TeleGaming! 👋
           </b-card-title>
           <b-card-text class="mb-2">
-            Please sign-in to your account and start the adventure
+            Please sign-in to your account.
           </b-card-text>
 
           <!-- <b-alert
@@ -244,17 +245,18 @@
 <script>
 /* eslint-disable global-require */
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
-import VuexyLogo from '@core/layouts/components/Logo.vue'
+// import VuexyLogo from '@core/layouts/components/Logo.vue'
 import {
-  BRow, BCol, BLink, BFormGroup, BFormInput, BInputGroupAppend, BInputGroup, BFormCheckbox, BCardText, BCardTitle, BImg, BForm, BButton, BAlert, VBTooltip,
+  BRow, BCol, BLink, BFormGroup, BFormInput, BInputGroupAppend, BInputGroup, BCardText, BCardTitle, BImg, BForm, BButton, VBTooltip,
+  // BAlert, BFormCheckbox,
 } from 'bootstrap-vue'
 import useJwt from '@/auth/jwt/useJwt'
 import { required } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
 import { getHomeRouteForLoggedInUser } from '@/auth/utils'
-
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import AppName from '@/components/AppName.vue'
 
 export default {
   directives: {
@@ -268,14 +270,15 @@ export default {
     BFormInput,
     BInputGroupAppend,
     BInputGroup,
-    BFormCheckbox,
+    // BFormCheckbox,
     BCardText,
     BCardTitle,
     BImg,
     BForm,
     BButton,
-    BAlert,
-    VuexyLogo,
+    // BAlert,
+    AppName,
+    // VuexyLogo,
     ValidationProvider,
     ValidationObserver,
   },

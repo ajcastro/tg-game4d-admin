@@ -26,7 +26,7 @@
     <b-navbar-nav class="nav align-items-center ml-auto">
       <!-- <locale /> -->
       <dark-Toggler class="d-none d-lg-block" />
-      <search-bar />
+      <search-bar v-if="isLocal" />
       <!-- <cart-dropdown /> -->
       <notification-dropdown />
       <user-dropdown />
@@ -67,6 +67,11 @@ export default {
     toggleVerticalMenuActive: {
       type: Function,
       default: () => {},
+    },
+  },
+  computed: {
+    isLocal() {
+      return process.env.NODE_ENV !== 'production'
     },
   },
 }
