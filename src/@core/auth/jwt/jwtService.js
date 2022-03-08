@@ -1,4 +1,6 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable class-methods-use-this */
+import router from '@/router'
 import jwtDefaultConfig from './jwtDefaultConfig'
 
 export default class JwtService {
@@ -47,7 +49,7 @@ export default class JwtService {
           localStorage.removeItem('userData')
 
           // Redirect to login page
-          // this.$router.push({ name: 'auth-login' }) // this is bug this.$router is not accessible
+          router.push({ name: 'auth-login' })
         }
 
         return Promise.reject(error)

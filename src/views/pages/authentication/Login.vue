@@ -290,7 +290,7 @@ export default {
       status: '',
       username: 'admin',
       password: 'password',
-      parentGroupCode: 'default',
+      parentGroupCode: '',
       sideImg: require('@/assets/images/pages/login-tg.jpg'),
       invalidCredentials: false,
 
