@@ -41,13 +41,13 @@
                 class="d-inline-block mr-1"
                 placeholder="Search by username, email or phone number..."
               />
-              <b-button
+              <!-- <b-button
                 variant="primary"
                 class="btn-icon"
                 @click="showFilter = !showFilter"
               >
                 <feather-icon icon="FilterIcon" />
-              </b-button>
+              </b-button> -->
               <!-- <b-button
                 variant="primary"
                 @click="add()"

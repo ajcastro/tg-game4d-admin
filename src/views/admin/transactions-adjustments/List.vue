@@ -314,9 +314,6 @@ export default {
     })
   },
   methods: {
-    add() {
-      this.$notifyError('Under construction')
-    },
     fetchRowsParams(ctx) {
       return {
         append: 'ticket_id',
