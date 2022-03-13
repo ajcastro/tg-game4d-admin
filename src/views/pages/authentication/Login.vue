@@ -289,7 +289,7 @@ export default {
     return {
       status: '',
       parentGroupCode: 'spvadmin',
-      username: 'spvadmin',
+      username: 'adm_master',
       password: 'password',
       sideImg: require('@/assets/images/pages/login-tg.jpg'),
       invalidCredentials: false,
