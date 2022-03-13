@@ -44,7 +44,7 @@
       md="3"
       cols="12"
     >
-      <b-dropdown
+      <!-- <b-dropdown
         variant="link"
         no-caret
         toggle-class="p-0"
@@ -92,7 +92,7 @@
           />
           <span class="align-middle ml-50">Calendar</span>
         </b-dropdown-item>
-      </b-dropdown>
+      </b-dropdown> -->
     </b-col>
   </b-row>
 </template>
