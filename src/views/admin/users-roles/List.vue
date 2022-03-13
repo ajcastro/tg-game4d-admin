@@ -252,7 +252,6 @@ export default {
       model: Role,
       ...makeTable({
         columns: [
-          { key: 'id', sortable: true },
           {
             key: 'parent_group_code',
             label: 'Parent Code',

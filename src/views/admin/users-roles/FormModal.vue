@@ -23,6 +23,7 @@
                 label="code"
                 :options="parentGroupOptions"
                 :reduce="(item) => item.id"
+                :disabled="!isCreating"
                 @input="errors.parent_group_id = []"
               />
               <input-errors :errors="errors.parent_group_id" />
