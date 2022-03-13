@@ -112,7 +112,12 @@ export default {
       this.$emit('input', { ...this.originalFilters })
     },
     async getParentGroupOptions() {
-      const res = await this.$http.get('api/admin/parent_groups', { params: { paginate: false } })
+      const res = await this.$http.get('api/admin/parent_groups', {
+        params: {
+          paginate: false,
+          filter: { accessible_by_me: true },
+        },
+      })
       this.parentGroupOptions = res.data.data
     },
   },
