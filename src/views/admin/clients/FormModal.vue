@@ -20,6 +20,7 @@
                 id="v-code"
                 v-model="form.code"
                 :state="null"
+                :disabled="!isCreating"
               />
               <input-errors :errors="errors.code" />
             </b-form-group>

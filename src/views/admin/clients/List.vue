@@ -108,7 +108,7 @@
               <span class="align-middle ml-50">Delete</span>
             </b-dropdown-item> -->
 
-            <b-dropdown-item
+            <!-- <b-dropdown-item
               v-if="!data.item.is_active"
               @click="setActive(data.item, true)"
             >
@@ -122,7 +122,7 @@
             >
               <feather-icon icon="XSquareIcon" />
               <span class="align-middle ml-50">Set Inactive</span>
-            </b-dropdown-item>
+            </b-dropdown-item> -->
           </b-dropdown>
         </template>
       </b-table>
