@@ -202,7 +202,6 @@ export default {
           warning_status: null,
         },
         columns: [
-          { key: 'id', sortable: true },
           {
             key: 'created_at',
             label: 'Join Date',

@@ -290,7 +290,6 @@ export default {
           warning_status: null,
         },
         columns: [
-          { key: 'id', sortable: true },
           {
             key: 'website',
             sortable: true,

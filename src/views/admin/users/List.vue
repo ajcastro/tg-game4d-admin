@@ -246,7 +246,6 @@ export default {
           is_active: null,
         },
         columns: [
-          { key: 'id', sortable: true },
           // { key: 'name', sortable: true },
           { key: 'username', sortable: true },
           { key: 'email', sortable: true },
