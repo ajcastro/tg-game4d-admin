@@ -288,9 +288,9 @@ export default {
   data() {
     return {
       status: '',
-      username: 'admin',
+      parentGroupCode: 'spvadmin',
+      username: 'spvadmin',
       password: 'password',
-      parentGroupCode: '',
       sideImg: require('@/assets/images/pages/login-tg.jpg'),
       invalidCredentials: false,
 
