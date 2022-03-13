@@ -246,7 +246,7 @@ export default {
           is_active: null,
         },
         columns: [
-          // { key: 'name', sortable: true },
+          { key: 'actions' },
           { key: 'username', sortable: true },
           { key: 'email', sortable: true },
           {
@@ -281,7 +281,6 @@ export default {
             sortable: true,
             formatter: value => dayjs(value).format('DD MMM YYYY, hh:mm a'),
           },
-          { key: 'actions' },
         ],
       }),
     }

@@ -234,6 +234,7 @@ export default {
       model: Website,
       ...makeTable({
         columns: [
+          { key: 'actions' },
           { key: 'code', sortable: true },
           {
             key: 'assigned_client',
@@ -264,7 +265,6 @@ export default {
             sortable: true,
             formatter: value => dayjs(value).format('DD MMM YYYY, hh:mm a'),
           },
-          { key: 'actions' },
         ],
       }),
     }

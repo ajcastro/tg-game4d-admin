@@ -223,6 +223,7 @@ export default {
           warning_status: null,
         },
         columns: [
+          { key: 'actions' },
           {
             key: 'website',
             sortable: true,
@@ -277,8 +278,6 @@ export default {
             sortable: false,
             formatter: (value, key, item) => dayjs(item.active_log.login_date).fromNow(true),
           },
-
-          { key: 'actions' },
         ],
       }),
     }

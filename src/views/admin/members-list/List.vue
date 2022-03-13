@@ -290,6 +290,7 @@ export default {
           warning_status: null,
         },
         columns: [
+          { key: 'actions' },
           {
             key: 'website',
             sortable: true,
@@ -337,7 +338,6 @@ export default {
             sortable: true,
             formatter: (value, key, item) => item.warning_status_display,
           },
-          { key: 'actions' },
         ],
       }),
     }

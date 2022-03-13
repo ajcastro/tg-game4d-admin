@@ -262,6 +262,7 @@ export default {
           search: '',
         },
         columns: [
+          { key: 'actions' },
           { key: 'ticket_id', sortable: true },
           {
             key: 'website',
@@ -294,7 +295,6 @@ export default {
             formatter: value => dayjs(value).format('DD MMM YYYY, hh:mm a'),
           },
           { key: 'remarks', sortable: false },
-          { key: 'actions' },
         ],
       }),
     }

@@ -252,6 +252,7 @@ export default {
       model: Role,
       ...makeTable({
         columns: [
+          { key: 'actions' },
           {
             key: 'parent_group_code',
             label: 'Parent Code',
@@ -270,7 +271,6 @@ export default {
             sortable: true,
             formatter: value => dayjs(value).format('DD MMM YYYY, hh:mm a'),
           },
-          { key: 'actions' },
         ],
       }),
     }

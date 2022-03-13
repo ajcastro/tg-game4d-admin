@@ -269,6 +269,7 @@ export default {
           search: '',
         },
         columns: [
+          { key: 'actions' },
           { key: 'ticket_id', sortable: true },
           {
             key: 'website',
@@ -305,7 +306,6 @@ export default {
           },
           { key: 'remarks', sortable: false },
           { key: 'status', sortable: true },
-          { key: 'actions' },
         ],
       }),
     }

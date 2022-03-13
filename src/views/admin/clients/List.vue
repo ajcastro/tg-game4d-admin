@@ -235,6 +235,7 @@ export default {
       model: Client,
       ...makeTable({
         columns: [
+          { key: 'actions' },
           { key: 'code', sortable: true },
           { key: 'remarks', sortable: false },
           { key: 'percentage_share', sortable: true },
@@ -259,7 +260,6 @@ export default {
             sortable: true,
             formatter: value => dayjs(value).format('DD MMM YYYY, hh:mm a'),
           },
-          { key: 'actions' },
         ],
       }),
     }
