@@ -96,12 +96,12 @@
               <span class="align-middle ml-50">Details</span>
             </b-dropdown-item> -->
 
-            <b-dropdown-item
+            <!-- <b-dropdown-item
               @click="edit(data.item, data)"
             >
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">Edit</span>
-            </b-dropdown-item>
+            </b-dropdown-item> -->
 
             <b-dropdown-item
               :to="{
@@ -113,6 +113,27 @@
             >
               <feather-icon icon="UsersIcon" />
               <span class="align-middle ml-50">View Users</span>
+            </b-dropdown-item>
+
+            <b-dropdown-item>
+              <feather-icon icon="EyeIcon" />
+              <span class="align-middle ml-50">View Website</span>
+            </b-dropdown-item>
+
+            <b-dropdown-item
+              v-if="!data.item.is_active"
+              @click="setActive(data.item, true)"
+            >
+              <feather-icon icon="CheckSquareIcon" />
+              <span class="align-middle ml-50">Set Active</span>
+            </b-dropdown-item>
+
+            <b-dropdown-item
+              v-if="data.item.is_active"
+              @click="setActive(data.item, false)"
+            >
+              <feather-icon icon="XSquareIcon" />
+              <span class="align-middle ml-50">Set Inactive</span>
             </b-dropdown-item>
 
             <!-- <b-dropdown-item @click="remove(data.item, data)">
@@ -247,14 +268,9 @@ export default {
       model: ParentGroup,
       ...makeTable({
         columns: [
-          { key: 'id', sortable: true },
           { key: 'code', sortable: true },
-          {
-            key: 'client',
-            sortable: true,
-            formatter: (value, key, item) => item.client.code,
-          },
           { key: 'remarks', sortable: false },
+          { key: 'is_active', sortable: true },
           {
             key: 'created_by',
             sortable: true,
@@ -283,8 +299,7 @@ export default {
   methods: {
     fetchRowsParams() {
       return {
-        include: 'client,created_by,updated_by',
-        'fields[client]': 'id,code',
+        include: 'created_by,updated_by',
         'fields[created_by]': 'id,name',
         'fields[updated_by]': 'id,name',
       }

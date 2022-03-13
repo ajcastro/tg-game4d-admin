@@ -235,7 +235,6 @@ export default {
       model: Client,
       ...makeTable({
         columns: [
-          { key: 'id', sortable: true },
           { key: 'code', sortable: true },
           { key: 'remarks', sortable: false },
           { key: 'percentage_share', sortable: true },

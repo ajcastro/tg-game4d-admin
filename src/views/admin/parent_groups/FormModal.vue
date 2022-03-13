@@ -25,24 +25,6 @@
             </b-form-group>
           </b-col>
 
-          <!-- client -->
-          <b-col cols="12">
-            <b-form-group
-              label="Assigned Client"
-              label-for="v-client"
-            >
-              <v-select
-                v-model="form.client_id"
-                id-for="v-client"
-                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-                label="title"
-                :options="clientOptions"
-                :reduce="(item) => item.id"
-              />
-              <input-errors :errors="errors.client_id" />
-            </b-form-group>
-          </b-col>
-
           <!-- remarks -->
           <b-col cols="12">
             <b-form-group

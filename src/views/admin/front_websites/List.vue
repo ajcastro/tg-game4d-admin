@@ -234,7 +234,6 @@ export default {
       model: Website,
       ...makeTable({
         columns: [
-          { key: 'id', sortable: true },
           { key: 'code', sortable: true },
           {
             key: 'assigned_client',
