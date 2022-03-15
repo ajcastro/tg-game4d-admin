@@ -106,6 +106,13 @@
               <span class="align-middle ml-50">Edit</span>
             </b-dropdown-item>
 
+            <b-dropdown-item
+              @click="$refs.manageParentGroupModal.setUser(data.item).open()"
+            >
+              <feather-icon icon="ListIcon" />
+              <span class="align-middle ml-50">Manage Parent Groups</span>
+            </b-dropdown-item>
+
             <!-- <b-dropdown-item @click="remove(data.item, data)">
               <feather-icon icon="TrashIcon" />
               <span class="align-middle ml-50">Delete</span>
@@ -187,7 +194,10 @@
       ref="formModal"
       :resource-id.sync="resourceId"
       @save="$refs.resourceTable.refresh()"
+      @created="$refs.manageParentGroupModal.setUser($event).open()"
     />
+
+    <manage-parent-group-modal ref="manageParentGroupModal" />
   </div>
 </template>
 
@@ -207,11 +217,12 @@ import {
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
 import { makeTable } from '@/helpers/table'
-import UserListFilters from '@/components/UserListFilters'
+import UserListFilters from '@/components/UserListFilters.vue'
 import resourceTable from '@/mixins/resource/resource-table'
 import dayjs from 'dayjs'
 import User from '@/models/User'
 import FormModal from './FormModal.vue'
+import ManageParentGroupModal from './components/ManageParentGroupModal.vue'
 
 export default {
   components: {
@@ -230,6 +241,7 @@ export default {
 
     FormModal,
     UserListFilters,
+    ManageParentGroupModal,
   },
   mixins: [
     resourceTable,
@@ -242,24 +254,12 @@ export default {
         filter: {
           search: '',
           parent_group_id: this.$route.query['filter[parent_group_id]'] || null,
-          role_id: null,
           is_active: null,
         },
         columns: [
           { key: 'actions' },
           { key: 'username', sortable: true },
           { key: 'email', sortable: true },
-          {
-            key: 'parent_group_code',
-            label: 'Parent Code',
-            sortable: true,
-            formatter: (value, key, item) => item.parent_group.code,
-          },
-          {
-            key: 'role',
-            sortable: true,
-            formatter: (value, key, item) => item.role.name,
-          },
           { key: 'is_active', sortable: true },
           {
             key: 'created_by',
@@ -293,12 +293,10 @@ export default {
   methods: {
     fetchRowsParams() {
       return {
-        include: 'role,created_by,updated_by,parent_group',
+        include: 'created_by,updated_by',
         fields: {
-          role: 'id,name',
           created_by: 'id,name',
           updated_by: 'id,name',
-          parent_group: 'id,code',
         },
       }
     },
