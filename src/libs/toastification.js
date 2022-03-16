@@ -30,7 +30,7 @@ function $notify(message, props) {
 }
 
 function flatten422Messsage(error) {
-  const message = Object.values(error.response.data.errors).join(' <br> ')
+  const message = Object.values(error.response.data.errors).join(' ')
   return message
 }
 
@@ -49,7 +49,10 @@ Vue.prototype.$notifyInfo = (message, props) => {
 }
 
 Vue.prototype.$notifyError422 = (error, props) => {
-  if (error.response.status === 422) {
+  if (error.response && error.response.status === 422) {
     $notify(flatten422Messsage(error), { ...props, variant: 'danger', icon: 'XIcon' })
+    return true
   }
+
+  return false
 }
