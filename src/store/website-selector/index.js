@@ -25,9 +25,7 @@ export default {
     async getWebsites({ commit }) {
       const { data } = await axios.get('api/admin/websites', {
         params: {
-          filter: {
-            accessible_by_me: true,
-          },
+          filter: {},
           paginate: false,
         },
       })
