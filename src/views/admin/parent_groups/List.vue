@@ -89,35 +89,19 @@
                 class="align-middle text-body"
               />
             </template>
-            <!-- <b-dropdown-item
-              :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
-            >
-              <feather-icon icon="FileTextIcon" />
-              <span class="align-middle ml-50">Details</span>
-            </b-dropdown-item> -->
-
-            <!-- <b-dropdown-item
-              @click="edit(data.item, data)"
-            >
-              <feather-icon icon="EditIcon" />
-              <span class="align-middle ml-50">Edit</span>
-            </b-dropdown-item> -->
 
             <b-dropdown-item
-              :to="{
-                name: 'users',
-                query: {
-                  'filter[parent_group_id]': data.item.id
-                }
-              }"
+              @click="$refs.viewUsersModal.setParentGroup(data.item).open()"
             >
               <feather-icon icon="UsersIcon" />
               <span class="align-middle ml-50">View Users</span>
             </b-dropdown-item>
 
-            <b-dropdown-item>
+            <b-dropdown-item
+              @click="$refs.viewWebsitesModal.setParentGroup(data.item).open()"
+            >
               <feather-icon icon="EyeIcon" />
-              <span class="align-middle ml-50">View Website</span>
+              <span class="align-middle ml-50">View Websites</span>
             </b-dropdown-item>
 
             <b-dropdown-item
@@ -218,6 +202,9 @@
       :resource-id.sync="resourceId"
       @save="$refs.resourceTable.refresh()"
     />
+
+    <view-users-modal ref="viewUsersModal" />
+    <view-websites-modal ref="viewWebsitesModal" />
   </div>
 </template>
 
@@ -241,6 +228,8 @@ import resourceTable from '@/mixins/resource/resource-table'
 import dayjs from 'dayjs'
 import ParentGroup from '@/models/ParentGroup'
 import FormModal from './FormModal.vue'
+import ViewUsersModal from './components/ViewUsersModal.vue'
+import ViewWebsitesModal from './components/ViewWebsitesModal.vue'
 
 export default {
   components: {
@@ -258,6 +247,8 @@ export default {
     vSelect,
 
     FormModal,
+    ViewUsersModal,
+    ViewWebsitesModal,
   },
   mixins: [
     resourceTable,

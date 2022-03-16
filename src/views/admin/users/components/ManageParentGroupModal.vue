@@ -10,11 +10,11 @@
       @show="(getUserParentGroups(), getRoleOptions(), getParentGroupOptions())"
     >
       <template>
-        <b-row class="mb-2">
+        <b-row>
           <b-col
             cols="12"
             md="3"
-            class="mb-md-0 mb-2"
+            class="mb-md-2 mb-2"
           >
             <label> &nbsp; </label>
             <div>
