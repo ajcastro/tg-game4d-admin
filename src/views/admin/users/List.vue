@@ -110,7 +110,7 @@
               @click="$refs.manageParentGroupModal.setUser(data.item).open()"
             >
               <feather-icon icon="ListIcon" />
-              <span class="align-middle ml-50">Manage Parent Groups</span>
+              <span class="align-middle ml-50">Set Access Code and Roles</span>
             </b-dropdown-item>
 
             <!-- <b-dropdown-item @click="remove(data.item, data)">

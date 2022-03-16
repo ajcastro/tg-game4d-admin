@@ -2,7 +2,7 @@
   <div>
     <b-modal
       ref="bModal"
-      :title="'Manage Parent Groups for '+(user||{}).username"
+      :title="'Set Access Code and Roles for '+(user||{}).username"
       hide-footer
       no-close-on-backdrop
       size="lg"
