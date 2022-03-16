@@ -9,7 +9,7 @@
         <p class="user-name font-weight-bolder mb-0">
           {{ userData.fullName || userData.username }}
         </p>
-        <span class="user-status">{{ userData.role }}</span>
+        <span class="user-status">{{ userData.username }}</span>
       </div>
       <b-avatar
         size="40"
