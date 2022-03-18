@@ -1,6 +1,6 @@
 export default [
   {
-    title: 'User Management',
+    title: 'Users Management',
     icon: 'UsersIcon',
     children: [
       {
@@ -32,7 +32,7 @@ export default [
   },
 
   {
-    title: 'Member',
+    title: 'Members',
     icon: 'Share2Icon',
     children: [
       {

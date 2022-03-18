@@ -11,6 +11,16 @@
       </b-col>
       <b-col class="text-right">
         <b-button
+          v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+          type="a"
+          variant="secondary"
+          class="mr-1"
+          size="sm"
+          :to="{name: 'roles'}"
+        >
+          Go Back to Roles
+        </b-button>
+        <b-button
           variant="primary"
           size="sm"
           class=""
@@ -176,7 +186,7 @@ export default {
       return Promise.resolve({})
     },
     async getAllPermissions() {
-      const res = await this.$http.get('api/admin/permissions', { params: { paginate: false, append: 'group,group_display' } })
+      const res = await this.$http.get('api/admin/permissions', { params: { paginate: false } })
       this.permissions = [...res.data.data]
       this.groupedPermissions = groupBy(res.data.data, 'group_display')
       return Promise.resolve({})
