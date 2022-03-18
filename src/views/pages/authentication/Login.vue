@@ -182,8 +182,13 @@
                 type="submit"
                 variant="primary"
                 block
-                :disabled="invalid"
+                :disabled="invalid || loggingIn"
               >
+                <b-spinner
+                  v-if="loggingIn"
+                  small
+                  class="mr-1"
+                />
                 Sign in
               </b-button>
               <small
@@ -249,7 +254,7 @@
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 // import VuexyLogo from '@core/layouts/components/Logo.vue'
 import {
-  BRow, BCol, BLink, BFormGroup, BFormInput, BInputGroupAppend, BInputGroup, BCardText, BCardTitle, BImg, BForm, BButton, VBTooltip,
+  BRow, BCol, BLink, BFormGroup, BFormInput, BInputGroupAppend, BInputGroup, BCardText, BCardTitle, BImg, BForm, BButton, VBTooltip, BSpinner,
   // BAlert, BFormCheckbox,
 } from 'bootstrap-vue'
 import useJwt from '@/auth/jwt/useJwt'
@@ -278,6 +283,7 @@ export default {
     BImg,
     BForm,
     BButton,
+    BSpinner,
     // BAlert,
     AppName,
     // VuexyLogo,
@@ -293,6 +299,7 @@ export default {
       password: 'password',
       sideImg: require('@/assets/images/pages/login-tg.jpg'),
       invalidCredentials: false,
+      loggingIn: false,
 
       // validation rules
       required,
@@ -315,6 +322,7 @@ export default {
     login() {
       this.$refs.loginForm.validate().then(success => {
         if (success) {
+          this.loggingIn = true
           useJwt.login({
             parent_group_code: this.parentGroupCode,
             username: this.username,
@@ -332,7 +340,7 @@ export default {
               // this.$store.commit('app-ecommerce/UPDATE_CART_ITEMS_COUNT', userData.extras.eCommerceCartItemsCount)
 
               // ? This is just for demo purpose. Don't think CASL is role based in this case, we used role in if condition just for ease
-              this.$router.replace(getHomeRouteForLoggedInUser(userData.role))
+              this.$router.replace(userData.admin_redirect || '/')
                 .then(() => {
                   this.$toast({
                     component: ToastificationContent,
@@ -353,6 +361,8 @@ export default {
               } else {
                 throw error
               }
+            }).finally(() => {
+              this.loggingIn = false
             })
         }
       })
