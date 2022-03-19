@@ -114,6 +114,7 @@
             </template>
 
             <b-dropdown-item
+              v-if="$can('approve_new_deposits', 'MemberTransaction')"
               @click="approve(data.item)"
             >
               <feather-icon icon="CheckIcon" />
@@ -121,6 +122,7 @@
             </b-dropdown-item>
 
             <b-dropdown-item
+              v-if="$can('reject_new_deposits', 'MemberTransaction')"
               @click="reject(data.item)"
             >
               <feather-icon icon="XIcon" />
@@ -128,6 +130,7 @@
             </b-dropdown-item>
 
             <b-dropdown-item
+              v-if="$can('enter_remarks_new_deposits', 'MemberTransaction')"
               @click="enterRemarks(data.item)"
             >
               <feather-icon icon="Edit2Icon" />

@@ -114,6 +114,7 @@
             </template>
 
             <b-dropdown-item
+              v-if="$can('cancel_deposit_list', 'MemberTransaction')"
               @click="cancel(data.item)"
             >
               <feather-icon icon="XCircleIcon" />
@@ -121,6 +122,7 @@
             </b-dropdown-item>
 
             <b-dropdown-item
+              v-if="$can('enter_remarks_deposit_list', 'MemberTransaction')"
               @click="enterRemarks(data.item)"
             >
               <feather-icon icon="Edit2Icon" />

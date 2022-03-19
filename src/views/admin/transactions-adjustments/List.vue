@@ -49,6 +49,7 @@
                 <feather-icon icon="FilterIcon" />
               </b-button> -->
               <b-button
+                v-if="$can('create_adjustments', 'MemberTransaction')"
                 variant="primary"
                 @click="add()"
               >
@@ -119,7 +120,7 @@
             </template>
 
             <b-dropdown-item
-              v-if="data.item.status === 0"
+              v-if="data.item.status === 0 && $can('approve_adjustments', 'MemberTransaction')"
               @click="approve(data.item)"
             >
               <feather-icon icon="CheckIcon" />
@@ -127,7 +128,7 @@
             </b-dropdown-item>
 
             <b-dropdown-item
-              v-if="data.item.status === 0"
+              v-if="data.item.status === 0 && $can('reject_adjustments', 'MemberTransaction')"
               @click="reject(data.item)"
             >
               <feather-icon icon="XIcon" />
@@ -135,6 +136,7 @@
             </b-dropdown-item>
 
             <b-dropdown-item
+              v-if="$can('enter_remarks_adjustments', 'MemberTransaction')"
               @click="enterRemarks(data.item)"
             >
               <feather-icon icon="Edit2Icon" />

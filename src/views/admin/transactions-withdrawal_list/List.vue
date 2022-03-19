@@ -114,6 +114,15 @@
             </template>
 
             <b-dropdown-item
+              v-if="$can('cancel_withdrawal_list', 'MemberTransaction')"
+              @click="cancel(data.item)"
+            >
+              <feather-icon icon="XCircleIcon" />
+              <span class="align-middle ml-50">Cancel Withdrawal</span>
+            </b-dropdown-item>
+
+            <b-dropdown-item
+              v-if="$can('enter_remarks_withdrawal_list', 'MemberTransaction')"
               @click="enterRemarks(data.item)"
             >
               <feather-icon icon="Edit2Icon" />
@@ -322,6 +331,14 @@ export default {
           is_adjustment: 0,
         },
       }
+    },
+    async cancel(item) {
+      const confirmed = await this.$confirm('Are you to sure to cancel this deposit?')
+      if (!confirmed) return
+
+      // this.$notifySuccess('Successfully Cancelled Deposit!')
+      this.$notifyInfo('What happens to cancelled deposits, where should it go?')
+      this.$refs.resourceTable.refresh()
     },
     resolveStatusVariant(status) {
       if (status === 1) return 'success'
