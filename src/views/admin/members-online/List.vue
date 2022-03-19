@@ -41,6 +41,7 @@
                 placeholder="Search by username, email or phone number..."
               />
               <b-button
+                v-if="$can('kick_all_members', 'Member')"
                 variant="danger"
                 @click="kickAll()"
               >
@@ -93,6 +94,7 @@
         <!-- Column: Actions -->
         <template #cell(actions)="data">
           <b-button
+            v-if="$can('kick_member', 'Member')"
             size="sm"
             variant="danger"
             @click="kick(data.item)"

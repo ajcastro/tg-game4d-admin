@@ -114,6 +114,7 @@
             </template>
 
             <b-dropdown-item
+              v-if="$can('view_detail', 'Member')"
               @click="view(data.item, data)"
             >
               <feather-icon icon="EyeIcon" />
@@ -121,7 +122,7 @@
             </b-dropdown-item>
 
             <b-dropdown-item
-              v-if="data.item.warning_status == 0"
+              v-if="data.item.warning_status == 0 && $can('suspend', 'Member')"
               @click="suspend(data.item, data)"
             >
               <feather-icon icon="AlertCircleIcon" />
@@ -129,7 +130,7 @@
             </b-dropdown-item>
 
             <b-dropdown-item
-              v-if="data.item.warning_status === 1"
+              v-if="data.item.warning_status === 1 && $can('remove_suspension', 'Member')"
               @click="removeSuspension(data.item, data)"
             >
               <feather-icon icon="RotateCcwIcon" />
@@ -137,33 +138,13 @@
             </b-dropdown-item>
 
             <b-dropdown-item
-              v-if="data.item.warning_status != 2"
+              v-if="data.item.warning_status != 2 && $can('blacklist', 'Member')"
               @click="blacklist(data.item, data)"
             >
               <feather-icon icon="XIcon" />
               <span class="align-middle ml-50">Blacklist</span>
             </b-dropdown-item>
 
-            <!-- <b-dropdown-item @click="remove(data.item, data)">
-              <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">Delete</span>
-            </b-dropdown-item> -->
-
-            <!-- <b-dropdown-item
-              v-if="!data.item.is_active"
-              @click="setActive(data.item, true)"
-            >
-              <feather-icon icon="CheckSquareIcon" />
-              <span class="align-middle ml-50">Set Active</span>
-            </b-dropdown-item>
-
-            <b-dropdown-item
-              v-if="data.item.is_active"
-              @click="setActive(data.item, false)"
-            >
-              <feather-icon icon="XSquareIcon" />
-              <span class="align-middle ml-50">Set Inactive</span>
-            </b-dropdown-item> -->
           </b-dropdown>
         </template>
       </b-table>
@@ -240,7 +221,6 @@ import {
   BRow,
   BCol,
   BFormInput,
-  BButton,
   BTable,
   BDropdown,
   BDropdownItem,
@@ -263,7 +243,6 @@ export default {
     BRow,
     BCol,
     BFormInput,
-    BButton,
     BTable,
     BDropdown,
     BDropdownItem,
