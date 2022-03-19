@@ -20,6 +20,7 @@
                 id="v-name"
                 v-model="form.name"
                 :state="null"
+                :readonly="!canSave"
                 @input="errors.name = []"
               />
               <input-errors :errors="errors.name" />
@@ -36,6 +37,7 @@
                 id="v-username"
                 v-model="form.username"
                 :state="null"
+                :readonly="!canSave"
                 @input="errors.username = []"
               />
               <input-errors :errors="errors.username" />
@@ -53,6 +55,7 @@
                 v-model="form.email"
                 autocomplete="off"
                 :state="null"
+                :readonly="!canSave"
                 @input="errors.email = []"
               />
               <input-errors :errors="errors.email" />
@@ -71,6 +74,7 @@
                 autocomplete="off"
                 :state="null"
                 type="password"
+                :readonly="!canSave"
                 @input="errors.password = []"
               />
               <input-errors :errors="errors.password" />
@@ -89,6 +93,7 @@
                 autocomplete="off"
                 type="password"
                 :state="null"
+                :readonly="!canSave"
               />
               <input-errors :errors="errors.password_confirmation" />
             </b-form-group>
@@ -101,7 +106,7 @@
           >
             <b-button
               v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-              :disabled="loading"
+              :disabled="loading || !canSave"
               type="submit"
               variant="primary"
               class=""
@@ -158,6 +163,14 @@ export default {
       roleOptions: [],
       parentGroupOptions: [],
     }
+  },
+  computed: {
+    canSave() {
+      if (this.isCreating) {
+        return true
+      }
+      return this.$can('update', 'User')
+    },
   },
   methods: {
     async getRoleOptions() {

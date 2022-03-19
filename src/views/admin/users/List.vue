@@ -40,6 +40,7 @@
                 placeholder="Search by username or email..."
               />
               <b-button
+                v-if="$can('create', 'User')"
                 variant="primary"
                 @click="add()"
               >
@@ -100,6 +101,7 @@
             </b-dropdown-item> -->
 
             <b-dropdown-item
+              v-if="$can('view_detail', 'User') || $can('update', 'User')"
               @click="edit(data.item, data)"
             >
               <feather-icon icon="EditIcon" />
@@ -107,6 +109,7 @@
             </b-dropdown-item>
 
             <b-dropdown-item
+              v-if="$can('set_access_code', 'User')"
               @click="$refs.manageParentGroupModal.setUser(data.item).open()"
             >
               <feather-icon icon="ListIcon" />
@@ -119,7 +122,7 @@
             </b-dropdown-item> -->
 
             <b-dropdown-item
-              v-if="!data.item.is_active"
+              v-if="!data.item.is_active && $can('activate', 'User')"
               @click="setActive(data.item, true)"
             >
               <feather-icon icon="CheckSquareIcon" />
@@ -127,7 +130,7 @@
             </b-dropdown-item>
 
             <b-dropdown-item
-              v-if="data.item.is_active"
+              v-if="data.item.is_active && $can('deactivate', 'User')"
               @click="setActive(data.item, false)"
             >
               <feather-icon icon="XSquareIcon" />
