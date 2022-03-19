@@ -24,6 +24,7 @@
                 :options="parentGroupOptions"
                 :reduce="(item) => item.id"
                 :disabled="!isCreating"
+                :readonly="!canSave"
                 @input="errors.parent_group_id = []"
               />
               <input-errors :errors="errors.parent_group_id" />
@@ -40,6 +41,7 @@
                 id="v-name"
                 v-model="form.name"
                 :state="null"
+                :readonly="!canSave"
               />
               <input-errors :errors="errors.name" />
             </b-form-group>
@@ -52,7 +54,7 @@
           >
             <b-button
               v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-              :disabled="loading"
+              :disabled="loading || !canSave"
               type="submit"
               variant="primary"
               class=""
@@ -111,6 +113,14 @@ export default {
 
       parentGroupOptions: [],
     }
+  },
+  computed: {
+    canSave() {
+      if (this.isCreating) {
+        return true
+      }
+      return this.$can('update', 'Role')
+    },
   },
   methods: {
     async getParentGroupOptions() {

@@ -98,6 +98,7 @@
             </b-dropdown-item> -->
 
             <b-dropdown-item
+              v-if="$can('update', 'Role')"
               @click="edit(data.item, data)"
             >
               <feather-icon icon="EditIcon" />
@@ -105,6 +106,7 @@
             </b-dropdown-item>
 
             <b-dropdown-item
+              v-if="$can('set_permissions', 'Role')"
               @click="setPermission(data.item)"
             >
               <feather-icon icon="CheckSquareIcon" />
@@ -117,7 +119,7 @@
             </b-dropdown-item> -->
 
             <b-dropdown-item
-              v-if="!data.item.is_active"
+              v-if="!data.item.is_active && $can('activate', 'Role')"
               @click="setActive(data.item, true)"
             >
               <feather-icon icon="CheckSquareIcon" />
@@ -125,7 +127,7 @@
             </b-dropdown-item>
 
             <b-dropdown-item
-              v-if="data.item.is_active"
+              v-if="data.item.is_active && $can('deactivate', 'Role')"
               @click="setActive(data.item, false)"
             >
               <feather-icon icon="XSquareIcon" />
