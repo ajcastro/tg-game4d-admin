@@ -242,7 +242,6 @@ export default {
       })
       this.$notifySuccess('Successfully Saved Permissions!')
       this.loading = false
-      this.$refs.bModal.hide()
     },
   },
 }
