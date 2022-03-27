@@ -254,6 +254,7 @@ export default {
   ],
   data() {
     return {
+      polling: null,
       resourceId: null,
       model: MemberTransaction,
       showFilter: true,
@@ -305,6 +306,10 @@ export default {
     this.$root.$on('selected-website', () => {
       this.$refs.resourceTable.refresh()
     })
+    this.pollTableData()
+  },
+  beforeDestroy() {
+    clearInterval(this.polling)
   },
   methods: {
     fetchRowsParams(ctx) {
@@ -327,6 +332,11 @@ export default {
       if (status === 1) return 'warning'
       if (status === 2) return 'danger'
       return ''
+    },
+    pollTableData() {
+      this.polling = setInterval(() => {
+        this.refreshResourceTable()
+      }, 5000)
     },
   },
 }
