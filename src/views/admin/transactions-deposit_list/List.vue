@@ -76,6 +76,18 @@
         :per-page="perPage"
         :current-page="currentPage"
       >
+        <!-- Column: Screenshot -->
+        <template #cell(screenshot)="data">
+          <a
+            v-if="data.item.screenshot_url"
+            :href="data.item.screenshot_url"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            View Screenshot
+          </a>
+        </template>
+
         <!-- Column: Status -->
         <template #cell(is_active)="data">
           <b-badge
