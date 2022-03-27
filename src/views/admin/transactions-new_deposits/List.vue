@@ -79,6 +79,7 @@
         <!-- Column: Screenshot -->
         <template #cell(screenshot)="data">
           <a
+            v-if="data.item.screenshot_url"
             :href="data.item.screenshot_url"
             target="_blank"
             rel="noreferrer noopener"
