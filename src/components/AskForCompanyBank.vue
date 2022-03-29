@@ -24,11 +24,11 @@
                     :options="companyBanks"
                     class="w-100"
                   >
-                    <template #option="{ bank_acc_no, bank_acc_name }">
-                      <span>{{ bank_acc_no }} ({{ bank_acc_name }})</span>
+                    <template #option="{bank_code, bank_acc_no, bank_acc_name }">
+                      <span>{{ bank_code }} - {{ bank_acc_no }} ({{ bank_acc_name }})</span>
                     </template>
-                    <template #selected-option="{ bank_acc_no, bank_acc_name }">
-                      <span>{{ bank_acc_no }} ({{ bank_acc_name }})</span>
+                    <template #selected-option="{ bank_code, bank_acc_no, bank_acc_name }">
+                      <span>{{ bank_code }} - {{ bank_acc_no }} ({{ bank_acc_name }})</span>
                     </template>
                   </v-select>
                   <small class="text-danger">{{ errors[0] }}</small>
