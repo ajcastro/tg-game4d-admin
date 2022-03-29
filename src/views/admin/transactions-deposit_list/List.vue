@@ -354,7 +354,7 @@ export default {
       if (status === 1) return 'success'
       if (status === 2) return 'danger'
       if (status === 3) return 'secondary'
-      if (status === 4) return 'secondary'
+      if (status === 4) return 'danger'
       return 'secondary'
     },
     resolveStatusText(status) {
