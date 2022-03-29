@@ -15,7 +15,7 @@
               <b-form-group>
                 <validation-provider
                   #default="{ errors }"
-                  name="company_bank"
+                  name="company bank"
                   rules="required"
                 >
                   <v-select
@@ -23,8 +23,14 @@
                     :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
                     :options="companyBanks"
                     class="w-100"
-                    label="bank_code"
-                  />
+                  >
+                    <template #option="{ bank_code, bank_acc_no }">
+                      <span>{{ bank_code }} ({{ bank_acc_no }})</span>
+                    </template>
+                    <template #selected-option="{ bank_code, bank_acc_no }">
+                      <span>{{ bank_code }} ({{ bank_acc_no }})</span>
+                    </template>
+                  </v-select>
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
@@ -87,6 +93,7 @@ export default {
 
       companyBanks: [],
       selectedBank: null,
+      type: null,
 
       title: 'Select Company Bank',
       loading: false,
@@ -101,10 +108,15 @@ export default {
         params: {
           filter: {
             is_active: 1,
+            bank_type: this.type,
           },
         },
       })
       this.companyBanks = data.data
+    },
+    ofType(type) {
+      this.type = type
+      return this
     },
     ask(title) {
       this.title = title || this.title

@@ -351,7 +351,7 @@ export default {
       }, 5000)
     },
     async approve(item) {
-      const companyBank = await this.$refs.askForCompanyBank.ask()
+      const companyBank = await this.$refs.askForCompanyBank.ofType('withdraw').ask()
       this.$refs.askForCompanyBank.setLoading(true)
       await this.$http.post(`api/admin/member_transactions/${item.id}/approve`, {
         company_bank_id: companyBank.id,
