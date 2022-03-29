@@ -202,6 +202,10 @@
     <ask-for-remarks
       ref="askForRemarks"
     />
+
+    <ask-reason
+      ref="askReason"
+    />
   </div>
 </template>
 
@@ -228,6 +232,7 @@ import AskForRemarks from '@/components/AskForRemarks.vue'
 import confirm from '@/mixins/confirm'
 import newTransactions from '@/mixins/transactions/new-transactions'
 import MemberTransactionNewFilters from '@/components/MemberTransactionNewFilters.vue'
+import AskReason from '@/components/AskReason.vue'
 import FormModal from './FormModal.vue'
 
 export default {
@@ -245,6 +250,7 @@ export default {
     vSelect,
     FormModal,
     AskForRemarks,
+    AskReason,
     MemberTransactionNewFilters,
   },
   mixins: [
@@ -337,6 +343,17 @@ export default {
       this.polling = setInterval(() => {
         this.refreshResourceTable()
       }, 5000)
+    },
+    async reject(item) {
+      const reason = await this.$refs.askReason.ask('Reject Withdrawal')
+      this.$refs.askReason.setLoading(true)
+      await this.$http.post(`/api/admin/member_transactions/${item.id}/reject`, {
+        reason,
+      })
+      this.$refs.askReason.setLoading(false)
+      this.$refs.askReason.hide()
+      this.$notifySuccess('Successfully Rejected!')
+      this.$refs.resourceTable.refresh()
     },
   },
 }

@@ -113,13 +113,13 @@
               />
             </template>
 
-            <b-dropdown-item
+            <!-- <b-dropdown-item
               v-if="$can('cancel_withdrawal_list', 'MemberTransaction')"
               @click="cancel(data.item)"
             >
               <feather-icon icon="XCircleIcon" />
               <span class="align-middle ml-50">Cancel Withdrawal</span>
-            </b-dropdown-item>
+            </b-dropdown-item> -->
 
             <b-dropdown-item
               v-if="$can('enter_remarks_withdrawal_list', 'MemberTransaction')"
