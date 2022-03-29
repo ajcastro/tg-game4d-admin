@@ -126,7 +126,7 @@
             </template>
 
             <b-dropdown-item
-              v-if="$can('cancel_deposit_list', 'MemberTransaction')"
+              v-if="data.item.status != 4 && $can('cancel_deposit_list', 'MemberTransaction')"
               @click="cancel(data.item)"
             >
               <feather-icon icon="XCircleIcon" />
@@ -207,6 +207,10 @@
     <ask-for-remarks
       ref="askForRemarks"
     />
+
+    <ask-reason
+      ref="askReason"
+    />
   </div>
 </template>
 
@@ -233,6 +237,7 @@ import AskForRemarks from '@/components/AskForRemarks.vue'
 import confirm from '@/mixins/confirm'
 import newTransactions from '@/mixins/transactions/new-transactions'
 import MemberTransactionListFilters from '@/components/MemberTransactionListFilters.vue'
+import AskReason from '@/components/AskReason.vue'
 import FormModal from './FormModal.vue'
 
 export default {
@@ -250,6 +255,7 @@ export default {
     vSelect,
     FormModal,
     AskForRemarks,
+    AskReason,
     MemberTransactionListFilters,
   },
   mixins: [
@@ -347,19 +353,26 @@ export default {
     resolveStatusVariant(status) {
       if (status === 1) return 'success'
       if (status === 2) return 'danger'
-      return ''
+      if (status === 3) return 'secondary'
+      if (status === 4) return 'secondary'
+      return 'secondary'
     },
     resolveStatusText(status) {
       if (status === 1) return 'Approved'
       if (status === 2) return 'Rejected'
+      if (status === 3) return 'In-progress'
+      if (status === 4) return 'Canceled'
       return ''
     },
     async cancel(item) {
-      const confirmed = await this.$confirm('Are you to sure to cancel this deposit?')
-      if (!confirmed) return
-
-      // this.$notifySuccess('Successfully Cancelled Deposit!')
-      this.$notifyInfo('What happens to cancelled deposits, where should it go?')
+      const reason = await this.$refs.askReason.ask('Cancel Deposit')
+      this.$refs.askReason.setLoading(true)
+      await this.$http.post(`/api/admin/member_transactions/${item.id}/cancel`, {
+        reason,
+      })
+      this.$refs.askReason.setLoading(false)
+      this.$refs.askReason.hide()
+      this.$notifySuccess('Successfully Cancelled Deposit!')
       this.$refs.resourceTable.refresh()
     },
   },

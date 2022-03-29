@@ -115,6 +115,10 @@ export default {
           value: 3,
           label: 'In-progress',
         },
+        {
+          value: 4,
+          label: 'Canceled',
+        },
       ],
     }
   },
