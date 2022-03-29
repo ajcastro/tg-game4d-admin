@@ -206,6 +206,10 @@
     <ask-reason
       ref="askReason"
     />
+
+    <ask-for-company-bank
+      ref="askForCompanyBank"
+    />
   </div>
 </template>
 
@@ -233,6 +237,7 @@ import confirm from '@/mixins/confirm'
 import newTransactions from '@/mixins/transactions/new-transactions'
 import MemberTransactionNewFilters from '@/components/MemberTransactionNewFilters.vue'
 import AskReason from '@/components/AskReason.vue'
+import AskForCompanyBank from '@/components/AskForCompanyBank.vue'
 import FormModal from './FormModal.vue'
 
 export default {
@@ -251,6 +256,7 @@ export default {
     FormModal,
     AskForRemarks,
     AskReason,
+    AskForCompanyBank,
     MemberTransactionNewFilters,
   },
   mixins: [
@@ -343,6 +349,18 @@ export default {
       this.polling = setInterval(() => {
         this.refreshResourceTable()
       }, 5000)
+    },
+    async approve(item) {
+      const companyBank = await this.$refs.askForCompanyBank.ask()
+      this.$refs.askForCompanyBank.setLoading(true)
+      await this.$http.post(`api/admin/member_transactions/${item.id}/approve`, {
+        company_bank_id: companyBank.id,
+      })
+      this.$refs.askForCompanyBank.setLoading(false)
+      this.$refs.askForCompanyBank.hide()
+
+      this.$notifySuccess('Successfully Approved!')
+      this.$refs.resourceTable.refresh()
     },
     async reject(item) {
       const reason = await this.$refs.askReason.ask('Reject Withdrawal')
