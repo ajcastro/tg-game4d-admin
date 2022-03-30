@@ -139,7 +139,7 @@
             </b-dropdown-item>
 
             <b-dropdown-item
-              v-if="$can('read_setting', 'Promotion')"
+              v-if="$can('setting', 'Promotion')"
             >
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">Setting</span>

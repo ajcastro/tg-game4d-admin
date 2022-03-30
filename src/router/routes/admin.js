@@ -151,7 +151,7 @@ export default [
     component: () => import('@/views/admin/promotions/List.vue'),
     meta: {
       resource: 'Promotions',
-      action: 'read_promotions',
+      action: 'read',
     },
   },
 ]

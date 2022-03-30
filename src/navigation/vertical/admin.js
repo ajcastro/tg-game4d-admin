@@ -125,7 +125,7 @@ export default [
         icon: 'MinusIcon',
         route: 'promotions.index',
         resource: 'Promotion',
-        action: 'read_promotions',
+        action: 'read',
       },
     ],
   },
