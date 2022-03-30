@@ -150,7 +150,7 @@ export default [
     name: 'promotions.index',
     component: () => import('@/views/admin/promotions/List.vue'),
     meta: {
-      resource: 'Promotions',
+      resource: 'Promotion',
       action: 'read',
     },
   },
