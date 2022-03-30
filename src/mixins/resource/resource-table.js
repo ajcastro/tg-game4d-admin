@@ -102,7 +102,7 @@ export default {
       this.refreshResourceTable()
     },
     resolveIsActiveVariant(is_active) {
-      return is_active ? 'success' : 'secondary'
+      return is_active ? 'success' : 'danger'
     },
   },
 }
