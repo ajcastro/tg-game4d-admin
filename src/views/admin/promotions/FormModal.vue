@@ -80,7 +80,6 @@
           </b-col>
 
           <!-- slug -->
-          <!-- TODO: Convert into javascript-side slug generator using @/helpers/slugify  -->
           <b-col cols="12">
             <b-form-group
               label="Slug"
