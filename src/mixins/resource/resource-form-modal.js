@@ -43,12 +43,15 @@ export default {
         this.$refs.bModal.hide()
       }
     },
+    populateForm(data) {
+      return { ...data }
+    },
     async getResource() {
       if (!this.resourceId) return
 
       this.loading = true
       const res = await this.model.find(this.resourceId)
-      this.form = { ...res.data }
+      this.form = this.populateForm({ ...res.data })
       this.loading = false
     },
     async save() {
