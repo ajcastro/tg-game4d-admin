@@ -116,4 +116,17 @@ export default [
       },
     ],
   },
+  {
+    title: 'Promotions',
+    icon: 'CodesandboxIcon',
+    children: [
+      {
+        title: 'Promotion List',
+        icon: 'MinusIcon',
+        route: 'promotions.index',
+        resource: 'Promotion',
+        action: 'read_promotions',
+      },
+    ],
+  },
 ]

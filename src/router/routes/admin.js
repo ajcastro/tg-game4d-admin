@@ -145,4 +145,13 @@ export default [
       action: 'read_adjustments',
     },
   },
+  {
+    path: '/promotions/list',
+    name: 'promotions.index',
+    component: () => import('@/views/admin/promotions/List.vue'),
+    meta: {
+      resource: 'Promotions',
+      action: 'read_promotions',
+    },
+  },
 ]
