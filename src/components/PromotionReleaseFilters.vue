@@ -8,7 +8,6 @@
     <b-card-body>
       <b-row>
         <b-col
-          v-show="showWarningStatusFilter"
           cols="12"
           md="4"
           class="mb-md-0 mb-2"
@@ -37,7 +36,6 @@
           />
         </b-col>
         <b-col
-          v-show="showWarningStatusFilter"
           cols="12"
           md="4"
           class="mb-md-0 mb-2"
@@ -45,11 +43,11 @@
           <label>Status</label>
           <v-select
             :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-            :value="value.warning_status"
+            :value="value.status"
             :options="statusOptions"
             class="w-100"
             :reduce="val => val.value"
-            @input="(val) => $emit('input', {...value, warning_status: val})"
+            @input="(val) => $emit('input', {...value, status: val})"
           />
         </b-col>
         <b-col
@@ -137,9 +135,6 @@ export default {
     }
   },
   computed: {
-    showWarningStatusFilter() {
-      return !this.except.includes('warning_status')
-    },
   },
   methods: {
     async reset() {
