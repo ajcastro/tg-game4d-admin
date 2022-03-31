@@ -1,12 +1,8 @@
 <template>
   <div>
-    <member-transaction-new-filters
-      v-show="showFilter"
-      v-model="filter"
-    />
-
     <!-- Table Container Card -->
     <b-card
+      v-if="$store.state.websiteSelector.selectedWebsiteId"
       no-body
       class="mb-0"
     >
@@ -39,21 +35,15 @@
               <b-form-input
                 v-model="filter.search"
                 class="d-inline-block mr-1"
-                placeholder="Search by username or bank destination..."
+                placeholder="Search by username or promo title..."
               />
-              <!-- <b-button
+              <b-button
+                v-if="$can('create_manual', 'Promotion')"
                 variant="primary"
-                class="btn-icon"
-                @click="showFilter = !showFilter"
               >
-                <feather-icon icon="FilterIcon" />
-              </b-button> -->
-              <!-- <b-button
-                variant="primary"
-                @click="add()"
-              >
-                <span class="text-nowrap">Add Parent Group</span>
-              </b-button> -->
+                <!-- @click="add()" -->
+                <span class="text-nowrap">Create</span>
+              </b-button>
             </div>
           </b-col>
         </b-row>
@@ -76,16 +66,15 @@
         :per-page="perPage"
         :current-page="currentPage"
       >
-        <!-- Column: Screenshot -->
-        <template #cell(screenshot)="data">
-          <a
-            v-if="data.item.screenshot_url"
-            :href="data.item.screenshot_url"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            View Screenshot
-          </a>
+        <!-- Column: Image -->
+        <template #cell(image)="data">
+          <div>
+            <b-img
+              class="mb-1 mb-sm-0"
+              height="80"
+              :src="data.item.image_thumb_url"
+            />
+          </div>
         </template>
 
         <!-- Column: Status -->
@@ -96,17 +85,6 @@
             class="text-capitalize"
           >
             {{ data.item.is_active ? 'Active' : 'Inactive' }}
-          </b-badge>
-        </template>
-
-        <!-- Column: warning_status -->
-        <template #cell(warning_status)="data">
-          <b-badge
-            pill
-            :variant="`light-${resolveWarningStatusVariant(data.item.warning_status)}`"
-            class="text-capitalize"
-          >
-            {{ data.item.warning_status_display }}
           </b-badge>
         </template>
 
@@ -124,9 +102,15 @@
                 class="align-middle text-body"
               />
             </template>
+            <!-- <b-dropdown-item
+              :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
+            >
+              <feather-icon icon="FileTextIcon" />
+              <span class="align-middle ml-50">Details</span>
+            </b-dropdown-item> -->
 
             <b-dropdown-item
-              v-if="$can('approve_new_deposits', 'MemberTransaction')"
+              v-if="$can('approve_manual', 'Promotion')"
               @click="approve(data.item)"
             >
               <feather-icon icon="CheckIcon" />
@@ -134,19 +118,11 @@
             </b-dropdown-item>
 
             <b-dropdown-item
-              v-if="$can('reject_new_deposits', 'MemberTransaction')"
+              v-if="$can('approve_manual', 'Promotion')"
               @click="reject(data.item)"
             >
               <feather-icon icon="XIcon" />
               <span class="align-middle ml-50">Reject</span>
-            </b-dropdown-item>
-
-            <b-dropdown-item
-              v-if="$can('enter_remarks_new_deposits', 'MemberTransaction')"
-              @click="enterRemarks(data.item)"
-            >
-              <feather-icon icon="Edit2Icon" />
-              <span class="align-middle ml-50">Enter Remarks</span>
             </b-dropdown-item>
 
           </b-dropdown>
@@ -206,15 +182,20 @@
       </div>
     </b-card>
 
+    <b-card
+      v-else
+      class="mb-0 bg-danger text-white"
+    >
+      Please select website first.
+    </b-card>
+
     <form-modal
       ref="formModal"
       :resource-id.sync="resourceId"
       @save="$refs.resourceTable.refresh()"
+      @created="$refs.manageParentGroupModal.setUser($event).open()"
     />
-
-    <ask-for-remarks
-      ref="askForRemarks"
-    />
+    <!-- TODO:@created redirect to promotion settings page -->
   </div>
 </template>
 
@@ -231,16 +212,13 @@ import {
   BDropdownItem,
   BPagination,
   BBadge,
+  BImg,
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
 import { makeTable } from '@/helpers/table'
 import resourceTable from '@/mixins/resource/resource-table'
 import dayjs from 'dayjs'
-import MemberTransaction from '@/models/MemberTransaction'
-import AskForRemarks from '@/components/AskForRemarks.vue'
-import confirm from '@/mixins/confirm'
-import newTransactions from '@/mixins/transactions/new-transactions'
-import MemberTransactionNewFilters from '@/components/MemberTransactionNewFilters.vue'
+import Promotion from '@/models/Promotion'
 import FormModal from './FormModal.vue'
 
 export default {
@@ -255,101 +233,59 @@ export default {
     BDropdownItem,
     BPagination,
     BBadge,
+    BImg,
+
     vSelect,
+
     FormModal,
-    AskForRemarks,
-    MemberTransactionNewFilters,
   },
   mixins: [
-    confirm,
-    newTransactions,
     resourceTable,
   ],
   data() {
     return {
-      polling: null,
       resourceId: null,
-      model: MemberTransaction,
-      showFilter: true,
+      model: Promotion,
       ...makeTable({
-        sortDesc: false,
-        sortBy: 'ticket_id',
         filter: {
           search: '',
         },
         columns: [
           { key: 'actions' },
-          { key: 'ticket_id', sortable: true },
-          {
-            key: 'website',
-            sortable: true,
-            formatter: (value, key, item) => item.website.code,
-          },
-          {
-            key: 'username',
-            sortable: true,
-            formatter: (value, key, item) => item.member.username,
-          },
-          {
-            key: 'bank_member',
-            sortable: false,
-            formatter: (value, key, item) => `${item.account_code}-${item.account_number}-${item.account_name}`,
-          },
-          { key: 'company_bank', label: 'Bank Destination', sortable: true },
-          {
-            key: 'company_bank_factor',
-            label: 'Rate',
-            sortable: true,
-            formatter: (value, key, item) => item.company_bank_factor,
-          },
-          { key: 'amount', sortable: true },
-          { key: 'screenshot', sortable: false },
-          {
-            key: 'created_at',
-            label: 'Created Date',
-            sortable: true,
-            formatter: value => dayjs(value).format('DD MMM YYYY, hh:mm a'),
-          },
-          { key: 'remarks', sortable: false },
+          { key: 'username', sortable: true },
+          { key: 'promo_title', sortable: true },
+          { key: 'deposit_amount', sortable: true },
+          { key: 'bonus_amount', sortable: true },
+          { key: 'target_to', label: 'Target TO', sortable: true },
+          { key: 'accumulate_to', label: 'Accumulate TO', sortable: true },
+          { key: 'status', sortable: true },
+          { key: 'created_at', sortable: true },
+          { key: 'updated_at', sortable: true },
+          { key: 'updated_by', sortable: true },
+          { key: 'is_active', sortable: true },
         ],
       }),
     }
   },
   mounted() {
     this.$root.$on('selected-website', () => {
-      this.$refs.resourceTable.refresh()
+      this.$nextTick(
+        () => {
+          // TODO: issue here, the request sent is duplicated sometimes
+          this.$refs.resourceTable.refresh()
+        },
+      )
     })
-    this.pollTableData()
-  },
-  beforeDestroy() {
-    clearInterval(this.polling)
   },
   methods: {
-    fetchRowsParams(ctx) {
+    fetchRowsParams() {
       return {
-        append: 'ticket_id,screenshot_url',
-        include: 'website,member,approved_by',
-        fields: {
-          website: 'id,code',
-          member: 'id,username',
-          approved_by: 'id,name',
-        },
-        filter: {
-          type: 'deposit',
-          status: 0,
-          is_adjustment: 0,
-        },
+        append: 'image_url,image_thumb_url',
+        include: 'setting',
       }
     },
-    resolveWarningStatusVariant(status) {
-      if (status === 1) return 'warning'
-      if (status === 2) return 'danger'
-      return ''
-    },
-    pollTableData() {
-      this.polling = setInterval(() => {
-        this.refreshResourceTable()
-      }, 5000)
+    async fetchRows(ctx) {
+      return []
     },
   },
 }
