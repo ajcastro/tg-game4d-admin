@@ -327,7 +327,7 @@ export default {
   methods: {
     fetchRowsParams(ctx) {
       return {
-        append: 'ticket_id',
+        append: 'ticket_id,screenshot_url',
         include: 'website,member,approved_by',
         fields: {
           website: 'id,code',
