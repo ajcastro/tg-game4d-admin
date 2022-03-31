@@ -6,7 +6,7 @@
   >
     <template #button-content>
       <feather-icon
-        badge="6"
+        badge="0"
         badge-classes="bg-danger"
         class="text-body"
         icon="BellIcon"
@@ -20,12 +20,12 @@
         <h4 class="notification-title mb-0 mr-auto">
           Notifications
         </h4>
-        <b-badge
+        <!-- <b-badge
           pill
           variant="light-primary"
         >
           6 New
-        </b-badge>
+        </b-badge> -->
       </div>
     </li>
 
@@ -128,46 +128,46 @@ export default {
   setup() {
     /* eslint-disable global-require */
     const notifications = [
-      {
-        title: 'Congratulation Sam 🎉',
-        avatar: require('@/assets/images/avatars/6-small.png'),
-        subtitle: 'Won the monthly best seller badge',
-        type: 'light-success',
-      },
-      {
-        title: 'New message received',
-        avatar: require('@/assets/images/avatars/9-small.png'),
-        subtitle: 'You have 10 unread messages',
-        type: 'light-info',
-      },
-      {
-        title: 'Revised Order 👋',
-        avatar: 'MD',
-        subtitle: 'MD Inc. order updated',
-        type: 'light-danger',
-      },
+      // {
+      //   title: 'Congratulation Sam 🎉',
+      //   avatar: require('@/assets/images/avatars/6-small.png'),
+      //   subtitle: 'Won the monthly best seller badge',
+      //   type: 'light-success',
+      // },
+      // {
+      //   title: 'New message received',
+      //   avatar: require('@/assets/images/avatars/9-small.png'),
+      //   subtitle: 'You have 10 unread messages',
+      //   type: 'light-info',
+      // },
+      // {
+      //   title: 'Revised Order 👋',
+      //   avatar: 'MD',
+      //   subtitle: 'MD Inc. order updated',
+      //   type: 'light-danger',
+      // },
     ]
     /* eslint-disable global-require */
 
     const systemNotifications = [
-      {
-        title: 'Server down',
-        subtitle: 'USA Server is down due to hight CPU usage',
-        type: 'light-danger',
-        icon: 'XIcon',
-      },
-      {
-        title: 'Sales report generated',
-        subtitle: 'Last month sales report generated',
-        type: 'light-success',
-        icon: 'CheckIcon',
-      },
-      {
-        title: 'High memory usage',
-        subtitle: 'BLR Server using high memory',
-        type: 'light-warning',
-        icon: 'AlertTriangleIcon',
-      },
+      // {
+      //   title: 'Server down',
+      //   subtitle: 'USA Server is down due to hight CPU usage',
+      //   type: 'light-danger',
+      //   icon: 'XIcon',
+      // },
+      // {
+      //   title: 'Sales report generated',
+      //   subtitle: 'Last month sales report generated',
+      //   type: 'light-success',
+      //   icon: 'CheckIcon',
+      // },
+      // {
+      //   title: 'High memory usage',
+      //   subtitle: 'BLR Server using high memory',
+      //   type: 'light-warning',
+      //   icon: 'AlertTriangleIcon',
+      // },
     ]
 
     const perfectScrollbarSettings = {

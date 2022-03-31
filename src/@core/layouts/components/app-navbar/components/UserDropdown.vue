@@ -27,7 +27,7 @@
       </b-avatar>
     </template>
 
-    <b-dropdown-item
+    <!-- <b-dropdown-item
       :to="{ name: 'pages-profile'}"
       link-class="d-flex align-items-center"
     >
@@ -71,9 +71,10 @@
       />
       <span>Chat</span>
     </b-dropdown-item>
+    -->
 
-    <b-dropdown-divider />
-
+    <!-- <b-dropdown-divider /> -->
+    <!--
     <b-dropdown-item
       :to="{ name: 'pages-account-setting' }"
       link-class="d-flex align-items-center"
@@ -107,6 +108,8 @@
       />
       <span>FAQ</span>
     </b-dropdown-item>
+ -->
+
     <b-dropdown-item
       link-class="d-flex align-items-center"
       @click="logout"
@@ -117,7 +120,9 @@
         class="mr-50"
       />
       <span>Logout</span>
-    </b-dropdown-item></b-nav-item-dropdown>
+    </b-dropdown-item>
+
+  </b-nav-item-dropdown>
 </template>
 
 <script>

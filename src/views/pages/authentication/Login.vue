@@ -130,9 +130,9 @@
               <b-form-group>
                 <div class="d-flex justify-content-between">
                   <label for="login-password">Password</label>
-                  <b-link :to="{name:'auth-forgot-password'}">
+                  <!-- <b-link :to="{name:'auth-forgot-password'}">
                     <small>Forgot Password?</small>
-                  </b-link>
+                  </b-link> -->
                 </div>
                 <validation-provider
                   #default="{ errors }"
