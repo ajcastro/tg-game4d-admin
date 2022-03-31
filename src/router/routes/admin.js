@@ -154,4 +154,31 @@ export default [
       action: 'read',
     },
   },
+  {
+    path: '/promotions/manual',
+    name: 'promotions.manual',
+    component: () => import('@/views/admin/promotions-manual/List.vue'),
+    meta: {
+      resource: 'Promotion',
+      action: 'read_manual',
+    },
+  },
+  {
+    path: '/promotions/summary',
+    name: 'promotions.summary',
+    component: () => import('@/views/admin/promotions-summary/List.vue'),
+    meta: {
+      resource: 'Promotion',
+      action: 'read_summary',
+    },
+  },
+  {
+    path: '/promotions/release',
+    name: 'promotions.release',
+    component: () => import('@/views/admin/promotions-release/List.vue'),
+    meta: {
+      resource: 'Promotion',
+      action: 'read_release',
+    },
+  },
 ]

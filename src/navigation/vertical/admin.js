@@ -127,6 +127,27 @@ export default [
         resource: 'Promotion',
         action: 'read',
       },
+      {
+        title: 'Summary',
+        icon: 'MinusIcon',
+        route: 'promotions.summary',
+        resource: 'Promotion',
+        action: 'read_summary',
+      },
+      {
+        title: 'Release',
+        icon: 'MinusIcon',
+        route: 'promotions.release',
+        resource: 'Promotion',
+        action: 'read_release',
+      },
+      {
+        title: 'Manual Bonus',
+        icon: 'MinusIcon',
+        route: 'promotions.manual',
+        resource: 'Promotion',
+        action: 'read_manual',
+      },
     ],
   },
 ]
