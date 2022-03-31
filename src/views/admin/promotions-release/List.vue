@@ -1,10 +1,12 @@
 <template>
   <div>
     <promotion-release-filters
+      v-if="$store.state.websiteSelector.selectedWebsiteId"
       v-model="filter"
     />
     <!-- Table Container Card -->
     <b-card
+      v-if="$store.state.websiteSelector.selectedWebsiteId"
       no-body
       class="mb-0"
     >
@@ -80,13 +82,13 @@
         </template>
 
         <!-- Column: Status -->
-        <template #cell(is_active)="data">
+        <template #cell(status)="data">
           <b-badge
             pill
-            :variant="`light-${resolveIsActiveVariant(data.item.is_active)}`"
+            :variant="`light-${resolveStatusVariant(data.item.status)}`"
             class="text-capitalize"
           >
-            {{ data.item.is_active ? 'Active' : 'Inactive' }}
+            {{ resolveStatusText(data.item.status) }}
           </b-badge>
         </template>
 
@@ -111,20 +113,11 @@
               <span class="align-middle ml-50">Details</span>
             </b-dropdown-item> -->
 
-            <b-dropdown-item
-              v-if="$can('approve_manual', 'Promotion')"
-              @click="approve(data.item)"
-            >
-              <feather-icon icon="CheckIcon" />
-              <span class="align-middle ml-50">Approve</span>
-            </b-dropdown-item>
-
-            <b-dropdown-item
-              v-if="$can('approve_manual', 'Promotion')"
-              @click="reject(data.item)"
-            >
-              <feather-icon icon="XIcon" />
-              <span class="align-middle ml-50">Reject</span>
+            <!-- TODO: v-if for casl permission check -->
+            <b-dropdown-item>
+              <!-- @click="edit(data.item, data)" -->
+              <feather-icon icon="EditIcon" />
+              <span class="align-middle ml-50">Edit</span>
             </b-dropdown-item>
 
           </b-dropdown>
@@ -184,6 +177,13 @@
       </div>
     </b-card>
 
+    <b-card
+      v-else
+      class="mb-0 bg-danger text-white"
+    >
+      Please select website first.
+    </b-card>
+
     <form-modal
       ref="formModal"
       :resource-id.sync="resourceId"
@@ -213,7 +213,7 @@ import vSelect from 'vue-select'
 import { makeTable } from '@/helpers/table'
 import resourceTable from '@/mixins/resource/resource-table'
 import dayjs from 'dayjs'
-import Promotion from '@/models/Promotion'
+import PromotionRelease from '@/models/PromotionRelease'
 import PromotionReleaseFilters from '@/components/PromotionReleaseFilters.vue'
 import FormModal from './FormModal.vue'
 
@@ -241,31 +241,45 @@ export default {
   data() {
     return {
       resourceId: null,
-      model: Promotion,
+      model: PromotionRelease,
       ...makeTable({
         filter: {
           search: '',
+          given_method: null,
+          status: null,
+          created_date: null,
         },
         columns: [
           { key: 'actions' },
-          { key: 'username', sortable: true },
-          { key: 'promo_title', sortable: true },
-          { key: 'deposit_amount', sortable: true },
-          { key: 'bonus_amount', sortable: true },
-          { key: 'target_to', label: 'Target TO', sortable: true },
-          { key: 'accumulate_to', label: 'Accumulate TO', sortable: true },
+          { key: 'username', sortable: false },
+          { key: 'promo_title', sortable: false },
+          { key: 'deposit_amount', sortable: false },
+          { key: 'bonus_amount', sortable: false },
+          { key: 'obligation_amount', label: 'Target TO', sortable: false },
+          { key: 'turn_over_amount', label: 'Accumulate TO', sortable: false },
           { key: 'status', sortable: true },
-          { key: 'created_at', sortable: true },
-          { key: 'updated_at', sortable: true },
-          { key: 'updated_by', sortable: true },
-          { key: 'is_active', sortable: true },
+          {
+            key: 'created_at',
+            sortable: true,
+            formatter: (value, key, item) => dayjs(item.created_at).format('DD MMM YYYY, hh:mm a'),
+          },
+          {
+            key: 'updated_at',
+            sortable: true,
+            formatter: (value, key, item) => dayjs(item.updated_at).format('DD MMM YYYY, hh:mm a'),
+          },
         ],
       }),
     }
   },
   mounted() {
     this.$root.$on('selected-website', () => {
-      this.$refs.resourceTable.refresh()
+      this.$nextTick(
+        () => {
+          // TODO: issue here, the request sent is duplicated sometimes
+          this.$refs.resourceTable.refresh()
+        },
+      )
     })
   },
   methods: {
@@ -275,8 +289,18 @@ export default {
         include: 'setting',
       }
     },
-    async fetchRows(ctx) {
-      return []
+    // TODO: refactor into mixin, transactionResolveStatus (transaction-resolve-status.js)
+    resolveStatusVariant(status) {
+      if (status === 0) return 'secondary'
+      if (status === 1) return 'success'
+      if (status === 2) return 'danger'
+      return ''
+    },
+    resolveStatusText(status) {
+      if (status === 0) return 'New'
+      if (status === 1) return 'Approved'
+      if (status === 2) return 'Rejected'
+      return ''
     },
   },
 }

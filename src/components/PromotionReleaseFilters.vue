@@ -16,11 +16,11 @@
           <label>Given Type</label>
           <v-select
             :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-            :value="value.warning_status"
+            :value="value.given_method"
             :options="givenTypeOptions"
             class="w-100"
             :reduce="val => val.value"
-            @input="(val) => $emit('input', {...value, warning_status: val})"
+            @input="(val) => $emit('input', {...value, given_method: val})"
           />
         </b-col>
         <b-col
@@ -30,10 +30,10 @@
         >
           <label>Created Date</label>
           <flat-pickr
-            v-model="joinDateRange"
+            v-model="dateRange"
             class="form-control"
             :config="{ mode: 'range'}"
-            @on-close="onSelectJoinDateRange"
+            @on-close="onSelectDateRange"
           />
         </b-col>
         <b-col
@@ -104,7 +104,7 @@ export default {
   data() {
     return {
       originalFilters: this.value,
-      joinDateRange: null,
+      dateRange: null,
       givenTypeOptions: [
         {
           value: 0,
@@ -115,6 +115,7 @@ export default {
           label: 'Turn Over Bonus',
         },
       ],
+      // TODO: Refactor transaction statusOptions list, find duplicate and make refactoring
       statusOptions: [
         {
           value: 1,
@@ -142,14 +143,14 @@ export default {
   },
   methods: {
     async reset() {
-      this.joinDateRange = null
+      this.dateRange = null
       await this.$nextTick()
       this.$emit('input', { ...this.originalFilters })
     },
-    onSelectJoinDateRange(value) {
+    onSelectDateRange(value) {
       const dates = value.map(d => dayjs(d).format('YYYY-MM-DD'))
       if (dates.length) {
-        this.$emit('input', { ...this.value, join_date: dates.join(',') })
+        this.$emit('input', { ...this.value, created_date: dates.join(',') })
       }
     },
   },

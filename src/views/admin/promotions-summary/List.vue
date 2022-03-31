@@ -1,10 +1,12 @@
 <template>
   <div>
     <promotion-summary-filters
+      v-if="$store.state.websiteSelector.selectedWebsiteId"
       v-model="filter"
     />
     <!-- Table Container Card -->
     <b-card
+      v-if="$store.state.websiteSelector.selectedWebsiteId"
       no-body
       class="mb-0"
     >
@@ -184,6 +186,13 @@
       </div>
     </b-card>
 
+    <b-card
+      v-else
+      class="mb-0 bg-danger text-white"
+    >
+      Please select website first.
+    </b-card>
+
     <form-modal
       ref="formModal"
       :resource-id.sync="resourceId"
@@ -261,7 +270,12 @@ export default {
   },
   mounted() {
     this.$root.$on('selected-website', () => {
-      this.$refs.resourceTable.refresh()
+      this.$nextTick(
+        () => {
+          // TODO: issue here, the request sent is duplicated sometimes
+          this.$refs.resourceTable.refresh()
+        },
+      )
     })
   },
   methods: {
