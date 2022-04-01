@@ -112,6 +112,18 @@
 
     <b-dropdown-item
       link-class="d-flex align-items-center"
+      @click="$refs.changePassword.open()"
+    >
+      <feather-icon
+        size="16"
+        icon="LogOutIcon"
+        class="mr-50"
+      />
+      <span>Change Password</span>
+    </b-dropdown-item>
+
+    <b-dropdown-item
+      link-class="d-flex align-items-center"
       @click="logout"
     >
       <feather-icon
@@ -122,23 +134,25 @@
       <span>Logout</span>
     </b-dropdown-item>
 
+    <change-password ref="changePassword" />
   </b-nav-item-dropdown>
 </template>
 
 <script>
 import {
-  BNavItemDropdown, BDropdownItem, BDropdownDivider, BAvatar,
+  BNavItemDropdown, BDropdownItem, BAvatar,
 } from 'bootstrap-vue'
 import { initialAbility } from '@/libs/acl/config'
 import useJwt from '@/auth/jwt/useJwt'
 import { avatarText } from '@core/utils/filter'
+import ChangePassword from '@/components/ChangePassword.vue'
 
 export default {
   components: {
     BNavItemDropdown,
     BDropdownItem,
-    BDropdownDivider,
     BAvatar,
+    ChangePassword,
   },
   data() {
     const userData = localStorage.getItem('userData')

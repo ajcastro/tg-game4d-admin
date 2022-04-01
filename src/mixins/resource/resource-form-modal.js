@@ -38,6 +38,12 @@ export default {
       this.loading = false
       this.errors = {}
     },
+    // TODO: find all form modal components which is directly accessing this.$refs.bModal.show() to open
+    open() {
+      if (this.$refs.bModal) {
+        this.$refs.bModal.show()
+      }
+    },
     close() {
       if (this.$refs.bModal) {
         this.$refs.bModal.hide()
