@@ -36,12 +36,12 @@
                 class="d-inline-block mr-1"
                 placeholder="Search..."
               />
-              <b-button
+              <!-- <b-button
                 variant="primary"
                 @click="add()"
               >
                 <span class="text-nowrap">Add Front Website</span>
-              </b-button>
+              </b-button> -->
             </div>
           </b-col>
         </b-row>
@@ -77,60 +77,15 @@
 
         <!-- Column: Actions -->
         <template #cell(actions)="data">
-          <b-dropdown
-            variant="link"
-            no-caret
-            :right="$store.state.appConfig.isRTL"
+
+          <b-button
+            variant="secondary"
+            size="sm"
+            @click="editCredit(data.item, data)"
           >
-            <template #button-content>
-              <feather-icon
-                icon="MoreVerticalIcon"
-                size="16"
-                class="align-middle text-body"
-              />
-            </template>
-            <!-- <b-dropdown-item
-              :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
-            >
-              <feather-icon icon="FileTextIcon" />
-              <span class="align-middle ml-50">Details</span>
-            </b-dropdown-item> -->
+            <span class="text-nowrap">Set Credit</span>
+          </b-button>
 
-            <b-dropdown-item
-              @click="edit(data.item, data)"
-            >
-              <feather-icon icon="EditIcon" />
-              <span class="align-middle ml-50">Edit</span>
-            </b-dropdown-item>
-            <!--
-            <b-dropdown-item
-              @click="editCredit(data.item, data)"
-            >
-              <feather-icon icon="DollarSignIcon" />
-              <span class="align-middle ml-50">Edit Website Credit</span>
-            </b-dropdown-item> -->
-
-            <!-- <b-dropdown-item @click="remove(data.item, data)">
-              <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">Delete</span>
-            </b-dropdown-item> -->
-
-            <b-dropdown-item
-              v-if="!data.item.is_active"
-              @click="setActive(data.item, true)"
-            >
-              <feather-icon icon="CheckSquareIcon" />
-              <span class="align-middle ml-50">Set Active</span>
-            </b-dropdown-item>
-
-            <b-dropdown-item
-              v-if="data.item.is_active"
-              @click="setActive(data.item, false)"
-            >
-              <feather-icon icon="XSquareIcon" />
-              <span class="align-middle ml-50">Set Inactive</span>
-            </b-dropdown-item>
-          </b-dropdown>
         </template>
       </b-table>
       <div class="mx-2 mb-2">
@@ -257,27 +212,27 @@ export default {
           { key: 'ip_address', sortable: true },
           { key: 'domain_name', sortable: true },
           { key: 'is_active', sortable: true },
-          { key: 'remarks', sortable: false },
-          {
-            key: 'created_by',
-            sortable: true,
-            formatter: (value, key, item) => item.created_by.name,
-          },
-          {
-            key: 'created_at',
-            sortable: true,
-            formatter: value => dayjs(value).format('DD MMM YYYY, hh:mm a'),
-          },
-          {
-            key: 'updated_by',
-            sortable: true,
-            formatter: (value, key, item) => item.updated_by.name,
-          },
-          {
-            key: 'updated_at',
-            sortable: true,
-            formatter: value => dayjs(value).format('DD MMM YYYY, hh:mm a'),
-          },
+          // { key: 'remarks', sortable: false },
+          // {
+          //   key: 'created_by',
+          //   sortable: true,
+          //   formatter: (value, key, item) => item.created_by.name,
+          // },
+          // {
+          //   key: 'created_at',
+          //   sortable: true,
+          //   formatter: value => dayjs(value).format('DD MMM YYYY, hh:mm a'),
+          // },
+          // {
+          //   key: 'updated_by',
+          //   sortable: true,
+          //   formatter: (value, key, item) => item.updated_by.name,
+          // },
+          // {
+          //   key: 'updated_at',
+          //   sortable: true,
+          //   formatter: value => dayjs(value).format('DD MMM YYYY, hh:mm a'),
+          // },
         ],
       }),
     }

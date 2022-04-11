@@ -65,6 +65,15 @@ export default [
     },
   },
   {
+    path: '/front_websites/set_credit',
+    name: 'front_websites.set_credit',
+    component: () => import('@/views/admin/front_websites-set_credit/List.vue'),
+    meta: {
+      resource: 'Website',
+      action: 'set_credit',
+    },
+  },
+  {
     path: '/members/list',
     name: 'members.list',
     component: () => import('@/views/admin/members-list/List.vue'),

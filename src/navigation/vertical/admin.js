@@ -38,6 +38,13 @@ export default [
         resource: 'Website',
         action: 'read',
       },
+      {
+        title: 'Edit Website Credit',
+        icon: 'MinusIcon',
+        route: 'front_websites.set_credit',
+        resource: 'Website',
+        action: 'set_credit',
+      },
     ],
   },
 
