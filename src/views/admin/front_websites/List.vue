@@ -103,6 +103,13 @@
               <span class="align-middle ml-50">Edit</span>
             </b-dropdown-item>
 
+            <b-dropdown-item
+              @click="editCredit(data.item, data)"
+            >
+              <feather-icon icon="DollarSignIcon" />
+              <span class="align-middle ml-50">Edit Website Credit</span>
+            </b-dropdown-item>
+
             <!-- <b-dropdown-item @click="remove(data.item, data)">
               <feather-icon icon="TrashIcon" />
               <span class="align-middle ml-50">Delete</span>
@@ -185,6 +192,10 @@
       :resource-id.sync="resourceId"
       @save="$refs.resourceTable.refresh()"
     />
+
+    <edit-credit-modal
+      ref="editCreditModal"
+    />
   </div>
 </template>
 
@@ -207,6 +218,7 @@ import Website from '@/models/Website'
 import resourceTable from '@/mixins/resource/resource-table'
 import dayjs from 'dayjs'
 import FormModal from './FormModal.vue'
+import EditCreditModal from './components/EditCreditModal.vue'
 
 export default {
   components: {
@@ -224,6 +236,7 @@ export default {
     vSelect,
 
     FormModal,
+    EditCreditModal,
   },
   mixins: [
     resourceTable,
@@ -277,6 +290,24 @@ export default {
         'fields[created_by]': 'id,name',
         'fields[updated_by]': 'id,name',
       }
+    },
+    async editCredit(item) {
+      this.$refs.editCreditModal.open()
+      this.$refs.editCreditModal.setLoading(true)
+      const { data } = await this.$http.get(`api/admin/websites/${item.id}/credit`)
+      this.$refs.editCreditModal.setCredit(data.credit)
+      this.$refs.editCreditModal.setLoading(false)
+
+      const credit = await this.$refs.editCreditModal.ask()
+      this.$refs.editCreditModal.setLoading(true)
+      await this.$http.post(`api/admin/websites/${item.id}/update_credit`, {
+        credit,
+      })
+      this.$refs.editCreditModal.setLoading(false)
+      this.$refs.editCreditModal.hide()
+
+      this.$notifySuccess('Successfully Updated Website Credit!')
+      this.$refs.resourceTable.refresh()
     },
   },
 }
