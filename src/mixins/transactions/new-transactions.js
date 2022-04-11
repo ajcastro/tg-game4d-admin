@@ -10,9 +10,13 @@ export default {
       const confirmed = await this.$confirm('Are you sure to approve this transaction?')
       if (!confirmed) return
 
-      await this.$http.post(`api/admin/member_transactions/${item.id}/approve`)
-      this.$notifySuccess('Successfully Approved!')
-      this.$refs.resourceTable.refresh()
+      try {
+        await this.$http.post(`api/admin/member_transactions/${item.id}/approve`)
+        this.$notifySuccess('Successfully Approved!')
+        this.$refs.resourceTable.refresh()
+      } catch (error) {
+        if (!this.$notifyError422(error)) throw error
+      }
     },
     async reject(item) {
       const confirmed = await this.$confirm('Are you sure to reject this transaction?')
