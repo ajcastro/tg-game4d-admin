@@ -63,6 +63,9 @@
         ref="resourceTable"
         class="position-relative"
         responsive
+        small
+        bordered
+        style="font-size: 13px;"
         primary-key="id"
         show-empty
         empty-text="No matching records found"
@@ -84,7 +87,7 @@
             target="_blank"
             rel="noreferrer noopener"
           >
-            View Screenshot
+            View
           </a>
         </template>
 
@@ -300,7 +303,7 @@ export default {
             formatter: (value, key, item) => item.company_bank_factor,
           },
           { key: 'amount', sortable: true },
-          { key: 'screenshot', sortable: false },
+          { key: 'screenshot', label: 'SS', sortable: false },
           {
             key: 'created_at',
             label: 'Request Date',

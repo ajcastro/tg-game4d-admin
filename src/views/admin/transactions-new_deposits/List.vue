@@ -61,8 +61,11 @@
 
       <b-table
         ref="resourceTable"
+        style="font-size: 13px;"
         class="position-relative"
         responsive
+        bordered
+        small
         primary-key="id"
         show-empty
         empty-text="No matching records found"
@@ -84,7 +87,7 @@
             target="_blank"
             rel="noreferrer noopener"
           >
-            View Screenshot
+            View
           </a>
         </template>
 
@@ -99,22 +102,39 @@
           </b-badge>
         </template>
 
-        <!-- Column: warning_status -->
-        <template #cell(warning_status)="data">
-          <b-badge
-            pill
-            :variant="`light-${resolveWarningStatusVariant(data.item.warning_status)}`"
-            class="text-capitalize"
+        <!-- Column: approve -->
+        <template #cell(approve)="data">
+          <b-button
+            v-if="$can('approve_new_deposits', 'MemberTransaction')"
+            variant="success"
+            size="sm"
+            class=""
+            @click="approve(data.item)"
           >
-            {{ data.item.warning_status_display }}
-          </b-badge>
+            <span class="text-nowrap">Approve</span>
+          </b-button>
+        </template>
+
+        <!-- Column: reject -->
+        <template #cell(reject)="data">
+          <b-button
+            v-if="$can('reject_new_deposits', 'MemberTransaction')"
+            variant="danger"
+            size="sm"
+            class=""
+            @click="reject(data.item)"
+          >
+            <span class="text-nowrap">Reject</span>
+          </b-button>
         </template>
 
         <!-- Column: Actions -->
         <template #cell(actions)="data">
+
           <b-dropdown
             variant="link"
             no-caret
+            class=""
             :right="$store.state.appConfig.isRTL"
           >
             <template #button-content>
@@ -125,21 +145,21 @@
               />
             </template>
 
-            <b-dropdown-item
+            <!-- <b-dropdown-item
               v-if="$can('approve_new_deposits', 'MemberTransaction')"
               @click="approve(data.item)"
             >
               <feather-icon icon="CheckIcon" />
               <span class="align-middle ml-50">Approve</span>
-            </b-dropdown-item>
+            </b-dropdown-item> -->
 
-            <b-dropdown-item
+            <!-- <b-dropdown-item
               v-if="$can('reject_new_deposits', 'MemberTransaction')"
               @click="reject(data.item)"
             >
               <feather-icon icon="XIcon" />
               <span class="align-middle ml-50">Reject</span>
-            </b-dropdown-item>
+            </b-dropdown-item> -->
 
             <b-dropdown-item
               v-if="$can('enter_remarks_new_deposits', 'MemberTransaction')"
@@ -215,6 +235,10 @@
     <ask-for-remarks
       ref="askForRemarks"
     />
+
+    <ask-reason
+      ref="askReason"
+    />
   </div>
 </template>
 
@@ -241,6 +265,7 @@ import AskForRemarks from '@/components/AskForRemarks.vue'
 import confirm from '@/mixins/confirm'
 import newTransactions from '@/mixins/transactions/new-transactions'
 import MemberTransactionNewFilters from '@/components/MemberTransactionNewFilters.vue'
+import AskReason from '@/components/AskReason.vue'
 import FormModal from './FormModal.vue'
 
 export default {
@@ -258,6 +283,7 @@ export default {
     vSelect,
     FormModal,
     AskForRemarks,
+    AskReason,
     MemberTransactionNewFilters,
   },
   mixins: [
@@ -278,7 +304,6 @@ export default {
           search: '',
         },
         columns: [
-          { key: 'actions' },
           { key: 'ticket_id', sortable: true },
           {
             key: 'website',
@@ -295,7 +320,7 @@ export default {
             sortable: false,
             formatter: (value, key, item) => `${item.account_code}-${item.account_number}-${item.account_name}`,
           },
-          { key: 'company_bank', label: 'Bank Destination', sortable: true },
+          { key: 'company_bank', label: 'Bank Dest.', sortable: true },
           {
             key: 'company_bank_factor',
             label: 'Rate',
@@ -303,7 +328,9 @@ export default {
             formatter: (value, key, item) => item.company_bank_factor,
           },
           { key: 'amount', sortable: true },
-          { key: 'screenshot', sortable: false },
+          {
+            key: 'screenshot', label: 'SS', sortable: false,
+          },
           {
             key: 'created_at',
             label: 'Created Date',
@@ -311,6 +338,9 @@ export default {
             formatter: value => dayjs(value).format('DD MMM YYYY, hh:mm a'),
           },
           { key: 'remarks', sortable: false },
+          { key: 'approve' },
+          { key: 'reject' },
+          // { key: 'actions' },
         ],
       }),
     }
@@ -341,15 +371,21 @@ export default {
         },
       }
     },
-    resolveWarningStatusVariant(status) {
-      if (status === 1) return 'warning'
-      if (status === 2) return 'danger'
-      return ''
-    },
     pollTableData() {
       this.polling = setInterval(() => {
         this.refreshResourceTable()
       }, 5000)
+    },
+    async reject(item) {
+      const reason = await this.$refs.askReason.ask('Reject Deposit')
+      this.$refs.askReason.setLoading(true)
+      await this.$http.post(`/api/admin/member_transactions/${item.id}/reject`, {
+        reason,
+      })
+      this.$refs.askReason.setLoading(false)
+      this.$refs.askReason.hide()
+      this.$notifySuccess('Successfully Rejected!')
+      this.$refs.resourceTable.refresh()
     },
   },
 }

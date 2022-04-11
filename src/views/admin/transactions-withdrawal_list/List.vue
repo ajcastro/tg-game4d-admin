@@ -63,6 +63,9 @@
         ref="resourceTable"
         class="position-relative"
         responsive
+        small
+        bordered
+        style="font-size: 13px;"
         primary-key="id"
         show-empty
         empty-text="No matching records found"
@@ -269,23 +272,16 @@ export default {
             sortable: true,
             formatter: (value, key, item) => item.member.username,
           },
+          { key: 'company_bank', label: 'Bank Origin', sortable: true },
           {
-            key: 'bank_origin',
+            key: 'bank_member',
             sortable: false,
             formatter: (value, key, item) => `${item.account_code}-${item.account_number}-${item.account_name}`,
           },
-          { key: 'company_bank', label: 'Bank Destination', sortable: true },
-          {
-            key: 'company_bank_factor',
-            label: 'Rate',
-            sortable: true,
-            formatter: (value, key, item) => item.company_bank_factor,
-          },
           { key: 'amount', sortable: true },
-          { key: 'screenshot', sortable: false },
           {
             key: 'created_at',
-            label: 'Request Date',
+            label: 'Created Date',
             sortable: true,
             formatter: value => dayjs(value).format('DD MMM YYYY, hh:mm a'),
           },
@@ -341,13 +337,18 @@ export default {
       this.$refs.resourceTable.refresh()
     },
     resolveStatusVariant(status) {
+      if (status === 0) return 'secondary'
       if (status === 1) return 'success'
       if (status === 2) return 'danger'
+      if (status === 3) return 'warning'
       return ''
     },
     resolveStatusText(status) {
+      if (status === 0) return 'Pending'
       if (status === 1) return 'Approved'
       if (status === 2) return 'Rejected'
+      if (status === 3) return 'In Process'
+
       return ''
     },
   },

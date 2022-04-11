@@ -64,6 +64,9 @@
         ref="resourceTable"
         class="position-relative"
         responsive
+        small
+        bordered
+        style="font-size: 13px;"
         primary-key="id"
         show-empty
         empty-text="No matching records found"

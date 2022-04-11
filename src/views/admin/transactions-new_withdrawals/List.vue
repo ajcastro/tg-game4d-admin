@@ -61,8 +61,11 @@
 
       <b-table
         ref="resourceTable"
+        style="font-size: 13px;"
         class="position-relative"
         responsive
+        bordered
+        small
         primary-key="id"
         show-empty
         empty-text="No matching records found"
@@ -87,15 +90,55 @@
           </b-badge>
         </template>
 
-        <!-- Column: warning_status -->
-        <template #cell(warning_status)="data">
+        <!-- Column: status -->
+        <template #cell(status)="data">
           <b-badge
             pill
-            :variant="`light-${resolveWarningStatusVariant(data.item.warning_status)}`"
+            :variant="`light-${resolveStatusVariant(data.item.status)}`"
             class="text-capitalize"
           >
-            {{ data.item.warning_status_display }}
+            {{ resolveStatusText(data.item.status) }}
           </b-badge>
+        </template>
+
+        <!-- Column: in_process -->
+        <template #cell(in_process)="data">
+          <b-button
+            v-if="data.item.status === pendingStatus && $can('approve_new_withdrawals', 'MemberTransaction')"
+            variant="warning"
+            size="sm"
+            class=""
+            @click="inProcess(data.item)"
+          >
+            <span class="text-nowrap">In Process</span>
+          </b-button>
+        </template>
+
+        <!-- Column: approve -->
+        <template #cell(approve)="data">
+          <b-button
+            v-if="$can('approve_new_withdrawals', 'MemberTransaction')"
+            variant="success"
+            size="sm"
+            class=""
+            :disabled="data.item.status != inProcessStatus"
+            @click="approve(data.item)"
+          >
+            <span class="text-nowrap">Approve</span>
+          </b-button>
+        </template>
+
+        <!-- Column: reject -->
+        <template #cell(reject)="data">
+          <b-button
+            v-if="$can('reject_new_withdrawals', 'MemberTransaction')"
+            variant="danger"
+            size="sm"
+            class=""
+            @click="reject(data.item)"
+          >
+            <span class="text-nowrap">Reject</span>
+          </b-button>
         </template>
 
         <!-- Column: Actions -->
@@ -103,6 +146,7 @@
           <b-dropdown
             variant="link"
             no-caret
+            class=""
             :right="$store.state.appConfig.isRTL"
           >
             <template #button-content>
@@ -113,7 +157,7 @@
               />
             </template>
 
-            <b-dropdown-item
+            <!-- <b-dropdown-item
               v-if="$can('approve_new_withdrawals', 'MemberTransaction')"
               @click="approve(data.item)"
             >
@@ -127,7 +171,7 @@
             >
               <feather-icon icon="XIcon" />
               <span class="align-middle ml-50">Reject</span>
-            </b-dropdown-item>
+            </b-dropdown-item> -->
 
             <b-dropdown-item
               v-if="$can('enter_remarks_new_withdrawals', 'MemberTransaction')"
@@ -270,6 +314,8 @@ export default {
       resourceId: null,
       model: MemberTransaction,
       showFilter: true,
+      pendingStatus: 0,
+      inProcessStatus: 3,
       ...makeTable({
         sortDesc: false,
         sortBy: 'ticket_id',
@@ -277,7 +323,6 @@ export default {
           search: '',
         },
         columns: [
-          { key: 'actions' },
           { key: 'ticket_id', sortable: true },
           {
             key: 'website',
@@ -289,20 +334,14 @@ export default {
             sortable: true,
             formatter: (value, key, item) => item.member.username,
           },
+          { key: 'company_bank', label: 'Bank Origin', sortable: true },
           {
             key: 'bank_member',
             sortable: false,
             formatter: (value, key, item) => `${item.account_code}-${item.account_number}-${item.account_name}`,
           },
-          { key: 'company_bank', label: 'Bank Destination', sortable: true },
-          {
-            key: 'company_bank_factor',
-            label: 'Rate',
-            sortable: true,
-            formatter: (value, key, item) => item.company_bank_factor,
-          },
           { key: 'amount', sortable: true },
-          { key: 'screenshot', sortable: false },
+          // { key: 'screenshot', label: 'SS', sortable: false },
           {
             key: 'created_at',
             label: 'Created Date',
@@ -310,6 +349,11 @@ export default {
             formatter: value => dayjs(value).format('DD MMM YYYY, hh:mm a'),
           },
           { key: 'remarks', sortable: false },
+          { key: 'status' },
+          { key: 'in_process' },
+          { key: 'approve' },
+          { key: 'reject' },
+          // { key: 'actions' },
         ],
       }),
     }
@@ -335,14 +379,25 @@ export default {
         },
         filter: {
           type: 'withdraw',
-          status: 0,
+          new: true,
           is_adjustment: 0,
         },
       }
     },
-    resolveWarningStatusVariant(status) {
-      if (status === 1) return 'warning'
+    // TODO: Find duplicate code for transaction resolveStatusVariant/resolveStatusText and refactor
+    resolveStatusVariant(status) {
+      if (status === 0) return 'secondary'
+      if (status === 1) return 'success'
       if (status === 2) return 'danger'
+      if (status === 3) return 'warning'
+      return ''
+    },
+    resolveStatusText(status) {
+      if (status === 0) return 'Pending'
+      if (status === 1) return 'Approved'
+      if (status === 2) return 'Rejected'
+      if (status === 3) return 'In Process'
+
       return ''
     },
     pollTableData() {
@@ -371,6 +426,19 @@ export default {
       this.$refs.askReason.setLoading(false)
       this.$refs.askReason.hide()
       this.$notifySuccess('Successfully Rejected!')
+      this.$refs.resourceTable.refresh()
+    },
+    async inProcess(item) {
+      const IN_PROCESS = 3
+
+      const confirmed = await this.$confirm('Are you sure to set this transaction to In Process?')
+      if (!confirmed) return
+
+      await this.$http.post(`/api/admin/member_transactions/${item.id}/change_status`, {
+        status: IN_PROCESS,
+      })
+
+      this.$notifySuccess('Successful!')
       this.$refs.resourceTable.refresh()
     },
   },
