@@ -157,4 +157,24 @@ export default [
       },
     ],
   },
+  {
+    title: 'Banking System',
+    icon: 'BriefcaseIcon',
+    children: [
+      {
+        title: 'Bank Groups',
+        icon: 'MinusIcon',
+        route: 'banks.groups',
+        resource: 'BankGroup',
+        action: 'read',
+      },
+      {
+        title: 'Bank List',
+        icon: 'MinusIcon',
+        route: 'banks.list',
+        resource: 'Bank',
+        action: 'read',
+      },
+    ],
+  },
 ]

@@ -190,4 +190,22 @@ export default [
       action: 'read_release',
     },
   },
+  {
+    path: '/banks/groups',
+    name: 'banks.groups',
+    component: () => import('@/views/admin/banks-groups/List.vue'),
+    meta: {
+      resource: 'BankGroup',
+      action: 'read',
+    },
+  },
+  {
+    path: '/banks/list',
+    name: 'banks.list',
+    component: () => import('@/views/admin/banks-list/List.vue'),
+    meta: {
+      resource: 'Bank',
+      action: 'read',
+    },
+  },
 ]
