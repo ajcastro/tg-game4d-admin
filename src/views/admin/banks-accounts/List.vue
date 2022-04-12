@@ -243,6 +243,7 @@ export default {
       resourceId: null,
       model: CompanyBank,
       ...makeTable({
+        sortBy: 'bank_code',
         perPage: 50,
         columns: [
           { key: 'actions' },
