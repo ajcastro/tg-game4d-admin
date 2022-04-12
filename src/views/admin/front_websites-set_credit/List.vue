@@ -162,8 +162,6 @@ import {
   BFormInput,
   BButton,
   BTable,
-  BDropdown,
-  BDropdownItem,
   BPagination,
   BBadge,
 } from 'bootstrap-vue'
@@ -171,7 +169,6 @@ import vSelect from 'vue-select'
 import { makeTable } from '@/helpers/table'
 import Website from '@/models/Website'
 import resourceTable from '@/mixins/resource/resource-table'
-import dayjs from 'dayjs'
 import FormModal from './FormModal.vue'
 import EditCreditModal from './components/EditCreditModal.vue'
 
@@ -183,8 +180,6 @@ export default {
     BFormInput,
     BButton,
     BTable,
-    BDropdown,
-    BDropdownItem,
     BPagination,
     BBadge,
 
@@ -204,12 +199,6 @@ export default {
         columns: [
           { key: 'actions' },
           { key: 'code', sortable: true },
-          {
-            key: 'assigned_client',
-            sortable: true,
-            formatter: (value, key, item) => item.assigned_client.code,
-          },
-          { key: 'ip_address', sortable: true },
           { key: 'domain_name', sortable: true },
           { key: 'is_active', sortable: true },
           // { key: 'remarks', sortable: false },
@@ -240,8 +229,7 @@ export default {
   methods: {
     fetchRowsParams() {
       return {
-        include: 'assigned_client,created_by,updated_by',
-        'fields[assigned_client]': 'id,code',
+        include: 'created_by,updated_by',
         'fields[created_by]': 'id,name',
         'fields[updated_by]': 'id,name',
       }
