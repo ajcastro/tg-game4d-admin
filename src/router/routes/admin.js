@@ -208,4 +208,13 @@ export default [
       action: 'read',
     },
   },
+  {
+    path: '/banks/accounts',
+    name: 'banks.accounts',
+    component: () => import('@/views/admin/banks-accounts/List.vue'),
+    meta: {
+      resource: 'CompanyBank',
+      action: 'read',
+    },
+  },
 ]

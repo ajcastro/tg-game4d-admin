@@ -175,6 +175,13 @@ export default [
         resource: 'Bank',
         action: 'read',
       },
+      {
+        title: 'Bank Accounts',
+        icon: 'MinusIcon',
+        route: 'banks.accounts',
+        resource: 'CompanyBank',
+        action: 'read',
+      },
     ],
   },
 ]
