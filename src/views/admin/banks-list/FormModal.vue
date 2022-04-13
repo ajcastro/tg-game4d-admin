@@ -14,7 +14,7 @@
           <!-- code -->
           <b-col cols="12">
             <b-form-group
-              label="Code"
+              label="Bank Code"
               label-for="v-code"
             >
               <b-form-input
@@ -28,7 +28,7 @@
           <!-- name -->
           <b-col cols="12">
             <b-form-group
-              label="Name"
+              label="Bank Name"
               label-for="v-name"
             >
               <b-form-input
