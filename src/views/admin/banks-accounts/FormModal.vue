@@ -6,7 +6,7 @@
       hide-footer
       no-close-on-backdrop
       @hidden="resetForm()"
-      @show="getResource()"
+      @show="(getResource(), getBankOptions())"
     >
       <b-form @submit.prevent="save">
         <b-row>
@@ -34,9 +34,13 @@
               label="Bank Code"
               label-for="v-bank_code"
             >
-              <b-form-input
-                id="v-bank_code"
+              <v-select
                 v-model="form.bank_code"
+                id-for="v-bank_code"
+                :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+                :options="bankOptions"
+                label="code"
+                :reduce="(item) => item.code"
               />
               <input-errors :errors="errors.bank_code" />
             </b-form-group>
@@ -202,6 +206,7 @@ export default {
       form: { is_auto_update_balance: 0 },
       errors: {},
       model: CompanyBank,
+      bankOptions: [],
     }
   },
   computed: {
@@ -220,6 +225,15 @@ export default {
         ...data,
         is_auto_update_balance: data.is_auto_update_balance ? 1 : 0,
       }
+    },
+    async getBankOptions() {
+      const { data } = await this.$http.get('api/admin/banks', {
+        params: {
+          paginate: false,
+          'fields[banks]': 'id,code,name',
+        },
+      })
+      this.bankOptions = data.data
     },
   },
 }
