@@ -114,10 +114,11 @@
             </b-dropdown-item> -->
 
             <!-- TODO: v-if for casl permission check -->
-            <b-dropdown-item>
-              <!-- @click="edit(data.item, data)" -->
-              <feather-icon icon="EditIcon" />
-              <span class="align-middle ml-50">Edit</span>
+            <b-dropdown-item
+              @click="release(data.item, data)"
+            >
+              <feather-icon icon="CheckIcon" />
+              <span class="align-middle ml-50">Release</span>
             </b-dropdown-item>
 
           </b-dropdown>
@@ -215,6 +216,7 @@ import resourceTable from '@/mixins/resource/resource-table'
 import dayjs from 'dayjs'
 import PromotionRelease from '@/models/PromotionRelease'
 import PromotionReleaseFilters from '@/components/PromotionReleaseFilters.vue'
+import confirm from '@/mixins/confirm'
 import FormModal from './FormModal.vue'
 
 export default {
@@ -236,6 +238,7 @@ export default {
     PromotionReleaseFilters,
   },
   mixins: [
+    confirm,
     resourceTable,
   ],
   data() {
@@ -301,6 +304,14 @@ export default {
       if (status === 1) return 'Approved'
       if (status === 2) return 'Rejected'
       return ''
+    },
+    async release(item) {
+      const confirmed = await this.$confirm('Are you sure to release this?')
+      if (!confirmed) return
+
+      await this.$http.post(`api/admin/promotion_releases/${item.id}/release`)
+      this.$notifySuccess('Promotion is successfully released!')
+      this.$refs.resourceTable.refresh()
     },
   },
 }
