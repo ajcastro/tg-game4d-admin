@@ -168,8 +168,8 @@ export default [
     name: 'promotions.settings',
     component: () => import('@/views/admin/promotions/Settings.vue'),
     meta: {
-      resource: 'PromotionSetting',
-      action: 'read',
+      resource: 'Promotion',
+      action: 'setting',
     },
   },
   {
