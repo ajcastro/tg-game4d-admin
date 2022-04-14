@@ -164,6 +164,15 @@ export default [
     },
   },
   {
+    path: '/promotions/:id/settings',
+    name: 'promotions.settings',
+    component: () => import('@/views/admin/promotions/Settings.vue'),
+    meta: {
+      resource: 'PromotionSetting',
+      action: 'read',
+    },
+  },
+  {
     path: '/promotions/manual',
     name: 'promotions.manual',
     component: () => import('@/views/admin/promotions-manual/List.vue'),

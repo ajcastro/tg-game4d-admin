@@ -140,6 +140,7 @@
 
             <b-dropdown-item
               v-if="$can('setting', 'Promotion')"
+              :to="{name: 'promotions.settings', params: { id: data.item.id }}"
             >
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">Setting</span>
