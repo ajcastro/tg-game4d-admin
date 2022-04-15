@@ -1,6 +1,7 @@
 <template>
   <div class="pb-1">
     <b-card
+      v-if="$store.state.websiteSelector.selectedWebsiteId"
       no-body
       class="mb-4 col-md-12 mx-auto"
     >
@@ -14,6 +15,55 @@
       <b-card-body>
 
         <b-form @submit.prevent="save">
+          <b-row>
+            <!-- rebate.content -->
+            <b-col cols="12">
+              <b-form-group
+                label="Rebate Content:"
+                label-for="h-rebate_content"
+                label-cols-md="2"
+              >
+                <b-form-input
+                  id="h-rebate_content"
+                  v-model="rebate.content"
+                />
+                <small
+                  v-for="error in errors.content"
+                  :key="error"
+                  class="text-danger d-block"
+                >{{ error }}</small>
+              </b-form-group>
+            </b-col>
+            <!-- is_active -->
+            <b-col
+              md="8"
+            >
+              <b-form-group>
+                <b-form-checkbox
+                  id="checkbox-is_active"
+                  v-model="rebate.is_active"
+                  name="checkbox-is_active"
+                >
+                  Is Active
+                </b-form-checkbox>
+              </b-form-group>
+            </b-col>
+            <!-- is_shown -->
+            <b-col
+              md="8"
+            >
+              <b-form-group>
+                <b-form-checkbox
+                  id="checkbox-is_shown"
+                  v-model="rebate.is_shown"
+                  name="checkbox-is_shown"
+                >
+                  Is Shown
+                </b-form-checkbox>
+              </b-form-group>
+            </b-col>
+          </b-row>
+
           <b-table-simple
             hover
             small
@@ -25,8 +75,7 @@
                 <b-th width="20%">
                   Game
                 </b-th>
-                <b-th>New Member</b-th>
-                <b-th>Regular Member</b-th>
+                <b-th>Percentage Level</b-th>
                 <b-th width="10%">
                   Pay Out By
                 </b-th>
@@ -39,17 +88,10 @@
                 v-for="setting in rebateSettings"
                 :key="setting.id"
               >
-                <b-td> {{ setting.category.title }}</b-td>
+                <b-td> {{ setting.game_category.title }}</b-td>
                 <b-td>
                   <b-form-input
-                    v-model="setting.new_member"
-                    type="number"
-                    step="any"
-                  />
-                </b-td>
-                <b-td>
-                  <b-form-input
-                    v-model="setting.regular_member"
+                    v-model="setting.percentage_level_0"
                     type="number"
                     step="any"
                   />
@@ -102,6 +144,13 @@
         </b-form>
       </b-card-body>
     </b-card>
+
+    <b-card
+      v-else
+      class="mb-0 bg-danger text-white"
+    >
+      Please select website first.
+    </b-card>
   </div>
 </template>
 
@@ -109,7 +158,7 @@
 /* eslint-disable new-cap */
 import Ripple from 'vue-ripple-directive'
 import {
-  BRow, BCol, BForm, BButton, BFormGroup, BFormInput, BSpinner, BFormSelect,
+  BRow, BCol, BForm, BButton, BFormGroup, BFormInput, BSpinner, BFormSelect, BFormCheckbox,
   BCard, BCardTitle, BCardBody,
   BTableSimple, BThead, BTr, BTbody, BTd, BTh,
 } from 'bootstrap-vue'
@@ -125,6 +174,7 @@ export default {
     BFormInput,
     BSpinner,
     BFormSelect,
+    BFormCheckbox,
     BCard,
     BCardTitle,
     BCardBody,
@@ -144,6 +194,7 @@ export default {
   data() {
     return {
       loading: false,
+      rebate: {},
       rebateSettings: [],
       errors: {},
     }
@@ -152,24 +203,37 @@ export default {
     canSave() {
       return true
     },
+    selectedWebsiteId() {
+      return this.$store.state.websiteSelector.selectedWebsiteId
+    },
+  },
+  watch: {
+    selectedWebsiteId() {
+      this.getRebateSettings()
+    },
   },
   created() {
     this.getRebateSettings()
   },
   methods: {
     async getRebateSettings() {
+      if (!this.selectedWebsiteId) return
+
       this.loading = true
-      const { data } = await this.$http.get('api/admin/rebate_settings')
-      this.rebateSettings = data
+      const { data } = await this.$http.get(`api/admin/rebate_settings/${this.selectedWebsiteId}`)
+      const { settings, ...rebate } = data
+      this.rebate = rebate
+      this.rebateSettings = settings
       this.loading = false
     },
     async save() {
       try {
         this.loading = true
         const payload = {
+          ...this.rebate,
           rebate_settings: this.rebateSettings,
         }
-        await this.$http.post('api/admin/rebate_settings', payload)
+        await this.$http.post(`api/admin/rebate_settings/${this.selectedWebsiteId}`, payload)
         this.$notifySuccess('Successfully Saved Settings!')
         this.errors = {}
       } catch (err) {
