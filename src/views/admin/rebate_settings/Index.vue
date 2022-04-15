@@ -58,7 +58,7 @@
                   v-model="rebate.is_shown"
                   name="checkbox-is_shown"
                 >
-                  Is Shown
+                  Show In Page Website
                 </b-form-checkbox>
               </b-form-group>
             </b-col>
@@ -75,7 +75,7 @@
                 <b-th width="20%">
                   Game
                 </b-th>
-                <b-th>Percentage Level</b-th>
+                <b-th>Rebate Percentage</b-th>
                 <b-th width="10%">
                   Pay Out By
                 </b-th>
