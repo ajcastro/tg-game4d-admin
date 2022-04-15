@@ -21,11 +21,11 @@
               <b-form-group
                 label="Rebate Content:"
                 label-for="h-rebate_content"
-                label-cols-md="2"
+                label-cols-md="12"
               >
-                <b-form-input
-                  id="h-rebate_content"
+                <quill-editor
                   v-model="rebate.content"
+                  :options="snowOption"
                 />
                 <small
                   v-for="error in errors.content"
@@ -162,7 +162,13 @@ import {
   BCard, BCardTitle, BCardBody,
   BTableSimple, BThead, BTr, BTbody, BTd, BTh,
 } from 'bootstrap-vue'
-import dayjs from 'dayjs'
+// eslint-disable-next-line
+import 'quill/dist/quill.core.css'
+// eslint-disable-next-line
+import 'quill/dist/quill.snow.css'
+// eslint-disable-next-line
+import 'quill/dist/quill.bubble.css'
+import { quillEditor } from 'vue-quill-editor'
 
 export default {
   components: {
@@ -185,6 +191,8 @@ export default {
     BTbody,
     BTd,
     BTh,
+
+    quillEditor,
   },
   directives: {
     Ripple,
@@ -197,6 +205,10 @@ export default {
       rebate: {},
       rebateSettings: [],
       errors: {},
+
+      snowOption: {
+        theme: 'snow',
+      },
     }
   },
   computed: {
