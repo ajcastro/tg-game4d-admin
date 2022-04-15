@@ -155,6 +155,13 @@ export default [
         resource: 'Promotion',
         action: 'read_manual',
       },
+      {
+        title: 'Rebate Settings',
+        icon: 'MinusIcon',
+        route: 'rebate_settings',
+        resource: 'RebateSetting',
+        action: 'read',
+      },
     ],
   },
   {

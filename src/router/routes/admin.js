@@ -200,6 +200,15 @@ export default [
     },
   },
   {
+    path: '/rebate_settings',
+    name: 'rebate_settings',
+    component: () => import('@/views/admin/rebate_settings/Index.vue'),
+    meta: {
+      resource: 'RebateSetting',
+      action: 'read',
+    },
+  },
+  {
     path: '/banks/groups',
     name: 'banks.groups',
     component: () => import('@/views/admin/banks-groups/List.vue'),
