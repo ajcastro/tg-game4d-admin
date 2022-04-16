@@ -44,7 +44,12 @@
                   v-model="rebate.is_active"
                   name="checkbox-is_active"
                 >
-                  Rebate Enable / Rebate Disable
+                  <template v-if="rebate.is_active">
+                    Rebate Enabled
+                  </template>
+                  <template v-else>
+                    Rebate Disable
+                  </template>
                 </b-form-checkbox>
               </b-form-group>
             </b-col>
