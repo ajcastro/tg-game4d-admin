@@ -7,7 +7,6 @@
     </b-card-header>
     <b-card-body>
       <b-row>
-        </b-col>
         <b-col
           cols="12"
           md="4"

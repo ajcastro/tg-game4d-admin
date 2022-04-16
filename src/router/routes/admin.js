@@ -209,6 +209,15 @@ export default [
     },
   },
   {
+    path: '/rebate_logs',
+    name: 'rebate_logs',
+    component: () => import('@/views/admin/rebate_logs/List.vue'),
+    meta: {
+      resource: 'RebateLog',
+      action: 'read',
+    },
+  },
+  {
     path: '/banks/groups',
     name: 'banks.groups',
     component: () => import('@/views/admin/banks-groups/List.vue'),

@@ -162,6 +162,13 @@ export default [
         resource: 'RebateSetting',
         action: 'read',
       },
+      {
+        title: 'Rebate Logs',
+        icon: 'MinusIcon',
+        route: 'rebate_logs',
+        resource: 'RebateLog',
+        action: 'read',
+      },
     ],
   },
   {
