@@ -18,9 +18,8 @@
       >
         <b-thead>
           <b-tr>
-            <b-th width="20%">
-              Game Category
-            </b-th>
+            <b-th>Username</b-th>
+            <b-th>Game Category</b-th>
             <b-th>Turn Over Amount</b-th>
             <b-th>Referral Percentage</b-th>
             <b-th>Referral Amount</b-th>
@@ -41,13 +40,14 @@
             v-for="detail in form.details"
             :key="detail.id"
           >
+            <b-td> {{ detail.downlink_member.username }}</b-td>
             <b-td> {{ detail.game_category.title }}</b-td>
             <b-td> {{ detail.turn_over_amount | currency }}</b-td>
             <b-td> {{ detail.referral_percentage }}</b-td>
             <b-td> {{ detail.referral_amount | currency }}</b-td>
           </b-tr>
-          <b-tr>
-            <b-td colspan="3" />
+          <b-tr v-if="!loading">
+            <b-td colspan="4" />
             <b-td class="font-weight-bold">
               {{ form.referral_amount | currency }}
             </b-td>
