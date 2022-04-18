@@ -1,6 +1,6 @@
 <template>
   <div>
-    <rebate-log-filters
+    <referral-log-filters
       v-if="$store.state.websiteSelector.selectedWebsiteId"
       v-model="filter"
     />
@@ -232,8 +232,8 @@ import vSelect from 'vue-select'
 import { makeTable } from '@/helpers/table'
 import resourceTable from '@/mixins/resource/resource-table'
 import dayjs from 'dayjs'
-import RebateLog from '@/models/RebateLog'
-import RebateLogFilters from '@/components/RebateLogFilters.vue'
+import ReferralLog from '@/models/ReferralLog'
+import ReferralLogFilters from '@/components/ReferralLogFilters.vue'
 import FormModal from './FormModal.vue'
 
 export default {
@@ -252,7 +252,7 @@ export default {
 
     vSelect,
     FormModal,
-    RebateLogFilters,
+    ReferralLogFilters,
   },
   mixins: [
     resourceTable,
@@ -260,7 +260,7 @@ export default {
   data() {
     return {
       resourceId: null,
-      model: RebateLog,
+      model: ReferralLog,
       ...makeTable({
         filter: {
           search: '',
@@ -280,16 +280,21 @@ export default {
             formatter: (value, key, item) => item.member.username,
           },
           {
+            key: 'uplink_member',
+            sortable: true,
+            formatter: (value, key, item) => item.uplink_member.username,
+          },
+          {
             key: 'turn_over_amount',
             sortable: true,
             formatter: value => this.$options.filters.currency(value),
           },
           {
-            key: 'rebate_percentage',
+            key: 'referral_percentage',
             sortable: true,
           },
           {
-            key: 'rebate_amount',
+            key: 'referral_amount',
             sortable: true,
             formatter: value => this.$options.filters.currency(value),
           },
@@ -320,7 +325,12 @@ export default {
   methods: {
     fetchRowsParams() {
       return {
-        include: 'game_category,member',
+        fields: {
+          member: 'id,username',
+          uplink_member: 'id,username',
+          game_category: 'id,title',
+        },
+        include: 'game_category,member,uplink_member',
       }
     },
   },

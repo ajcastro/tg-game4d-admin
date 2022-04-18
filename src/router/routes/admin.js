@@ -227,6 +227,15 @@ export default [
     },
   },
   {
+    path: '/referral_logs',
+    name: 'referral_logs',
+    component: () => import('@/views/admin/referral_logs/List.vue'),
+    meta: {
+      resource: 'ReferralLog',
+      action: 'read',
+    },
+  },
+  {
     path: '/banks/groups',
     name: 'banks.groups',
     component: () => import('@/views/admin/banks-groups/List.vue'),

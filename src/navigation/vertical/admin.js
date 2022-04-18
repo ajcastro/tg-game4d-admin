@@ -176,6 +176,13 @@ export default [
         resource: 'ReferralSetting',
         action: 'read',
       },
+      {
+        title: 'Referral Logs',
+        icon: 'MinusIcon',
+        route: 'referral_logs',
+        resource: 'ReferralLog',
+        action: 'read',
+      },
     ],
   },
   {
