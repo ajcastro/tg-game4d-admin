@@ -96,49 +96,14 @@
                 class="align-middle text-body"
               />
             </template>
-            <!-- <b-dropdown-item
-              :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
-            >
-              <feather-icon icon="FileTextIcon" />
-              <span class="align-middle ml-50">Details</span>
-            </b-dropdown-item> -->
-
             <b-dropdown-item
               v-if="$can('view_detail', 'Promotion') || $can('update', 'Promotion')"
               @click="edit(data.item, data)"
             >
-              <feather-icon icon="EditIcon" />
-              <span class="align-middle ml-50">Edit</span>
+              <feather-icon icon="EyeIcon" />
+              <span class="align-middle ml-50">View Details</span>
             </b-dropdown-item>
 
-            <!-- <b-dropdown-item @click="remove(data.item, data)">
-              <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">Delete</span>
-            </b-dropdown-item> -->
-
-            <b-dropdown-item
-              v-if="!data.item.is_active && $can('activate', 'Promotion')"
-              @click="setActive(data.item, true)"
-            >
-              <feather-icon icon="CheckSquareIcon" />
-              <span class="align-middle ml-50">Set Active</span>
-            </b-dropdown-item>
-
-            <b-dropdown-item
-              v-if="data.item.is_active && $can('deactivate', 'Promotion')"
-              @click="setActive(data.item, false)"
-            >
-              <feather-icon icon="XSquareIcon" />
-              <span class="align-middle ml-50">Set Inactive</span>
-            </b-dropdown-item>
-
-            <b-dropdown-item
-              v-if="$can('setting', 'Promotion')"
-              :to="{name: 'promotions.settings', params: { id: data.item.id }}"
-            >
-              <feather-icon icon="EditIcon" />
-              <span class="align-middle ml-50">Setting</span>
-            </b-dropdown-item>
           </b-dropdown>
         </template>
       </b-table>
@@ -265,35 +230,14 @@ export default {
         filter: {
           search: '',
           date_range: '',
-          game_category_ids: [],
         },
         columns: [
-          // { key: 'actions' },
-          // {
-          //   key: 'game_category',
-          //   sortable: true,
-          //   formatter: (value, key, item) => item.game_category.title,
-          // },
+          { key: 'actions' },
           {
             key: 'member',
             sortable: true,
             formatter: (value, key, item) => item.member.username,
           },
-          {
-            key: 'uplink_member',
-            label: 'Username',
-            sortable: true,
-            formatter: (value, key, item) => item.uplink_member.username,
-          },
-          // {
-          //   key: 'turn_over_amount',
-          //   sortable: true,
-          //   formatter: value => this.$options.filters.currency(value),
-          // },
-          // {
-          //   key: 'referral_percentage',
-          //   sortable: true,
-          // },
           {
             key: 'referral_amount',
             label: 'Amount',
@@ -329,10 +273,8 @@ export default {
       return {
         fields: {
           member: 'id,username',
-          uplink_member: 'id,username',
-          game_category: 'id,title',
         },
-        include: 'game_category,member,uplink_member',
+        include: 'member',
       }
     },
   },

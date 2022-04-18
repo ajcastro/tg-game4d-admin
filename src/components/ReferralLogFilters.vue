@@ -12,23 +12,6 @@
           md="4"
           class="mb-md-0 mb-2"
         >
-          <label>Game Category</label>
-          <v-select
-            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-            :value="value.game_category_ids"
-            :options="gameCategoryOptions"
-            label="title"
-            multiple
-            class="w-100"
-            :reduce="val => val.id"
-            @input="(val) => $emit('input', {...value, game_category_ids: val})"
-          />
-        </b-col>
-        <b-col
-          cols="12"
-          md="4"
-          class="mb-md-0 mb-2"
-        >
           <label>Date Range</label>
           <flat-pickr
             v-model="dateRange"
@@ -89,20 +72,14 @@ export default {
   data() {
     return {
       dateRange: null,
-      gameCategoryOptions: [],
       originalFilters: this.value,
     }
   },
   computed: {
   },
   mounted() {
-    this.getGameCategoryOptions()
   },
   methods: {
-    async getGameCategoryOptions() {
-      const { data } = await this.$http.get('api/admin/game_categories', { params: { paginate: false } })
-      this.gameCategoryOptions = data.data
-    },
     async reset() {
       this.dateRange = null
       await this.$nextTick()
