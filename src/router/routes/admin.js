@@ -218,6 +218,15 @@ export default [
     },
   },
   {
+    path: '/referral_settings',
+    name: 'referral_settings',
+    component: () => import('@/views/admin/referral_settings/Index.vue'),
+    meta: {
+      resource: 'ReferralSetting',
+      action: 'read',
+    },
+  },
+  {
     path: '/banks/groups',
     name: 'banks.groups',
     component: () => import('@/views/admin/banks-groups/List.vue'),

@@ -8,7 +8,7 @@
       <div class="card-header">
         <!-- Title & SubTitle -->
         <div>
-          <b-card-title>Rebate Settings</b-card-title>
+          <b-card-title>Referral Settings</b-card-title>
         </div>
       </div>
 
@@ -16,19 +16,41 @@
 
         <b-form @submit.prevent="save">
           <b-row>
-            <!-- rebate.content -->
+            <!-- referral.content -->
             <b-col cols="12">
               <b-form-group
-                label="Rebate Content:"
-                label-for="h-rebate_content"
+                label="Referral Content:"
+                label-for="h-referral_content"
                 label-cols-md="12"
               >
                 <quill-editor
-                  v-model="rebate.content"
+                  v-model="referral.content"
                   :options="snowOption"
                 />
                 <small
                   v-for="error in errors.content"
+                  :key="error"
+                  class="text-danger d-block"
+                >{{ error }}</small>
+              </b-form-group>
+            </b-col>
+            <!-- referral.pay_period -->
+            <b-col cols="12">
+              <b-form-group
+                label="Pay Period:"
+                label-for="h-referral_pay_period"
+                label-cols-md="1"
+                label-cols-sm="4"
+                label-cols-xs="12"
+              >
+                <b-form-select
+                  id="h-referral_pay_period"
+                  v-model="referral.pay_period"
+                  :options="[{value:0, text: 'Weekly'}, {value:1, text: 'Monthly'}]"
+                  class="col-xs-12 col-md-2"
+                />
+                <small
+                  v-for="error in errors.pay_period"
                   :key="error"
                   class="text-danger d-block"
                 >{{ error }}</small>
@@ -41,14 +63,14 @@
               <b-form-group>
                 <b-form-checkbox
                   id="checkbox-is_active"
-                  v-model="rebate.is_active"
+                  v-model="referral.is_active"
                   name="checkbox-is_active"
                 >
-                  <template v-if="rebate.is_active">
-                    Rebate Enabled
+                  <template v-if="referral.is_active">
+                    Referral Enabled
                   </template>
                   <template v-else>
-                    Rebate Disabled
+                    Referral Disabled
                   </template>
                 </b-form-checkbox>
               </b-form-group>
@@ -60,7 +82,7 @@
               <b-form-group>
                 <b-form-checkbox
                   id="checkbox-is_shown"
-                  v-model="rebate.is_shown"
+                  v-model="referral.is_shown"
                   name="checkbox-is_shown"
                 >
                   Show In Page Website
@@ -78,45 +100,36 @@
             <b-thead>
               <b-tr>
                 <b-th width="20%">
-                  Game
+                  Game Category
                 </b-th>
-                <b-th>Rebate Percentage</b-th>
-                <b-th width="10%">
-                  Pay Out By
-                </b-th>
-                <b-th>Min Amount</b-th>
-                <b-th>Max Amount</b-th>
+                <b-th>Min Commission</b-th>
+                <b-th>Max Commission</b-th>
+                <b-th>Referral Level (%)</b-th>
               </b-tr>
             </b-thead>
             <b-tbody>
               <b-tr
-                v-for="setting in rebateSettings"
+                v-for="setting in referralSettings"
                 :key="setting.id"
               >
                 <b-td> {{ setting.game_category.title }}</b-td>
                 <b-td>
                   <b-form-input
-                    v-model="setting.percentage_level_0"
-                    type="number"
-                    step="any"
-                  />
-                </b-td>
-                <b-td>
-                  <b-form-select
-                    v-model="setting.pay_out_by"
-                    :options="[{value:0, text: 'Daily'}, {value:1, text: 'Weekly'}]"
-                  />
-                </b-td>
-                <b-td>
-                  <b-form-input
-                    v-model="setting.min_amount"
+                    v-model="setting.min_commission"
                     type="number"
                     step="any"
                   />
                 </b-td>
                 <b-td>
                   <b-form-input
-                    v-model="setting.max_amount"
+                    v-model="setting.max_commission"
+                    type="number"
+                    step="any"
+                  />
+                </b-td>
+                <b-td>
+                  <b-form-input
+                    v-model="setting.referral_level"
                     type="number"
                     step="any"
                   />
@@ -207,8 +220,8 @@ export default {
   data() {
     return {
       loading: false,
-      rebate: {},
-      rebateSettings: [],
+      referral: {},
+      referralSettings: [],
       errors: {},
 
       snowOption: {
@@ -226,31 +239,31 @@ export default {
   },
   watch: {
     selectedWebsiteId() {
-      this.getRebateSettings()
+      this.getReferralSettings()
     },
   },
   created() {
-    this.getRebateSettings()
+    this.getReferralSettings()
   },
   methods: {
-    async getRebateSettings() {
+    async getReferralSettings() {
       if (!this.selectedWebsiteId) return
 
       this.loading = true
-      const { data } = await this.$http.get(`api/admin/rebate_settings/${this.selectedWebsiteId}`)
-      const { settings, ...rebate } = data
-      this.rebate = rebate
-      this.rebateSettings = settings
+      const { data } = await this.$http.get(`api/admin/referral_settings/${this.selectedWebsiteId}`)
+      const { settings, ...referral } = data
+      this.referral = referral
+      this.referralSettings = settings
       this.loading = false
     },
     async save() {
       try {
         this.loading = true
         const payload = {
-          ...this.rebate,
-          rebate_settings: this.rebateSettings,
+          ...this.referral,
+          referral_settings: this.referralSettings,
         }
-        await this.$http.post(`api/admin/rebate_settings/${this.selectedWebsiteId}`, payload)
+        await this.$http.post(`api/admin/referral_settings/${this.selectedWebsiteId}`, payload)
         this.$notifySuccess('Successfully Saved Settings!')
         this.errors = {}
       } catch (err) {

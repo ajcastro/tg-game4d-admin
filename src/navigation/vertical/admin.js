@@ -169,6 +169,13 @@ export default [
         resource: 'RebateLog',
         action: 'read',
       },
+      {
+        title: 'Referral Settings',
+        icon: 'MinusIcon',
+        route: 'referral_settings',
+        resource: 'ReferralSetting',
+        action: 'read',
+      },
     ],
   },
   {
