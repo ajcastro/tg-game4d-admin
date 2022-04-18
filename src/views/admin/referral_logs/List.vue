@@ -269,11 +269,11 @@ export default {
         },
         columns: [
           // { key: 'actions' },
-          {
-            key: 'game_category',
-            sortable: true,
-            formatter: (value, key, item) => item.game_category.title,
-          },
+          // {
+          //   key: 'game_category',
+          //   sortable: true,
+          //   formatter: (value, key, item) => item.game_category.title,
+          // },
           {
             key: 'member',
             sortable: true,
@@ -285,17 +285,18 @@ export default {
             sortable: true,
             formatter: (value, key, item) => item.uplink_member.username,
           },
-          {
-            key: 'turn_over_amount',
-            sortable: true,
-            formatter: value => this.$options.filters.currency(value),
-          },
-          {
-            key: 'referral_percentage',
-            sortable: true,
-          },
+          // {
+          //   key: 'turn_over_amount',
+          //   sortable: true,
+          //   formatter: value => this.$options.filters.currency(value),
+          // },
+          // {
+          //   key: 'referral_percentage',
+          //   sortable: true,
+          // },
           {
             key: 'referral_amount',
+            label: 'Amount',
             sortable: true,
             formatter: value => this.$options.filters.currency(value),
           },
