@@ -281,6 +281,7 @@ export default {
           },
           {
             key: 'uplink_member',
+            label: 'Username',
             sortable: true,
             formatter: (value, key, item) => item.uplink_member.username,
           },
