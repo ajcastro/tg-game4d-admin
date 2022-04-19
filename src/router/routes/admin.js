@@ -262,4 +262,13 @@ export default [
       action: 'read',
     },
   },
+  {
+    path: '/website_settings',
+    name: 'website_settings',
+    component: () => import('@/views/admin/website_settings/Index.vue'),
+    meta: {
+      resource: 'WebsiteSetting',
+      action: 'read',
+    },
+  },
 ]

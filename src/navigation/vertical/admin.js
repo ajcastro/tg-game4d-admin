@@ -212,4 +212,17 @@ export default [
       },
     ],
   },
+  {
+    title: 'CMS',
+    icon: 'LayoutIcon',
+    children: [
+      {
+        title: 'Website Settings',
+        icon: 'MinusIcon',
+        route: 'website_settings',
+        resource: 'WebsiteSetting',
+        action: 'read',
+      },
+    ],
+  },
 ]
