@@ -88,10 +88,11 @@
                 label="Meta Keyword"
                 label-for="v-meta_keyword"
               >
-                <b-form-input
+                <b-form-textarea
                   id="v-meta_keyword"
                   v-model="form.meta_keyword"
-                  :state="null"
+                  placeholder=""
+                  rows="2"
                   :readonly="!canSave"
                   @input="errors.meta_keyword = []"
                 />
@@ -105,10 +106,11 @@
                 label="Meta Description"
                 label-for="v-meta_description"
               >
-                <b-form-input
+                <b-form-textarea
                   id="v-meta_description"
                   v-model="form.meta_description"
-                  :state="null"
+                  placeholder=""
+                  rows="2"
                   :readonly="!canSave"
                   @input="errors.meta_description = []"
                 />
@@ -162,7 +164,7 @@
 /* eslint-disable new-cap */
 import Ripple from 'vue-ripple-directive'
 import {
-  BRow, BCol, BForm, BButton, BFormGroup, BFormInput, BSpinner, BFormCheckbox,
+  BRow, BCol, BForm, BButton, BFormGroup, BFormInput, BSpinner, BFormCheckbox, BFormTextarea,
   BCard, BCardTitle, BCardBody,
 } from 'bootstrap-vue'
 import InputErrors from '@/components/InputErrors.vue'
@@ -189,6 +191,7 @@ export default {
     BCardTitle,
     BCardBody,
     BFormCheckbox,
+    BFormTextarea,
 
     InputErrors,
     quillEditor,
