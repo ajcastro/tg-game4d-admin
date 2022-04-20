@@ -300,4 +300,13 @@ export default [
       action: 'update',
     },
   },
+  {
+    path: '/contact_settings',
+    name: 'contact_settings',
+    component: () => import('@/views/admin/contact_settings/List.vue'),
+    meta: {
+      resource: 'ContactSetting',
+      action: 'read',
+    },
+  },
 ]

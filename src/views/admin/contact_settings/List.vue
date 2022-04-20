@@ -38,11 +38,11 @@
                 placeholder="Search by title or short description..."
               />
               <b-button
-                v-if="$can('create', 'PageContent')"
+                v-if="$can('create', 'ContactSetting')"
                 variant="primary"
                 @click="add()"
               >
-                <span class="text-nowrap">New Page</span>
+                <span class="text-nowrap">New Contact</span>
               </b-button>
             </div>
           </b-col>
@@ -66,16 +66,6 @@
         :per-page="perPage"
         :current-page="currentPage"
       >
-        <!-- Column: Image -->
-        <template #cell(image)="data">
-          <div>
-            <b-img
-              class="mb-1 mb-sm-0"
-              height="80"
-              :src="data.item.image_thumb_url"
-            />
-          </div>
-        </template>
 
         <!-- Column: is_shown -->
         <template #cell(is_shown)="data">
@@ -115,15 +105,15 @@
             </template>
 
             <b-dropdown-item
-              v-if="$can('view_detail', 'PageContent') || $can('update', 'PageContent')"
+              v-if="$can('view_detail', 'ContactSetting') || $can('update', 'ContactSetting')"
               @click="edit(data.item, data)"
             >
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">Edit</span>
             </b-dropdown-item>
 
-            <!-- <b-dropdown-item
-              v-if="!data.item.is_active && $can('activate', 'PageContent')"
+            <b-dropdown-item
+              v-if="!data.item.is_active && $can('activate', 'ContactSetting')"
               @click="setActive(data.item, true)"
             >
               <feather-icon icon="CheckSquareIcon" />
@@ -131,12 +121,12 @@
             </b-dropdown-item>
 
             <b-dropdown-item
-              v-if="data.item.is_active && $can('deactivate', 'PageContent')"
+              v-if="data.item.is_active && $can('deactivate', 'ContactSetting')"
               @click="setActive(data.item, false)"
             >
               <feather-icon icon="XSquareIcon" />
               <span class="align-middle ml-50">Set Inactive</span>
-            </b-dropdown-item> -->
+            </b-dropdown-item>
           </b-dropdown>
         </template>
       </b-table>
@@ -200,6 +190,12 @@
     >
       Please select website first.
     </b-card>
+
+    <form-modal
+      ref="formModal"
+      :resource-id.sync="resourceId"
+      @save="$refs.resourceTable.refresh()"
+    />
   </div>
 </template>
 
@@ -216,12 +212,12 @@ import {
   BDropdownItem,
   BPagination,
   BBadge,
-  BImg,
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
 import { makeTable } from '@/helpers/table'
 import resourceTable from '@/mixins/resource/resource-table'
-import PageContent from '@/models/PageContent'
+import ContactSetting from '@/models/ContactSetting'
+import FormModal from './FormModal.vue'
 
 export default {
   components: {
@@ -235,9 +231,10 @@ export default {
     BDropdownItem,
     BPagination,
     BBadge,
-    BImg,
 
     vSelect,
+
+    FormModal,
   },
   mixins: [
     resourceTable,
@@ -245,16 +242,17 @@ export default {
   data() {
     return {
       resourceId: null,
-      model: PageContent,
+      model: ContactSetting,
       ...makeTable({
         filter: {
           search: '',
         },
         columns: [
           { key: 'actions' },
-          { key: 'short_description', sortable: true },
-          { key: 'url', sortable: true },
+          { key: 'title', sortable: true },
+          { key: 'value', sortable: true },
           { key: 'is_shown', label: 'Show in Website', sortable: true },
+          { key: 'is_active', sortable: true },
         ],
       }),
     }
@@ -273,12 +271,6 @@ export default {
     fetchRowsParams() {
       return {
       }
-    },
-    add() {
-      this.$router.push({ name: 'page_contents.new' })
-    },
-    async edit(item) {
-      this.$router.push({ name: 'page_contents.edit', params: { id: item.id } })
     },
   },
 }

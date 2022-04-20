@@ -230,13 +230,13 @@ export default [
         resource: 'PageContent',
         action: 'read',
       },
-      // {
-      //   title: 'Contact Settings',
-      //   icon: 'MinusIcon',
-      //   route: 'contact_settings',
-      //   resource: 'ContactSetting',
-      //   action: 'read',
-      // },
+      {
+        title: 'Contact Settings',
+        icon: 'MinusIcon',
+        route: 'contact_settings',
+        resource: 'ContactSetting',
+        action: 'read',
+      },
     ],
   },
 ]
