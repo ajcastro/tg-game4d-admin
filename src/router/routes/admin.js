@@ -271,4 +271,33 @@ export default [
       action: 'read',
     },
   },
+  {
+    path: '/page_contents',
+    name: 'page_contents',
+    component: () => import('@/views/admin/page_contents/List.vue'),
+    meta: {
+      resource: 'PageContent',
+      action: 'read',
+    },
+  },
+  {
+    path: '/page_contents/new',
+    name: 'page_contents.new',
+    component: () => import('@/views/admin/page_contents/Form.vue'),
+    meta: {
+      resource: 'PageContent',
+      action: 'create',
+    },
+  },
+  {
+    path: '/page_contents/:id/edit',
+    name: 'page_contents.edit',
+    component: () => import('@/views/admin/page_contents/Form.vue'),
+    // eslint-disable-next-line radix
+    props: route => ({ resourceId: parseInt(route.params.id) }),
+    meta: {
+      resource: 'PageContent',
+      action: 'update',
+    },
+  },
 ]

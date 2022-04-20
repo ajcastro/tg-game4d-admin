@@ -223,6 +223,20 @@ export default [
         resource: 'WebsiteSetting',
         action: 'read',
       },
+      {
+        title: 'Page Contents',
+        icon: 'MinusIcon',
+        route: 'page_contents',
+        resource: 'PageContent',
+        action: 'read',
+      },
+      // {
+      //   title: 'Contact Settings',
+      //   icon: 'MinusIcon',
+      //   route: 'contact_settings',
+      //   resource: 'ContactSetting',
+      //   action: 'read',
+      // },
     ],
   },
 ]
