@@ -2,7 +2,7 @@
   <div class="pb-1">
     <b-card
       no-body
-      class="mb-4 col-md-8 mx-auto"
+      class="mb-4 col-md-12 mx-auto"
     >
       <div class="card-header">
         <!-- Title & SubTitle -->
