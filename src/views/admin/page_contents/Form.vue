@@ -6,8 +6,21 @@
     >
       <div class="card-header">
         <!-- Title & SubTitle -->
-        <div>
-          <b-card-title>{{ isCreating ? 'New' : 'Edit' }} Page Content</b-card-title>
+        <div class="col col-md-6 p-0">
+          <b-card-title>
+            {{ isCreating ? 'New' : 'Edit' }} Page Content
+          </b-card-title>
+        </div>
+        <div class="col col-md-6 text-right p-0">
+          <b-button
+            v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+            :disabled="loading"
+            variant="secondary"
+            class=""
+            to="/page_contents"
+          >
+            Back
+          </b-button>
         </div>
       </div>
 
@@ -139,6 +152,15 @@
             >
               <b-button
                 v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                :disabled="loading"
+                variant="secondary"
+                class="mr-1"
+                to="/page_contents"
+              >
+                Back
+              </b-button>
+              <b-button
+                v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                 :disabled="loading || !canSave"
                 type="submit"
                 variant="primary"
@@ -204,6 +226,7 @@ export default {
   ],
   data() {
     return {
+      closeOnSave: false,
       loading: false,
       form: {},
       errors: {},
