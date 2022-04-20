@@ -119,7 +119,7 @@
             <!-- content -->
             <b-col cols="12">
               <b-form-group
-                label="Meta Content"
+                label="Content"
                 label-for="v-content"
               >
                 <quill-editor
