@@ -237,6 +237,20 @@ export default [
         resource: 'ContactSetting',
         action: 'read',
       },
+      {
+        title: 'Guides List',
+        icon: 'MinusIcon',
+        route: 'guide_lists',
+        resource: 'GuideList',
+        action: 'read',
+      },
+      {
+        title: 'Guides Contents',
+        icon: 'MinusIcon',
+        route: 'guide_contents',
+        resource: 'GuideContent',
+        action: 'read',
+      },
     ],
   },
 ]

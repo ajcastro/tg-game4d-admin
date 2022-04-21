@@ -309,4 +309,33 @@ export default [
       action: 'read',
     },
   },
+  {
+    path: '/guide_lists',
+    name: 'guide_lists',
+    component: () => import('@/views/admin/guide_lists/List.vue'),
+    meta: {
+      resource: 'GuideList',
+      action: 'read',
+    },
+  },
+  {
+    path: '/guide_contents',
+    name: 'guide_contents',
+    component: () => import('@/views/admin/guide_contents/List.vue'),
+    meta: {
+      resource: 'GuideContent',
+      action: 'read',
+    },
+  },
+  {
+    path: '/guide_contents/:id/edit',
+    name: 'guide_contents.edit',
+    component: () => import('@/views/admin/guide_contents/Form.vue'),
+    // eslint-disable-next-line radix
+    props: route => ({ resourceId: parseInt(route.params.id) }),
+    meta: {
+      resource: 'PageContent',
+      action: 'update',
+    },
+  },
 ]
