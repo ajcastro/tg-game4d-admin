@@ -50,7 +50,7 @@
             </b-col>
 
             <!-- logo -->
-            <b-col cols="4">
+            <b-col cols="6">
               <b-form-group
                 label="Website Logo"
                 label-for="v-logo"
@@ -75,7 +75,7 @@
             </b-col>
 
             <!-- favicon -->
-            <b-col cols="4">
+            <b-col cols="6">
               <b-form-group
                 label="Website Favicon"
                 label-for="v-favicon"
@@ -101,7 +101,7 @@
             </b-col>
 
             <!-- jackpot_image -->
-            <b-col cols="4">
+            <b-col cols="12">
               <b-form-group
                 label="Progressive Jackpot Image"
                 label-for="v-jackpot_image"
