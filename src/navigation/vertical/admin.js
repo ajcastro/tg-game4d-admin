@@ -121,13 +121,6 @@ export default [
         resource: 'MemberTransaction',
         action: 'read_adjustments',
       },
-      {
-        title: 'Transfer Logs',
-        icon: 'MinusIcon',
-        route: 'transfer_logs',
-        resource: 'TransferLog',
-        action: 'read',
-      },
     ],
   },
   {
@@ -256,6 +249,19 @@ export default [
         icon: 'MinusIcon',
         route: 'guide_contents',
         resource: 'GuideContent',
+        action: 'read',
+      },
+    ],
+  },
+  {
+    title: 'Log Reports',
+    icon: 'FileTextIcon',
+    children: [
+      {
+        title: 'Transfer Logs',
+        icon: 'MinusIcon',
+        route: 'transfer_logs',
+        resource: 'TransferLog',
         action: 'read',
       },
     ],
