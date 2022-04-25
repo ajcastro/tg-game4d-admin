@@ -239,17 +239,17 @@ export default {
           {
             key: 'date',
             sortable: true,
-            formatter: value => (value ? dayjs(value).format('DD MMM YYYY, hh:mm a') : ''),
+            formatter: (value, key, item) => (item.from ? dayjs(item.from).format('DD MMM YYYY') : ''),
           },
           {
             key: 'from',
             sortable: true,
-            formatter: value => (value ? dayjs(value).format('DD MMM YYYY, hh:mm a') : ''),
+            formatter: value => (value ? dayjs(value).format('hh:mm a') : ''),
           },
           {
             key: 'to',
             sortable: true,
-            formatter: value => (value ? dayjs(value).format('DD MMM YYYY, hh:mm a') : ''),
+            formatter: value => (value ? dayjs(value).format('hh:mm a') : ''),
           },
           {
             key: 'amount',
