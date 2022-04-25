@@ -121,6 +121,13 @@ export default [
         resource: 'MemberTransaction',
         action: 'read_adjustments',
       },
+      {
+        title: 'Transfer Logs',
+        icon: 'MinusIcon',
+        route: 'transfer_logs',
+        resource: 'TransferLog',
+        action: 'read',
+      },
     ],
   },
   {

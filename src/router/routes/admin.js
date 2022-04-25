@@ -155,6 +155,15 @@ export default [
     },
   },
   {
+    path: '/transfer_logs',
+    name: 'transfer_logs',
+    component: () => import('@/views/admin/transfer_logs/List.vue'),
+    meta: {
+      resource: 'TransferLog',
+      action: 'read',
+    },
+  },
+  {
     path: '/promotions/list',
     name: 'promotions.index',
     component: () => import('@/views/admin/promotions/List.vue'),
