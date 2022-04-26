@@ -258,6 +258,13 @@ export default [
     icon: 'FileTextIcon',
     children: [
       {
+        title: 'User Logs',
+        icon: 'MinusIcon',
+        route: 'user_logs',
+        resource: 'UserLog',
+        action: 'read',
+      },
+      {
         title: 'Transfer Logs',
         icon: 'MinusIcon',
         route: 'transfer_logs',
