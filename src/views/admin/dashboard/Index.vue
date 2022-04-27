@@ -13,7 +13,7 @@
         </b-link>
       </p>
     </b-col> -->
-    <b-col cols="12">
+    <b-col cols="6">
       <NewMembersVsWithDeposits />
     </b-col>
     <!--
