@@ -83,9 +83,9 @@ export default {
         dataLabels: {
           enabled: true,
           enabledOnSeries: [0, 1],
-          style: {
-            colors: ['#a4d7fc', '#26E7A6'],
-          },
+          // style: {
+          //   colors: ['#a4d7fc', '#26E7A6'],
+          // },
         },
         labels: [
           '01-15 Feb 2022',

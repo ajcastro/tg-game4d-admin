@@ -4,7 +4,7 @@
       <!-- title and subtitle -->
       <div>
         <b-card-title class="mb-1">
-          Member Registration Brief
+          Website Revenue
         </b-card-title>
         <!-- <b-card-sub-title>Commercial networks</b-card-sub-title> -->
       </div>
@@ -28,12 +28,13 @@
 
     <b-card-body>
       <vue-apex-charts
-        type="line"
+        type="bar"
         height="300"
         :options="chartOptions"
         :series="series"
-      />
-    </b-card-body>
+      >
+        />
+      </vue-apex-charts></b-card-body>
   </b-card>
 </template>
 
@@ -60,54 +61,54 @@ export default {
       apexChatData,
       rangePicker: ['2022-05-01', '2022-05-10'],
 
-      series: [{
-        name: 'New Members',
-        type: 'column',
-        data: [440, 505, 414, 671, 227, 413],
-      }, {
-        name: 'New Members With Deposit',
-        type: 'line',
-        data: [400, 450, 380, 600, 200, 400],
-      }],
+      series: [
+        {
+          name: 'cl1wb1',
+          data: [440000, 550000, 410000],
+        },
+        {
+          name: 'cl1wb2',
+          data: [530000, 320000, 330000],
+        },
+        {
+          name: 'cl1wb3',
+          data: [530000, 320000, 330000],
+        },
+      ],
       chartOptions: {
         chart: {
-          height: 350,
-          type: 'line',
+          type: 'bar',
+          height: 300,
         },
-        stroke: {
-          width: [0, 4],
+        plotOptions: {
+          bar: {
+            horizontal: false,
+            dataLabels: {
+              position: 'top',
+            },
+          },
         },
-        // title: {
-        //   text: 'Traffic Sources',
-        // },
         dataLabels: {
           enabled: true,
-          enabledOnSeries: [0, 1],
-          // style: {
-          //   colors: ['#a4d7fc', '#26E7A6'],
-          // },
+          style: {
+            colors: ['#fff'],
+          },
+          formatter(val) {
+            return `${val / 1000}k`
+          },
         },
-        labels: [
-          '01-15 Feb 2022',
-          '16-28 Feb 2022',
-          '01-15 Mar 2022',
-          '16-31 Mar 2022',
-          '01-15 Apr 2022',
-          '15-30 Apr 2022',
-        ],
+        stroke: {
+          show: true,
+          width: 1,
+          colors: ['#fff'],
+        },
+        tooltip: {
+          shared: true,
+          intersect: false,
+        },
         xaxis: {
-          // type: 'datetime',
+          categories: ['Feb', 'Mar', 'Apr'],
         },
-        yaxis: [{
-          title: {
-            text: 'New Members',
-          },
-        }, {
-          opposite: true,
-          title: {
-            text: 'New Members With Deposit',
-          },
-        }],
       },
     }
   },

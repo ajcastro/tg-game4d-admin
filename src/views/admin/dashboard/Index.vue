@@ -19,6 +19,9 @@
     <b-col cols="6">
       <NewMembersVsRevenue />
     </b-col>
+    <b-col cols="6">
+      <WebsiteRevenue />
+    </b-col>
     <!--
     <b-col cols="12">
       <apex-line-area-chart />
@@ -56,18 +59,19 @@
 <script>
 import { BRow, BCol, BLink } from 'bootstrap-vue'
 
-import ApexLineChart from './ApexLineChart.vue'
-import ApexLineAreaChart from './ApexLineAreaChart.vue'
-import ApexDataBarChart from './ApexDataBarChart.vue'
-import ApexBarChart from './ApexBarChart.vue'
-import ApexCandlestickChart from './ApexCandlestickChart.vue'
-import ApexScatterChart from './ApexScatterChart.vue'
-import ApexHeatMapChart from './ApexHeatMapChart.vue'
-import ApexDonutChart from './ApexDonutChart.vue'
-import ApexRadialBarChart from './ApexRadialBarChart.vue'
-import ApexRadarChart from './ApexRadarChart.vue'
+// import ApexLineChart from './ApexLineChart.vue'
+// import ApexLineAreaChart from './ApexLineAreaChart.vue'
+// import ApexDataBarChart from './ApexDataBarChart.vue'
+// import ApexBarChart from './ApexBarChart.vue'
+// import ApexCandlestickChart from './ApexCandlestickChart.vue'
+// import ApexScatterChart from './ApexScatterChart.vue'
+// import ApexHeatMapChart from './ApexHeatMapChart.vue'
+// import ApexDonutChart from './ApexDonutChart.vue'
+// import ApexRadialBarChart from './ApexRadialBarChart.vue'
+// import ApexRadarChart from './ApexRadarChart.vue'
 import NewMembersVsWithDeposits from './NewMembersVsWithDeposits.vue'
 import NewMembersVsRevenue from './NewMembersVsRevenue.vue'
+import WebsiteRevenue from './WebsiteRevenue.vue'
 
 export default {
   components: {
@@ -75,19 +79,20 @@ export default {
     BCol,
     BLink,
 
-    ApexLineChart,
-    ApexLineAreaChart,
-    ApexDataBarChart,
-    ApexBarChart,
-    ApexCandlestickChart,
-    ApexScatterChart,
-    ApexHeatMapChart,
-    ApexDonutChart,
-    ApexRadarChart,
-    ApexRadialBarChart,
+    // ApexLineChart,
+    // ApexLineAreaChart,
+    // ApexDataBarChart,
+    // ApexBarChart,
+    // ApexCandlestickChart,
+    // ApexScatterChart,
+    // ApexHeatMapChart,
+    // ApexDonutChart,
+    // ApexRadarChart,
+    // ApexRadialBarChart,
 
     NewMembersVsWithDeposits,
     NewMembersVsRevenue,
+    WebsiteRevenue,
   },
 }
 </script>
