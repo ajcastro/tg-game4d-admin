@@ -34,7 +34,7 @@
   .apexcharts-datalabel-label,
   .apexcharts-datalabel {
     font-family: $font-family-base !important;
-    fill: $body-color;
+    // fill: $body-color; // disable this line to bring back color white label text
     font-weight: 400;
     filter: none;
   }
