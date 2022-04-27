@@ -29,7 +29,7 @@
     <b-card-body>
       <vue-apex-charts
         type="line"
-        height="400"
+        height="300"
         :options="chartOptions"
         :series="series"
       />
@@ -67,7 +67,7 @@ export default {
       }, {
         name: 'New Members With Deposit',
         type: 'line',
-        data: [23, 42, 35, 27, 43, 22],
+        data: [400, 450, 380, 600, 200, 400],
       }],
       chartOptions: {
         chart: {
