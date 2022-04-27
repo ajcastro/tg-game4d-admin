@@ -4,7 +4,7 @@
       <!-- title and subtitle -->
       <div>
         <b-card-title class="mb-1">
-          New Members/New Members with Deposit
+          Member Registration Brief
         </b-card-title>
         <!-- <b-card-sub-title>Commercial networks</b-card-sub-title> -->
       </div>
@@ -82,7 +82,7 @@ export default {
         // },
         dataLabels: {
           enabled: true,
-          enabledOnSeries: [1],
+          enabledOnSeries: [0, 1],
         },
         labels: [
           '01-15 Feb 2022',
@@ -99,7 +99,6 @@ export default {
           title: {
             text: 'New Members',
           },
-
         }, {
           opposite: true,
           title: {
