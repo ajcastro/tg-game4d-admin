@@ -4,7 +4,7 @@
       <!-- title and subtitle -->
       <div>
         <b-card-title class="mb-1">
-          Member Registration Brief
+          Revenue and New Registration Performance
         </b-card-title>
         <!-- <b-card-sub-title>Commercial networks</b-card-sub-title> -->
       </div>
@@ -61,11 +61,11 @@ export default {
       rangePicker: ['2022-05-01', '2022-05-10'],
 
       series: [{
-        name: 'New Members',
-        type: 'column',
-        data: [440, 505, 414, 671, 227, 413],
+        name: 'Revenue',
+        type: 'line',
+        data: [800, 900, 800, 1000, 2000, 800],
       }, {
-        name: 'New Members With Deposit',
+        name: 'New Members',
         type: 'line',
         data: [400, 450, 380, 600, 200, 400],
       }],
@@ -75,7 +75,7 @@ export default {
           type: 'line',
         },
         stroke: {
-          width: [0, 4],
+          width: [4, 4],
         },
         // title: {
         //   text: 'Traffic Sources',
@@ -100,12 +100,12 @@ export default {
         },
         yaxis: [{
           title: {
-            text: 'New Members',
+            text: 'Revenue',
           },
         }, {
           opposite: true,
           title: {
-            text: 'New Members With Deposit',
+            text: 'New Members',
           },
         }],
       },

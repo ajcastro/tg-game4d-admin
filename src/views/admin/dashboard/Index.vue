@@ -16,6 +16,9 @@
     <b-col cols="6">
       <NewMembersVsWithDeposits />
     </b-col>
+    <b-col cols="6">
+      <NewMembersVsRevenue />
+    </b-col>
     <!--
     <b-col cols="12">
       <apex-line-area-chart />
@@ -64,6 +67,7 @@ import ApexDonutChart from './ApexDonutChart.vue'
 import ApexRadialBarChart from './ApexRadialBarChart.vue'
 import ApexRadarChart from './ApexRadarChart.vue'
 import NewMembersVsWithDeposits from './NewMembersVsWithDeposits.vue'
+import NewMembersVsRevenue from './NewMembersVsRevenue.vue'
 
 export default {
   components: {
@@ -83,6 +87,7 @@ export default {
     ApexRadialBarChart,
 
     NewMembersVsWithDeposits,
+    NewMembersVsRevenue,
   },
 }
 </script>
