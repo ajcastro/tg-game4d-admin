@@ -3,6 +3,8 @@ export default [
     title: 'Dashboard',
     route: 'dashboard',
     icon: 'HomeIcon',
+    resource: 'Dashboard',
+    action: 'view',
   },
   {
     title: 'Users Management',
