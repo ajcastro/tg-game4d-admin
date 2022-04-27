@@ -56,7 +56,7 @@
       <b-table
         ref="resourceTable"
         class="position-relative"
-        responsive
+        fixed
         primary-key="id"
         show-empty
         empty-text="No matching records found"
@@ -80,6 +80,36 @@
           >
             {{ data.item.is_active ? 'Active' : 'Inactive' }}
           </b-badge>
+        </template>
+
+        <!-- Column: user-->
+        <template #cell(user)="data">
+          <span v-b-tooltip.hover.top="data.item.user.username"> {{ data.item.user.username }} </span>
+        </template>
+
+        <!-- Column: date-->
+        <template #cell(date)="data">
+          <span v-b-tooltip.hover.top="data.value"> {{ data.value }} </span>
+        </template>
+
+        <!-- Column: member-->
+        <template #cell(member)="data">
+          <span v-b-tooltip.hover.top="data.value"> {{ data.value }} </span>
+        </template>
+
+        <!-- Column: user_info-->
+        <template #cell(user_info)="data">
+          <span v-b-tooltip.hover.top="data.item.user_info"> {{ data.item.user_info }} </span>
+        </template>
+
+        <!-- Column: activity-->
+        <template #cell(activity)="data">
+          <span v-b-tooltip.hover.top="data.item.activity"> {{ data.item.activity }} </span>
+        </template>
+
+        <!-- Column: detail-->
+        <template #cell(detail)="data">
+          <span v-b-tooltip.hover.top="data.item.detail"> {{ data.item.detail }} </span>
         </template>
 
         <!-- Column: Actions -->
@@ -189,6 +219,7 @@ import {
   BDropdownItem,
   BPagination,
   BBadge,
+  VBTooltip,
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
 import { makeTable } from '@/helpers/table'
@@ -196,6 +227,7 @@ import resourceTable from '@/mixins/resource/resource-table'
 import dayjs from 'dayjs'
 import UserLog from '@/models/UserLog'
 import UserLogFilters from '@/components/UserLogFilters.vue'
+import Ripple from 'vue-ripple-directive'
 import FormModal from './FormModal.vue'
 
 export default {
@@ -214,6 +246,10 @@ export default {
     vSelect,
     FormModal,
     UserLogFilters,
+  },
+  directives: {
+    'b-tooltip': VBTooltip,
+    Ripple,
   },
   mixins: [
     resourceTable,
@@ -246,6 +282,7 @@ export default {
           {
             key: 'user_info',
             sortable: false,
+            tdClass: 'text-truncate',
           },
           {
             key: 'member',
