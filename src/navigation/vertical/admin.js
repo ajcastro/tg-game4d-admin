@@ -1,5 +1,10 @@
 export default [
   {
+    title: 'Dashboard',
+    route: 'dashboard',
+    icon: 'HomeIcon',
+  },
+  {
     title: 'Users Management',
     icon: 'UsersIcon',
     children: [

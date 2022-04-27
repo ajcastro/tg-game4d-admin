@@ -356,4 +356,14 @@ export default [
       action: 'update',
     },
   },
+  {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: () => import('@/views/admin/dashboard/Index.vue'),
+    // eslint-disable-next-line radix
+    meta: {
+      resource: 'Dashboard',
+      action: 'view',
+    },
+  },
 ]
