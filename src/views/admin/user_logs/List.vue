@@ -1,12 +1,10 @@
 <template>
   <div>
     <user-log-filters
-      v-if="$store.state.websiteSelector.selectedWebsiteId"
       v-model="filter"
     />
     <!-- Table Container Card -->
     <b-card
-      v-if="$store.state.websiteSelector.selectedWebsiteId"
       no-body
       class="mb-0"
     >
@@ -191,13 +189,6 @@
       </div>
     </b-card>
 
-    <b-card
-      v-else
-      class="mb-0 bg-danger text-white"
-    >
-      Please select website first.
-    </b-card>
-
     <form-modal
       ref="formModal"
       :resource-id.sync="resourceId"
@@ -266,6 +257,11 @@ export default {
         columns: [
           // { key: 'actions' },
           {
+            key: 'website',
+            sortable: true,
+            formatter: (value, key, item) => item.website.code,
+          },
+          {
             key: 'user',
             sortable: true,
             formatter: (value, key, item) => item.user.username,
@@ -321,8 +317,9 @@ export default {
         fields: {
           user: 'id,username',
           member: 'id,username',
+          website: 'id,code',
         },
-        include: 'user,member',
+        include: 'user,member,website',
       }
     },
   },
