@@ -283,7 +283,7 @@ export default {
           {
             key: 'member',
             sortable: true,
-            formatter: (value, key, item) => item.member.username,
+            formatter: (value, key, item) => (item.member ? item.member.username : '-None-'),
           },
           {
             key: 'category',
