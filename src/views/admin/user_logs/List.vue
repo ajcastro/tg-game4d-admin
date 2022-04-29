@@ -250,6 +250,8 @@ export default {
       resourceId: null,
       model: UserLog,
       ...makeTable({
+        sortBy: 'date',
+        sortDesc: true,
         filter: {
           search: '',
           date_range: '',
