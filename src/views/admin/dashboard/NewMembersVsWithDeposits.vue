@@ -63,11 +63,11 @@ export default {
       series: [{
         name: 'New Members',
         type: 'column',
-        data: [440, 505, 414, 671, 227, 413],
+        data: [440, 505, 414, 671, 327, 513],
       }, {
         name: 'New Members With Deposit',
         type: 'line',
-        data: [400, 450, 380, 600, 200, 400],
+        data: [100, 150, 180, 300, 100, 200],
       }],
       chartOptions: {
         chart: {
@@ -98,16 +98,25 @@ export default {
         xaxis: {
           // type: 'datetime',
         },
-        yaxis: [{
-          title: {
-            text: 'New Members',
+        yaxis: [
+          {
+            title: {
+              text: 'New Members',
+            },
+            min: 0,
+            max: 600,
+            tickAmount: 6,
           },
-        }, {
-          opposite: true,
-          title: {
-            text: 'New Members With Deposit',
+          {
+            opposite: true,
+            title: {
+              text: 'New Members With Deposit',
+            },
+            min: 0,
+            max: 600,
+            tickAmount: 6,
           },
-        }],
+        ],
       },
     }
   },
