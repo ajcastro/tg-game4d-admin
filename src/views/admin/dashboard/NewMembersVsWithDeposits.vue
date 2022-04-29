@@ -77,6 +77,7 @@ export default {
         stroke: {
           width: [0, 4],
         },
+        colors: ['#26e7a6', '#FF1654'],
         // title: {
         //   text: 'Traffic Sources',
         // },
