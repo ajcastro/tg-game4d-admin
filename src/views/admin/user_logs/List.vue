@@ -92,7 +92,11 @@
 
         <!-- Column: member-->
         <template #cell(member)="data">
-          <span v-b-tooltip.hover.top="data.value"> {{ data.value }} </span>
+          <span
+            v-b-tooltip.hover.top="data.value"
+            class="cursor-pointer text-primary"
+            @click="view(data.item.member)"
+          > {{ data.value }} </span>
         </template>
 
         <!-- Column: user_info-->
@@ -219,7 +223,7 @@ import dayjs from 'dayjs'
 import UserLog from '@/models/UserLog'
 import UserLogFilters from '@/components/UserLogFilters.vue'
 import Ripple from 'vue-ripple-directive'
-import FormModal from './FormModal.vue'
+import FormModal from '../members-list/FormModal.vue'
 
 export default {
   components: {
