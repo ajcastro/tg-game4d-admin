@@ -93,6 +93,7 @@
         <!-- Column: member-->
         <template #cell(member)="data">
           <span
+            v-if="data.item.member"
             v-b-tooltip.hover.top="data.value"
             class="cursor-pointer text-primary"
             @click="view(data.item.member)"
