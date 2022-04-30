@@ -96,12 +96,18 @@
     </vue-perfect-scrollbar>
 
     <!-- Cart Footer -->
-    <li class="dropdown-menu-footer"><b-button
-      v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-      variant="primary"
-      block
-      @click="$refs.broadcastMessage.open()"
-    >Broadcast message</b-button>
+    <li
+      v-if="$can('broadcast', 'BroadcastMessage')"
+      class="dropdown-menu-footer"
+    >
+      <b-button
+        v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+        variant="primary"
+        block
+        @click="$refs.broadcastMessage.open()"
+      >
+        Broadcast message
+      </b-button>
     </li>
 
     <broadcast-message ref="broadcastMessage" />
