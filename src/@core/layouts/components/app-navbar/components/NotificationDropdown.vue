@@ -30,14 +30,14 @@
     </li>
 
     <!-- Notifications -->
+    <!-- v-once -->
     <vue-perfect-scrollbar
-      v-once
       :settings="perfectScrollbarSettings"
       class="scrollable-container media-list scroll-area"
       tagname="li"
     >
       <!-- Account Notification -->
-      <b-link
+      <!-- <b-link
         v-for="notification in notifications"
         :key="notification.subtitle"
       >
@@ -57,10 +57,10 @@
           </p>
           <small class="notification-text">{{ notification.subtitle }}</small>
         </b-media>
-      </b-link>
+      </b-link> -->
 
       <!-- System Notification Toggler -->
-      <div class="media d-flex align-items-center">
+      <!-- <div class="media d-flex align-items-center">
         <h6 class="font-weight-bolder mr-auto mb-0">
           System Notifications
         </h6>
@@ -68,12 +68,12 @@
           :checked="true"
           switch
         />
-      </div>
+      </div> -->
 
       <!-- System Notifications -->
       <b-link
         v-for="notification in systemNotifications"
-        :key="notification.subtitle"
+        :key="notification.id"
       >
         <b-media>
           <template #aside>
@@ -99,87 +99,92 @@
       v-ripple.400="'rgba(255, 255, 255, 0.15)'"
       variant="primary"
       block
-    >Read all notifications</b-button>
+      @click="$refs.broadcastMessage.open()"
+    >Broadcast message</b-button>
     </li>
+
+    <broadcast-message ref="broadcastMessage" />
   </b-nav-item-dropdown>
 </template>
 
 <script>
 import {
-  BNavItemDropdown, BBadge, BMedia, BLink, BAvatar, BButton, BFormCheckbox,
+  BNavItemDropdown, BMedia, BLink, BAvatar, BButton, /* BFormCheckbox, BBadge, */
 } from 'bootstrap-vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import Ripple from 'vue-ripple-directive'
+import BroadcastMessage from '@/components/BroadcastMessage.vue'
 
 export default {
   components: {
     BNavItemDropdown,
-    BBadge,
     BMedia,
     BLink,
     BAvatar,
     VuePerfectScrollbar,
     BButton,
-    BFormCheckbox,
+    // BBadge,
+    // BFormCheckbox,
+    BroadcastMessage,
   },
   directives: {
     Ripple,
   },
-  setup() {
-    /* eslint-disable global-require */
-    const notifications = [
-      // {
-      //   title: 'Congratulation Sam 🎉',
-      //   avatar: require('@/assets/images/avatars/6-small.png'),
-      //   subtitle: 'Won the monthly best seller badge',
-      //   type: 'light-success',
-      // },
-      // {
-      //   title: 'New message received',
-      //   avatar: require('@/assets/images/avatars/9-small.png'),
-      //   subtitle: 'You have 10 unread messages',
-      //   type: 'light-info',
-      // },
-      // {
-      //   title: 'Revised Order 👋',
-      //   avatar: 'MD',
-      //   subtitle: 'MD Inc. order updated',
-      //   type: 'light-danger',
-      // },
-    ]
-    /* eslint-disable global-require */
-
-    const systemNotifications = [
-      // {
-      //   title: 'Server down',
-      //   subtitle: 'USA Server is down due to hight CPU usage',
-      //   type: 'light-danger',
-      //   icon: 'XIcon',
-      // },
-      // {
-      //   title: 'Sales report generated',
-      //   subtitle: 'Last month sales report generated',
-      //   type: 'light-success',
-      //   icon: 'CheckIcon',
-      // },
-      // {
-      //   title: 'High memory usage',
-      //   subtitle: 'BLR Server using high memory',
-      //   type: 'light-warning',
-      //   icon: 'AlertTriangleIcon',
-      // },
-    ]
-
-    const perfectScrollbarSettings = {
-      maxScrollbarLength: 60,
-      wheelPropagation: false,
-    }
-
+  data() {
     return {
-      notifications,
-      systemNotifications,
-      perfectScrollbarSettings,
+      perfectScrollbarSettings: {
+        maxScrollbarLength: 60,
+        wheelPropagation: false,
+      },
+      notifications: [],
+      systemNotifications: [
+        // {
+        //   title: 'Server down',
+        //   subtitle: 'USA Server is down due to hight CPU usage',
+        //   type: 'light-danger',
+        //   icon: 'XIcon',
+        // },
+        // {
+        //   title: 'Sales report generated',
+        //   subtitle: 'Last month sales report generated',
+        //   type: 'light-success',
+        //   icon: 'CheckIcon',
+        // },
+        // {
+        //   title: 'High memory usage',
+        //   subtitle: 'BLR Server using high memory',
+        //   type: 'light-warning',
+        //   icon: 'AlertTriangleIcon',
+        // },
+      ],
     }
+  },
+  mounted() {
+    this.getNotifications()
+    this.pollNotificationsData()
+  },
+  beforeDestroy() {
+    clearInterval(this.polling)
+  },
+  methods: {
+    async getNotifications() {
+      const { data } = await this.$http.get('api/admin/broadcast_messages')
+      this.systemNotifications = data.data.map(i => this.makeNotifItem(i))
+    },
+    makeNotifItem(responseItem) {
+      return {
+        id: responseItem.id,
+        title: responseItem.data.from_user.username,
+        subtitle: responseItem.data.message,
+        type: 'light-success',
+        icon: 'InfoIcon',
+      }
+    },
+    pollNotificationsData() {
+      this.polling = setInterval(() => {
+        this.getNotifications()
+      }, 5000)
+    },
   },
 }
 </script>
