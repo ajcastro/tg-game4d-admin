@@ -13,13 +13,22 @@
         </b-link>
       </p>
     </b-col> -->
-    <b-col cols="6">
+    <b-col
+      v-if="$can('view', 'MemberRegistrationBrief')"
+      cols="6"
+    >
       <NewMembersVsWithDeposits />
     </b-col>
-    <b-col cols="6">
+    <b-col
+      v-if="$can('view', 'RevenueAndNewRegistrationPerformance')"
+      cols="6"
+    >
       <NewMembersVsRevenue />
     </b-col>
-    <b-col cols="6">
+    <b-col
+      v-if="$can('view', 'WebsiteRevenue')"
+      cols="6"
+    >
       <WebsiteRevenue />
     </b-col>
     <!--
