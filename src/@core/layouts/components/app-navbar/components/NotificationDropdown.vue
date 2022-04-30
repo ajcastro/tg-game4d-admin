@@ -6,11 +6,12 @@
   >
     <template #button-content>
       <feather-icon
-        badge="0"
+        :badge="unreadCount"
         badge-classes="bg-danger"
         class="text-body"
         icon="BellIcon"
         size="21"
+        @click="markAsRead()"
       />
     </template>
 
@@ -159,6 +160,14 @@ export default {
       ],
     }
   },
+  computed: {
+    unreadCount() {
+      return this.unreadNotifs.length
+    },
+    unreadNotifs() {
+      return this.systemNotifications.filter(item => !item.read_at)
+    },
+  },
   mounted() {
     this.getNotifications()
     this.pollNotificationsData()
@@ -178,12 +187,16 @@ export default {
         subtitle: responseItem.data.message,
         type: 'light-success',
         icon: 'InfoIcon',
+        read_at: responseItem.read_at,
       }
     },
     pollNotificationsData() {
       this.polling = setInterval(() => {
         this.getNotifications()
       }, 5000)
+    },
+    async markAsRead() {
+      await this.$http.post('api/admin/broadcast_messages/mark_as_read')
     },
   },
 }
