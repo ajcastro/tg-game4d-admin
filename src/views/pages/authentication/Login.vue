@@ -333,7 +333,7 @@ export default {
               useJwt.setToken(response.data.data.access_token)
               // useJwt.setRefreshToken(response.data.data.refreshToken)
               localStorage.setItem('userData', JSON.stringify(userData))
-              this.$ability.update(userData.ability)
+              this.$ability.update(userData.ability.concat([{ action: 'read', subject: 'Index' }]))
 
               // ? This is just for demo purpose as well.
               // ? Because we are showing eCommerce app's cart items count in navbar

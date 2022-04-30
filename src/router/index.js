@@ -22,7 +22,13 @@ const router = new VueRouter({
     return { x: 0, y: 0 }
   },
   routes: [
-    { path: '/' },
+    {
+      path: '/',
+      meta: {
+        resource: 'Index',
+        action: 'read',
+      },
+    },
     ...admin,
     ...apps,
     ...dashboard,
@@ -52,7 +58,8 @@ router.beforeEach((to, _, next) => {
   // Redirect if logged in
   if (to.meta.redirectIfLoggedIn && isLoggedIn) {
     const userData = getUserData()
-    next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
+    // next(getHomeRouteForLoggedInUser(userData ? userData.role : null))
+    next(userData.admin_redirect || '/')
   }
 
   return next()
