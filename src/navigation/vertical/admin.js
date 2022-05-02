@@ -280,4 +280,24 @@ export default [
       },
     ],
   },
+  {
+    title: '4D Setting',
+    icon: 'SettingsIcon',
+    children: [
+      {
+        title: 'Market List',
+        icon: 'MinusIcon',
+        route: 'markets',
+        resource: 'Market',
+        action: 'read',
+      },
+      {
+        title: 'Market Websites',
+        icon: 'MinusIcon',
+        route: 'market_websites',
+        resource: 'MarketWebsite',
+        action: 'read',
+      },
+    ],
+  },
 ]
