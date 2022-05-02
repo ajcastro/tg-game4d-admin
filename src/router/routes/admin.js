@@ -360,10 +360,18 @@ export default [
     path: '/dashboard',
     name: 'dashboard',
     component: () => import('@/views/admin/dashboard/Index.vue'),
-    // eslint-disable-next-line radix
     meta: {
       resource: 'Dashboard',
       action: 'view',
+    },
+  },
+  {
+    path: '/markets',
+    name: 'markets',
+    component: () => import('@/views/admin/markets/List.vue'),
+    meta: {
+      resource: 'Market',
+      action: 'read',
     },
   },
 ]
