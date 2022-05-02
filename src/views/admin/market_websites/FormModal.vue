@@ -46,7 +46,7 @@
           <!-- close_time -->
           <b-col cols="12">
             <b-form-group
-              label="Sort Order"
+              label="Close Time"
               label-for="v-close_time"
             >
               <b-form-input
@@ -63,7 +63,7 @@
           <!-- result_time -->
           <b-col cols="12">
             <b-form-group
-              label="Sort Order"
+              label="Result Time"
               label-for="v-result_time"
             >
               <b-form-input
