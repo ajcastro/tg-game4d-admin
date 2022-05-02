@@ -366,11 +366,20 @@ export default [
     },
   },
   {
-    path: '/markets',
+    path: '/markets/list',
     name: 'markets',
     component: () => import('@/views/admin/markets/List.vue'),
     meta: {
       resource: 'Market',
+      action: 'read',
+    },
+  },
+  {
+    path: '/markets/websites',
+    name: 'market_websites',
+    component: () => import('@/views/admin/market_websites/List.vue'),
+    meta: {
+      resource: 'MarketWebsite',
       action: 'read',
     },
   },

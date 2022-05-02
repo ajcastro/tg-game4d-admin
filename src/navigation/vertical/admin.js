@@ -291,13 +291,13 @@ export default [
         resource: 'Market',
         action: 'read',
       },
-      // {
-      //   title: 'Market Websites',
-      //   icon: 'MinusIcon',
-      //   route: 'transfer_logs',
-      //   resource: 'MarketWebsite',
-      //   action: 'read',
-      // },
+      {
+        title: 'Market Websites',
+        icon: 'MinusIcon',
+        route: 'market_websites',
+        resource: 'MarketWebsite',
+        action: 'read',
+      },
     ],
   },
 ]
