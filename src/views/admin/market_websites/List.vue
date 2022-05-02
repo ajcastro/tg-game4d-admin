@@ -268,7 +268,12 @@ export default {
   },
   mounted() {
     this.$root.$on('selected-website', () => {
-      this.$refs.resourceTable.refresh()
+      this.$nextTick(
+        () => {
+          // TODO: issue here, the request sent is duplicated sometimes
+          this.$refs.resourceTable.refresh()
+        },
+      )
     })
   },
   methods: {
