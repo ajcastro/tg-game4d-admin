@@ -2,6 +2,7 @@
   <div>
     <!-- Table Container Card -->
     <b-card
+      v-if="$store.state.websiteSelector.selectedWebsiteId"
       no-body
       class="mb-0"
     >
@@ -164,6 +165,13 @@
           </b-col>
         </b-row>
       </div>
+    </b-card>
+
+    <b-card
+      v-else
+      class="mb-0 bg-danger text-white"
+    >
+      Please select website first.
     </b-card>
 
     <form-modal
