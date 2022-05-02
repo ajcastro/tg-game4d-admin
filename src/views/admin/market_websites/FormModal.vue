@@ -16,31 +16,20 @@
               label="Result Day"
               label-for="v-result_day"
             >
+              <b-form-checkbox
+                id="checkbox-select-all"
+                v-model="form.is_result_day_everyday"
+                class="mb-1"
+                @input="(val) => val
+                  ? (form.result_day = [...dayOptions])
+                  : (form.result_day = [])"
+              >
+                Select All
+              </b-form-checkbox>
+
               <b-form-checkbox-group
                 id="v-result_day"
                 v-model="form.result_day"
-              >
-                <b-form-checkbox
-                  v-for="day in dayOptions"
-                  :key="day"
-                  :value="day"
-                  class="col-3 mb-1"
-                >
-                  {{ day }}
-                </b-form-checkbox>
-              </b-form-checkbox-group>
-            </b-form-group>
-          </b-col>
-
-          <!-- off_day -->
-          <b-col cols="12">
-            <b-form-group
-              label="Off Day"
-              label-for="v-off_day"
-            >
-              <b-form-checkbox-group
-                id="v-off_day"
-                v-model="form.off_day"
               >
                 <b-form-checkbox
                   v-for="day in dayOptions"
