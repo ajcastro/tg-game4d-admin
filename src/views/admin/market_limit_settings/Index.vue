@@ -23,7 +23,8 @@
           >
             <b-thead>
               <b-tr>
-                <b-th>Market</b-th>
+                <b-th>Market Code</b-th>
+                <b-th>Market Name</b-th>
                 <b-th>Limit Line 4D</b-th>
                 <b-th>Limit Line 3D</b-th>
                 <b-th>Limit Line 2D</b-th>
@@ -36,6 +37,7 @@
                 v-for="market in markets"
                 :key="market.id"
               >
+                <b-td> {{ market.code }}</b-td>
                 <b-td> {{ market.name }}</b-td>
                 <b-td>
                   <b-form-input
