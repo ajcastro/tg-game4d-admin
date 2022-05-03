@@ -298,6 +298,13 @@ export default [
         resource: 'MarketWebsite',
         action: 'read',
       },
+      {
+        title: 'Market Limits',
+        icon: 'MinusIcon',
+        route: 'market_limit_settings',
+        resource: 'MarketLimitSetting',
+        action: 'read',
+      },
     ],
   },
 ]

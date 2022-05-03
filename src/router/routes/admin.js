@@ -383,4 +383,13 @@ export default [
       action: 'read',
     },
   },
+  {
+    path: '/markets/limit_settings',
+    name: 'market_limit_settings',
+    component: () => import('@/views/admin/market_limit_settings/Index.vue'),
+    meta: {
+      resource: 'MarketLimitSetting',
+      action: 'read',
+    },
+  },
 ]
