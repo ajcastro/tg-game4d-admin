@@ -8,7 +8,7 @@
       <div class="card-header">
         <!-- Title & SubTitle -->
         <div>
-          <b-card-title>Referral Settings</b-card-title>
+          <b-card-title>Market Limit Settings</b-card-title>
         </div>
       </div>
 
