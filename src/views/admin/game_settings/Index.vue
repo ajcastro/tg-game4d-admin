@@ -23,15 +23,31 @@
           >
             <b-thead>
               <b-tr>
-                <b-th>Game</b-th>
-                <b-th>Min Bet</b-th>
-                <b-th>Max Bet</b-th>
-                <b-th>Win (x)</b-th>
-                <b-th>Discount(%)</b-th>
-                <b-th>Kei(%)</b-th>
-                <b-th>Limit</b-th>
-                <b-th>Limit Total</b-th>
-                <b-th />
+                <b-th width="20%">
+                  Game
+                </b-th>
+                <b-th width="10%">
+                  Min Bet
+                </b-th>
+                <b-th width="10%">
+                  Max Bet
+                </b-th>
+                <b-th width="10%">
+                  Win (x)
+                </b-th>
+                <b-th width="10%">
+                  Discount(%)
+                </b-th>
+                <b-th width="10%">
+                  Kei(%)
+                </b-th>
+                <b-th width="10%">
+                  Limit
+                </b-th>
+                <b-th width="10%">
+                  Limit Total
+                </b-th>
+                <b-th width="10%" />
               </b-tr>
             </b-thead>
             <b-tbody>
