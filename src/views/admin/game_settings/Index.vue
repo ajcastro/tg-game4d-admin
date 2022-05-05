@@ -23,7 +23,7 @@
           >
             <b-thead>
               <b-tr>
-                <b-th>Game Name</b-th>
+                <b-th>Game</b-th>
                 <b-th>Min Bet</b-th>
                 <b-th>Max Bet</b-th>
                 <b-th>Win (x)</b-th>
