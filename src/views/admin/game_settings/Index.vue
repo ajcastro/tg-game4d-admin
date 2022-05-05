@@ -23,7 +23,6 @@
           >
             <b-thead>
               <b-tr>
-                <b-th>Game Category</b-th>
                 <b-th>Game Name</b-th>
                 <b-th>Min Bet</b-th>
                 <b-th>Max Bet</b-th>
@@ -39,7 +38,6 @@
                 v-for="game in games"
                 :key="game.id"
               >
-                <b-td> {{ game.game_category.title }}</b-td>
                 <b-td> {{ game.title }}</b-td>
                 <b-td>
                   <b-form-input
