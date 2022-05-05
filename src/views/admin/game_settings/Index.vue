@@ -44,46 +44,72 @@
                   <b-form-input
                     v-model="game.setting.min_bet"
                     type="number"
+                    :disabled="!game.isEditing"
                   />
                 </b-td>
                 <b-td>
                   <b-form-input
                     v-model="game.setting.max_bet"
                     type="number"
+                    :disabled="!game.isEditing"
                   />
                 </b-td>
                 <b-td>
                   <b-form-input
                     v-model="game.setting.win_multiplier"
                     type="number"
+                    :disabled="!game.isEditing"
                   />
                 </b-td>
                 <b-td>
                   <b-form-input
                     v-model="game.setting.percentage_discount"
                     type="number"
+                    :disabled="!game.isEditing"
                   />
                 </b-td>
                 <b-td>
                   <b-form-input
                     v-model="game.setting.percentage_kei"
                     type="number"
+                    :disabled="!game.isEditing"
                   />
                 </b-td>
                 <b-td>
                   <b-form-input
                     v-model="game.setting.limit"
                     type="number"
+                    :disabled="!game.isEditing"
                   />
                 </b-td>
                 <b-td>
                   <b-form-input
                     v-model="game.setting.limit_total"
                     type="number"
+                    :disabled="!game.isEditing"
                   />
                 </b-td>
                 <b-td>
                   <b-button
+                    v-if="!game.isEditing"
+                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                    :disabled="!canSave"
+                    variant="secondary"
+                    size="sm"
+                    class="w-100"
+                    @click="$set(game, 'isEditing', true)"
+                  >
+                    <b-spinner
+                      v-if="game.isSaving"
+                      small
+                      class=""
+                    />
+                    <template v-else>
+                      Edit
+                    </template>
+                  </b-button>
+                  <b-button
+                    v-else
                     v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                     :disabled="!canSave"
                     variant="primary"
@@ -143,15 +169,13 @@
 /* eslint-disable new-cap */
 import Ripple from 'vue-ripple-directive'
 import {
-  BRow, BCol, BForm, BButton, BFormInput, BSpinner,
+  BForm, BButton, BFormInput, BSpinner,
   BCard, BCardTitle, BCardBody,
   BTableSimple, BThead, BTr, BTbody, BTd, BTh,
 } from 'bootstrap-vue'
 
 export default {
   components: {
-    BRow,
-    BCol,
     BForm,
     BButton,
     BFormInput,
@@ -234,6 +258,7 @@ export default {
         }
       } finally {
         this.$set(game, 'isSaving', false)
+        this.$set(game, 'isEditing', false)
       }
     },
   },
