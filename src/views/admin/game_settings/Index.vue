@@ -8,7 +8,7 @@
       <div class="card-header">
         <!-- Title & SubTitle -->
         <div>
-          <b-card-title>Market Limit Settings</b-card-title>
+          <b-card-title>Game Settings</b-card-title>
         </div>
       </div>
 
@@ -23,49 +23,63 @@
           >
             <b-thead>
               <b-tr>
-                <b-th>Market Code</b-th>
-                <b-th>Market Name</b-th>
-                <b-th>Limit Line 4D</b-th>
-                <b-th>Limit Line 3D</b-th>
-                <b-th>Limit Line 2D</b-th>
-                <b-th>Limit Line 2D Front</b-th>
-                <b-th>Limit Line 2D Middle</b-th>
+                <b-th>Game Category</b-th>
+                <b-th>Game Name</b-th>
+                <b-th>Min Bet</b-th>
+                <b-th>Max Bet</b-th>
+                <b-th>Win (x)</b-th>
+                <b-th>Discount(%)</b-th>
+                <b-th>Kei(%)</b-th>
+                <b-th>Limit</b-th>
+                <b-th>Limit Total</b-th>
               </b-tr>
             </b-thead>
             <b-tbody>
               <b-tr
-                v-for="market in markets"
-                :key="market.id"
+                v-for="game in games"
+                :key="game.id"
               >
-                <b-td> {{ market.code }}</b-td>
-                <b-td> {{ market.name }}</b-td>
+                <b-td> {{ game.game_category.title }}</b-td>
+                <b-td> {{ game.title }}</b-td>
                 <b-td>
                   <b-form-input
-                    v-model="market.limit_setting.limit_line_4d"
+                    v-model="game.setting.min_bet"
                     type="number"
                   />
                 </b-td>
                 <b-td>
                   <b-form-input
-                    v-model="market.limit_setting.limit_line_3d"
+                    v-model="game.setting.max_bet"
                     type="number"
                   />
                 </b-td>
                 <b-td>
                   <b-form-input
-                    v-model="market.limit_setting.limit_line_2d"
+                    v-model="game.setting.win_multiplier"
                     type="number"
                   />
                 </b-td>
                 <b-td>
                   <b-form-input
-                    v-model="market.limit_setting.limit_line_2d_front"
+                    v-model="game.setting.percentage_discount"
                     type="number"
                   />
                 </b-td>
                 <b-td>
                   <b-form-input
-                    v-model="market.limit_setting.limit_line_2d_middle"
+                    v-model="game.setting.percentage_kei"
+                    type="number"
+                  />
+                </b-td>
+                <b-td>
+                  <b-form-input
+                    v-model="game.setting.limit"
+                    type="number"
+                  />
+                </b-td>
+                <b-td>
+                  <b-form-input
+                    v-model="game.setting.limit_total"
                     type="number"
                   />
                 </b-td>
@@ -144,13 +158,13 @@ export default {
   data() {
     return {
       loading: false,
-      markets: [],
+      games: [],
       errors: {},
     }
   },
   computed: {
     canSave() {
-      return this.$can('update', 'MarketLimitSetting')
+      return this.$can('update', 'GameSetting')
     },
     selectedWebsiteId() {
       return this.$store.state.websiteSelector.selectedWebsiteId
@@ -158,28 +172,28 @@ export default {
   },
   watch: {
     selectedWebsiteId() {
-      this.getMarketLimitSettings()
+      this.getGameSettings()
     },
   },
   created() {
-    this.getMarketLimitSettings()
+    this.getGameSettings()
   },
   methods: {
-    async getMarketLimitSettings() {
+    async getGameSettings() {
       if (!this.selectedWebsiteId) return
 
       this.loading = true
-      const { data } = await this.$http.get(`api/admin/market_limit_settings/${this.selectedWebsiteId}`)
-      this.markets = data
+      const { data } = await this.$http.get(`api/admin/game_settings/${this.selectedWebsiteId}`)
+      this.games = data
       this.loading = false
     },
     async save() {
       try {
         this.loading = true
         const payload = {
-          market_limit_settings: this.markets.map(m => m.limit_setting),
+          game_settings: this.games.map(m => m.setting),
         }
-        await this.$http.post(`api/admin/market_limit_settings/${this.selectedWebsiteId}`, payload)
+        await this.$http.post(`api/admin/game_settings/${this.selectedWebsiteId}`, payload)
         this.$notifySuccess('Successfully Saved Settings!')
         this.errors = {}
       } catch (err) {

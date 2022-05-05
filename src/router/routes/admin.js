@@ -392,4 +392,13 @@ export default [
       action: 'read',
     },
   },
+  {
+    path: '/games/settings',
+    name: 'game_settings',
+    component: () => import('@/views/admin/game_settings/Index.vue'),
+    meta: {
+      resource: 'GameSetting',
+      action: 'read',
+    },
+  },
 ]

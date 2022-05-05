@@ -305,6 +305,13 @@ export default [
         resource: 'MarketLimitSetting',
         action: 'read',
       },
+      {
+        title: 'Game Settings',
+        icon: 'MinusIcon',
+        route: 'game_settings',
+        resource: 'GameSetting',
+        action: 'read',
+      },
     ],
   },
 ]
