@@ -88,12 +88,13 @@
                     :disabled="!canSave"
                     variant="primary"
                     size="sm"
+                    class="w-100"
                     @click="saveOne(game)"
                   >
                     <b-spinner
                       v-if="game.isSaving"
                       small
-                      class="mr-1 d-block"
+                      class=""
                     />
                     <template v-else>
                       Save
