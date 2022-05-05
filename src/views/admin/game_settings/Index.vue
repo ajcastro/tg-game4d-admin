@@ -31,6 +31,7 @@
                 <b-th>Kei(%)</b-th>
                 <b-th>Limit</b-th>
                 <b-th>Limit Total</b-th>
+                <b-th />
               </b-tr>
             </b-thead>
             <b-tbody>
@@ -81,11 +82,29 @@
                     type="number"
                   />
                 </b-td>
+                <b-td>
+                  <b-button
+                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                    :disabled="!canSave"
+                    variant="primary"
+                    size="sm"
+                    @click="saveOne(game)"
+                  >
+                    <b-spinner
+                      v-if="game.isSaving"
+                      small
+                      class="mr-1 d-block"
+                    />
+                    <template v-else>
+                      Save
+                    </template>
+                  </b-button>
+                </b-td>
               </b-tr>
             </b-tbody>
           </b-table-simple>
 
-          <b-row>
+          <!-- <b-row>
             <b-col
               class="mt-1 text-center"
             >
@@ -105,7 +124,7 @@
                 Save
               </b-button>
             </b-col>
-          </b-row>
+          </b-row> -->
         </b-form>
       </b-card-body>
     </b-card>
@@ -200,6 +219,20 @@ export default {
         }
       } finally {
         this.loading = false
+      }
+    },
+    async saveOne(game) {
+      try {
+        this.$set(game, 'isSaving', true)
+        await this.$http.post(`api/admin/game_settings/${this.selectedWebsiteId}/${game.id}`, { ...game.setting })
+        this.$notifySuccess('Successfully Saved Settings!')
+        this.errors = {}
+      } catch (err) {
+        if (err.response && err.response.status === 422) {
+          this.errors = { ...err.response.data.errors }
+        }
+      } finally {
+        this.$set(game, 'isSaving', false)
       }
     },
   },
