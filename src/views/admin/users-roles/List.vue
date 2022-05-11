@@ -197,10 +197,6 @@
       @created="setPermission($event)"
     />
 
-    <!-- TODO: For removal, in favor of SetPermissions.vue page -->
-    <set-permissions-modal
-      ref="setPermissionModal"
-    />
   </div>
 </template>
 
@@ -225,7 +221,6 @@ import dayjs from 'dayjs'
 import Role from '@/models/Role'
 import RoleListFilters from '@/components/RoleListFilters.vue'
 import FormModal from './FormModal.vue'
-import SetPermissionsModal from './SetPermissionsModal.vue'
 
 export default {
   components: {
@@ -243,7 +238,6 @@ export default {
 
     RoleListFilters,
     FormModal,
-    SetPermissionsModal,
   },
   mixins: [
     resourceTable,
