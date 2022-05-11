@@ -60,6 +60,9 @@ export default {
       this.form = this.populateForm({ ...res.data })
       this.loading = false
     },
+    performSave(model) {
+      return model.save()
+    },
     async save() {
       try {
         this.loading = true
@@ -67,7 +70,7 @@ export default {
           id: this.resourceId,
           ...this.form,
         })
-        const res = await model.save()
+        const res = await this.performSave(model)
         this.$emit('update:resource-id', res.id)
         this.$notifySuccess('Successfully Saved!')
         this.errors = {}

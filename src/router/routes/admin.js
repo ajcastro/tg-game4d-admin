@@ -64,31 +64,4 @@ export default [
       action: 'read',
     },
   },
-  {
-    path: '/markets/websites',
-    name: 'market_websites',
-    component: () => import('@/views/admin/market_websites/List.vue'),
-    meta: {
-      resource: 'MarketWebsite',
-      action: 'read',
-    },
-  },
-  {
-    path: '/markets/limit_settings',
-    name: 'market_limit_settings',
-    component: () => import('@/views/admin/market_limit_settings/Index.vue'),
-    meta: {
-      resource: 'MarketLimitSetting',
-      action: 'read',
-    },
-  },
-  {
-    path: '/games/settings',
-    name: 'game_settings',
-    component: () => import('@/views/admin/game_settings/Index.vue'),
-    meta: {
-      resource: 'GameSetting',
-      action: 'read',
-    },
-  },
 ]

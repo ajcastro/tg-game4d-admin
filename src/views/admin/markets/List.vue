@@ -108,10 +108,10 @@
             </b-dropdown-item> -->
 
             <b-dropdown-item
-              @click="edit(data.item, data)"
+              @click="$refs.marketScheduleModal.setMarketSchedule(data.item)"
             >
-              <feather-icon icon="EditIcon" />
-              <span class="align-middle ml-50">Edit</span>
+              <feather-icon icon="ClockIcon" />
+              <span class="align-middle ml-50">Set Market Schedule</span>
             </b-dropdown-item>
 
             <!-- <b-dropdown-item @click="remove(data.item, data)">
@@ -196,6 +196,12 @@
       :resource-id.sync="resourceId"
       @save="$refs.resourceTable.refresh()"
     />
+
+    <market-schedule-modal
+      ref="marketScheduleModal"
+      :resource-id.sync="resourceId"
+      @save="$refs.resourceTable.refresh()"
+    />
   </div>
 </template>
 
@@ -218,6 +224,7 @@ import { makeTable } from '@/helpers/table'
 import resourceTable from '@/mixins/resource/resource-table'
 import Market from '@/models/Market'
 import FormModal from './FormModal.vue'
+import MarketScheduleModal from './MarketScheduleModal.vue'
 
 export default {
   components: {
@@ -235,6 +242,7 @@ export default {
     vSelect,
 
     FormModal,
+    MarketScheduleModal,
   },
   mixins: [
     resourceTable,
@@ -245,10 +253,35 @@ export default {
       model: Market,
       ...makeTable({
         columns: [
-          // { key: 'actions' },
+          { key: 'actions' },
           { key: 'code', sortable: true },
           { key: 'name', sortable: true },
           { key: 'status', sortable: true },
+          { key: 'period', sortable: true },
+          {
+            key: 'result_day',
+            sortable: true,
+            formatter: (value, key, item) => (item.market_schedule.is_result_day_everyday
+              ? 'Everyday'
+              : (item.market_schedule.result_day || []).join(', ')),
+          },
+          {
+            key: 'off_day',
+            sortable: true,
+            formatter: (value, key, item) => (item.market_schedule.is_off_day_everyday
+              ? 'Everyday'
+              : (item.market_schedule.off_day || []).join(', ')),
+          },
+          {
+            key: 'close_time',
+            sortable: true,
+            formatter: (value, key, item) => (item.market_schedule.close_time),
+          },
+          {
+            key: 'result_time',
+            sortable: true,
+            formatter: (value, key, item) => (item.market_schedule.result_time),
+          },
         ],
       }),
     }
@@ -260,7 +293,9 @@ export default {
   },
   methods: {
     fetchRowsParams() {
-      return {}
+      return {
+        include: 'market_schedule',
+      }
     },
   },
 }
