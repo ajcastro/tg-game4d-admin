@@ -260,14 +260,14 @@ export default {
           { key: 'period', sortable: true },
           {
             key: 'result_day',
-            sortable: true,
+            sortable: false,
             formatter: (value, key, item) => (item.market_schedule.is_result_day_everyday
               ? 'Everyday'
               : (item.market_schedule.result_day || []).join(', ')),
           },
           {
             key: 'off_day',
-            sortable: true,
+            sortable: false,
             formatter: (value, key, item) => (item.market_schedule.is_off_day_everyday
               ? 'Everyday'
               : (item.market_schedule.off_day || []).join(', ')),
