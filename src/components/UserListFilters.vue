@@ -7,23 +7,7 @@
     </b-card-header>
     <b-card-body>
       <b-row>
-        <b-col
-          cols="12"
-          md="3"
-          class="mb-md-0 mb-2"
-        >
-          <label>Parent Code</label>
-          <v-select
-            :value="value.parent_group_id"
-            id-for="v-parent_group"
-            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-            label="code"
-            :options="parentGroupOptions"
-            :reduce="(item) => item.id"
-            @input="(val) => $emit('input', {...value, parent_group_id: val})"
-          />
-        </b-col>
-        <b-col
+        <!-- <b-col
           cols="12"
           md="3"
           class="mb-md-0 mb-2"
@@ -38,7 +22,7 @@
             label="name"
             @input="(val) => $emit('input', {...value, role_id: val})"
           />
-        </b-col>
+        </b-col> -->
         <b-col
           cols="12"
           md="3"
@@ -123,14 +107,9 @@ export default {
   computed: {
   },
   mounted() {
-    this.getRoleOptions()
-    this.getParentGroupOptions()
+    // this.getRoleOptions()
   },
   methods: {
-    async getParentGroupOptions() {
-      const res = await this.$http.get('api/admin/parent_groups', { params: { paginate: false } })
-      this.parentGroupOptions = res.data.data
-    },
     async getRoleOptions() {
       const res = await this.$http.get('api/admin/roles', { params: { paginate: false } })
       this.roleOptions = res.data.data

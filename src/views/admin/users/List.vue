@@ -109,19 +109,6 @@
             </b-dropdown-item>
 
             <b-dropdown-item
-              v-if="$can('set_access_code', 'User')"
-              @click="$refs.manageParentGroupModal.setUser(data.item).open()"
-            >
-              <feather-icon icon="ListIcon" />
-              <span class="align-middle ml-50">Set Access Code and Roles</span>
-            </b-dropdown-item>
-
-            <!-- <b-dropdown-item @click="remove(data.item, data)">
-              <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">Delete</span>
-            </b-dropdown-item> -->
-
-            <b-dropdown-item
               v-if="!data.item.is_active && $can('activate', 'User')"
               @click="setActive(data.item, true)"
             >
@@ -197,8 +184,8 @@
       ref="formModal"
       :resource-id.sync="resourceId"
       @save="$refs.resourceTable.refresh()"
-      @created="$refs.manageParentGroupModal.setUser($event).open()"
     />
+    <!-- @created="$refs.manageParentGroupModal.setUser($event).open()" -->
 
     <manage-parent-group-modal ref="manageParentGroupModal" />
   </div>

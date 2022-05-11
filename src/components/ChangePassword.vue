@@ -135,7 +135,7 @@ export default {
     async save() {
       try {
         this.loading = true
-        await this.$http.post('api/auth/change_password', this.form)
+        await this.$http.post('api/admin/auth/change_password', this.form)
         this.$notifySuccess('Password is successfully changed.')
         this.close()
       } catch (err) {

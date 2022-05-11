@@ -1,13 +1,13 @@
 <template>
   <span>
     <span class="text-danger h2">
-      Tele
+      TG
     </span>
     <span
       class="text-warning h2"
       style="margin-left: -6px;"
     >
-      Gaming
+      4D Game
     </span>
   </span>
 </template>

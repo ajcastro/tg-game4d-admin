@@ -44,7 +44,7 @@
             class="mb-1 font-weight-bold"
             title-tag="h2"
           >
-            Welcome to TeleGaming! 👋
+            Welcome to TG-4D Game! 👋
           </b-card-title>
           <b-card-text class="mb-2">
             Please sign-in to your account.
@@ -80,29 +80,6 @@
               class="auth-login-form mt-2"
               @submit.prevent="login"
             >
-              <!-- access group -->
-              <b-form-group
-                label="Access Group"
-                label-for="parent-group"
-              >
-                <validation-provider
-                  #default="{ errors }"
-                  name="access group"
-                  vid="parent-group"
-                  rules="required"
-                >
-                  <b-form-input
-                    id="parent-group"
-                    v-model.trim="parentGroupCode"
-                    :state="errors.length > 0 ? false:null"
-                    name="parent-group"
-                    placeholder="Access Group"
-                    @input="invalidCredentials=false"
-                  />
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
-              </b-form-group>
-
               <!-- username -->
               <b-form-group
                 label="Username"
@@ -294,8 +271,7 @@ export default {
   data() {
     return {
       status: '',
-      parentGroupCode: 'spvadmin',
-      username: 'adm_master',
+      username: 'admin',
       password: 'password',
       sideImg: require('@/assets/images/pages/login-tg.jpg'),
       invalidCredentials: false,
@@ -324,7 +300,6 @@ export default {
         if (success) {
           this.loggingIn = true
           useJwt.login({
-            parent_group_code: this.parentGroupCode,
             username: this.username,
             password: this.password,
           })

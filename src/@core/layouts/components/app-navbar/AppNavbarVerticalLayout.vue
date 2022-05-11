@@ -18,7 +18,7 @@
 
     <!-- Left Col -->
     <div class="bookmark-wrapper align-items-center flex-grow-1">
-      <website-selector />
+      <!-- <website-selector /> -->
       <!-- Bookmarks Container -->
       <!-- <bookmarks /> -->
     </div>
@@ -28,7 +28,7 @@
       <dark-Toggler class="d-none d-lg-block" />
       <search-bar v-if="isLocal" />
       <!-- <cart-dropdown /> -->
-      <notification-dropdown />
+      <!-- <notification-dropdown /> -->
       <user-dropdown />
     </b-navbar-nav>
   </div>

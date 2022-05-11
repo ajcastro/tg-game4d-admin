@@ -9,22 +9,6 @@
       <b-row>
         <b-col
           cols="12"
-          md="4"
-          class="mb-md-0 mb-2"
-        >
-          <label>Parent Code</label>
-          <v-select
-            :value="value.parent_group_id"
-            id-for="v-parent_group"
-            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
-            label="code"
-            :options="parentGroupOptions"
-            :reduce="(item) => item.id"
-            @input="(val) => $emit('input', {...value, parent_group_id: val})"
-          />
-        </b-col>
-        <b-col
-          cols="12"
           md="3"
           class="mb-md-0 mb-2"
         >
@@ -63,7 +47,6 @@ import {
   BCard, BCardHeader, BCardBody, BRow, BCol, BButton,
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
-import dayjs from 'dayjs'
 
 export default {
   components: {
@@ -104,21 +87,11 @@ export default {
   computed: {
   },
   mounted() {
-    this.getParentGroupOptions()
   },
   methods: {
     async reset() {
       await this.$nextTick()
       this.$emit('input', { ...this.originalFilters })
-    },
-    async getParentGroupOptions() {
-      const res = await this.$http.get('api/admin/parent_groups', {
-        params: {
-          paginate: false,
-          filter: { accessible_by_me: true },
-        },
-      })
-      this.parentGroupOptions = res.data.data
     },
   },
 }

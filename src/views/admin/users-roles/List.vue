@@ -255,12 +255,6 @@ export default {
       ...makeTable({
         columns: [
           { key: 'actions' },
-          {
-            key: 'parent_group_code',
-            label: 'Parent Code',
-            sortable: true,
-            formatter: (value, key, item) => item.parent_group.code,
-          },
           { key: 'name', sortable: true },
           { key: 'is_active', sortable: true },
           {
