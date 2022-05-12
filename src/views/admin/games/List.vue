@@ -77,6 +77,66 @@
           </b-badge>
         </template>
 
+        <!-- Column: edit_date -->
+        <template #cell(edit_date)="data">
+          <b-button
+            variant="secondary"
+            class="btn-icon edit-icon-btn"
+            size="sm"
+            title="Edit Date"
+          >
+            <feather-icon icon="EditIcon" />
+          </b-button>
+          <b-button
+            v-if="true"
+            variant="success"
+            class="btn-icon"
+            size="sm"
+          >
+            <feather-icon icon="CheckIcon" />
+          </b-button>
+        </template>
+
+        <!-- Column: edit_close_time -->
+        <template #cell(edit_close_time)="data">
+          <b-button
+            variant="secondary"
+            class="btn-icon edit-icon-btn"
+            size="sm"
+            title="Edit Close Time"
+          >
+            <feather-icon icon="EditIcon" />
+          </b-button>
+          <b-button
+            v-if="true"
+            variant="success"
+            class="btn-icon"
+            size="sm"
+          >
+            <feather-icon icon="CheckIcon" />
+          </b-button>
+        </template>
+
+        <!-- Column: input_result -->
+        <template #cell(input_result)="data">
+          <b-button
+            variant="secondary"
+            class="btn-icon edit-icon-btn"
+            size="sm"
+            title="Input Result"
+          >
+            <feather-icon icon="EditIcon" />
+          </b-button>
+          <b-button
+            v-if="true"
+            variant="success"
+            class="btn-icon"
+            size="sm"
+          >
+            <feather-icon icon="CheckIcon" />
+          </b-button>
+        </template>
+
         <!-- Column: Status -->
         <template #cell(status)="data">
           <b-badge
@@ -111,32 +171,6 @@
             </b-dropdown-item>
           </b-dropdown>
         </template>
-
-        <!-- Column: edit -->
-        <template #cell(edit)="data">
-          <b-button
-            variant="secondary"
-            size="sm"
-            class=""
-            @click="edit(data.item)"
-          >
-            <span class="text-nowrap">Edit</span>
-          </b-button>
-        </template>
-
-        <!-- Column: approve_edit -->
-        <template #cell(approve_edit)="data">
-          <b-button
-            v-if="$can('approve_new_deposits', 'MemberTransaction')"
-            variant="success"
-            size="sm"
-            class=""
-            @click="edit(data.item)"
-          >
-            <span class="text-nowrap">Approve</span>
-          </b-button>
-        </template>
-
       </b-table>
       <div class="mx-2 mb-2">
         <b-row>
@@ -243,9 +277,6 @@ export default {
     resourceTable,
   ],
   data() {
-    const userData = localStorage.getItem('userData')
-    const user = userData ? JSON.parse(userData) : {}
-
     return {
       resourceId: null,
       model: Game,
@@ -271,16 +302,17 @@ export default {
             key: 'date',
             sortable: true,
             formatter: value => dayjs(value).format('YYYY-MM-DD'),
+            thAttr: { width: '10%' },
           },
-          { key: 'close_time', sortable: true },
-          { key: 'result_time', sortable: true },
-          { key: 'market_result', sortable: true },
-          { key: 'edit', thClass: 'text-center', tdClass: 'text-center' },
+          { key: 'close_time', sortable: true, thAttr: { width: '8%' } },
+          { key: 'result_time', sortable: true, thAttr: { width: '8%' } },
           {
-            key: 'approve_edit',
-            thClass: user.is_admin ? 'text-center' : 'hidden',
-            tdClass: user.is_admin ? 'text-center' : 'hidden',
+            key: 'market_result', label: 'Result', sortable: true, thAttr: { width: '8%' },
           },
+
+          { key: 'edit_date', label: 'Date', thAttr: { width: '8%' } },
+          { key: 'edit_close_time', label: 'Close Time', thAttr: { width: '8%' } },
+          { key: 'input_result', label: 'Result', thAttr: { width: '8%' } },
         ],
       }),
     }
@@ -306,4 +338,8 @@ export default {
 
 <style lang="scss">
 @import "@core/scss/vue/libs/vue-select.scss";
+
+.edit-icon-btn {
+  margin-right: 5px;
+}
 </style>
