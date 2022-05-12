@@ -161,8 +161,10 @@ export default {
       this.open()
     },
     async getMarketSchedule() {
+      this.loading = true
       const { data } = await this.$http.get(`api/admin/markets/${this.market.id}/market_schedule`)
       this.form = data
+      this.loading = false
     },
     async save() {
       try {
