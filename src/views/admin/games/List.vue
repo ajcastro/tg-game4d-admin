@@ -290,6 +290,8 @@ export default {
       resourceId: null,
       model: Game,
       ...makeTable({
+        sortBy: 'date',
+        sortDesc: true,
         columns: [
           {
             key: 'market_code',
