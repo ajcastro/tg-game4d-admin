@@ -12,6 +12,15 @@
         <b-row>
           <!-- date -->
           <b-col
+            v-if="isApproving"
+            cols="12"
+            class="mb-1"
+          >
+            User <strong>{{ gameEdit.created_by.username }}</strong> is requesting to accept this changes:
+          </b-col>
+
+          <!-- date -->
+          <b-col
             v-if="editField === 'date'"
             cols="12"
           >
@@ -74,6 +83,22 @@
             class="text-right"
           >
             <b-button
+              v-if="isApproving"
+              v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+              :disabled="loading"
+              type="button"
+              variant="success"
+              @click="approve"
+            >
+              <b-spinner
+                v-if="loading"
+                small
+                class="mr-1"
+              />
+              Approve
+            </b-button>
+            <b-button
+              v-else
               v-ripple.400="'rgba(255, 255, 255, 0.15)'"
               :disabled="loading || !canSave"
               type="submit"
@@ -131,28 +156,56 @@ export default {
       model: Game,
       editField: null,
 
+      gameEdit: null,
     }
   },
   computed: {
+    isApproving() {
+      return !!this.gameEdit
+    },
     canSave() {
-      return true
+      return !this.isApproving
     },
     editFieldTitle() {
+      let action = this.isApproving ? 'Approve' : 'Edit'
+
+      if (this.editField === 'market_result' && action === 'Edit') {
+        action = 'Input'
+      }
+
       if (this.editField === 'date') {
-        return 'Edit Date'
+        return `${action} Date`
       }
       if (this.editField === 'close_time') {
-        return 'Edit Close Time'
+        return `${action} Close Time`
       }
       if (this.editField === 'market_result') {
-        return 'Input Result'
+        return `${action} Result`
       }
+
       return ''
     },
   },
   methods: {
     editting(field) {
       this.editField = field
+    },
+    approving(gameEdit) {
+      this.editField = gameEdit.edit_field
+      this.gameEdit = gameEdit
+      this.setFormDisabled(true)
+      const form = {}
+      form[this.editField] = gameEdit[this.editField]
+      this.form = form
+      return this
+    },
+    async approve() {
+      this.loading = true
+      await this.$http.post(`api/admin/games/${this.gameEdit.game_id}/game_edits/${this.gameEdit.id}/approve`)
+      this.$notifySuccess('Successfully Approved and Applied Changes!')
+      this.loading = false
+      this.$emit('save')
+      this.close()
     },
     populateForm(data) {
       return {
@@ -166,6 +219,14 @@ export default {
       }
       params[this.editField] = attributes[this.editField] || ''
       return new this.model(params)
+    },
+    resetForm() {
+      this.$emit('update:resource-id', null)
+      this.form = { ...this.formOriginal }
+      this.loading = false
+      this.errors = {}
+      this.editField = null
+      this.gameEdit = null
     },
   },
 }

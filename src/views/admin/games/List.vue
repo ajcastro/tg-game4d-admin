@@ -89,10 +89,11 @@
             <feather-icon icon="EditIcon" />
           </b-button>
           <b-button
-            v-if="true"
+            v-if="data.item.pending_edit_date"
             variant="success"
             class="btn-icon"
             size="sm"
+            @click="approveGameEdit(data.item, data.item.pending_edit_date)"
           >
             <feather-icon icon="CheckIcon" />
           </b-button>
@@ -110,10 +111,11 @@
             <feather-icon icon="EditIcon" />
           </b-button>
           <b-button
-            v-if="true"
+            v-if="data.item.pending_edit_close_time"
             variant="success"
             class="btn-icon"
             size="sm"
+            @click="approveGameEdit(data.item, data.item.pending_edit_close_time)"
           >
             <feather-icon icon="CheckIcon" />
           </b-button>
@@ -131,10 +133,11 @@
             <feather-icon icon="EditIcon" />
           </b-button>
           <b-button
-            v-if="true"
+            v-if="data.item.pending_edit_market_result"
             variant="success"
             class="btn-icon"
             size="sm"
+            @click="approveGameEdit(data.item, data.item.pending_edit_market_result)"
           >
             <feather-icon icon="CheckIcon" />
           </b-button>
@@ -326,12 +329,15 @@ export default {
     fetchRowsParams() {
       return {
         append: 'result_day_text',
-        include: 'market',
+        include: 'market, pending_edit_date.created_by, pending_edit_close_time.created_by, pending_edit_market_result.created_by',
       }
     },
     editGame(item, field) {
       this.$refs.formModal.editting(field)
       this.edit(item)
+    },
+    approveGameEdit(item, gameEdit) {
+      this.$refs.formModal.approving(gameEdit).open()
     },
   },
 }
