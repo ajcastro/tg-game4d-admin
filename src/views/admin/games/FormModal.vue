@@ -10,13 +10,19 @@
       <!-- @show="(getResource())" -->
       <b-form @submit.prevent="save">
         <b-row>
-          <!-- date -->
+
           <b-col
             v-if="isApproving"
             cols="12"
             class="mb-1"
           >
-            User <strong>{{ gameEdit.created_by.username }}</strong> is requesting to accept this changes:
+            <template v-if="isUserSameWithCreatedBy">
+              You are
+            </template>
+            <template v-else>
+              User <strong>{{ gameEdit.created_by.username }}</strong> is
+            </template>
+            requesting to accept this changes:
           </b-col>
 
           <!-- date -->
@@ -82,37 +88,49 @@
             cols="12"
             class="text-right"
           >
-            <b-button
-              v-if="isApproving"
-              v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-              :disabled="loading"
-              type="button"
-              variant="success"
-              class="mr-1"
-              @click="approve"
-            >
-              <b-spinner
-                v-if="approveLoading"
-                small
+            <template v-if="isApproving">
+              <b-button
+                v-if="isUserSameWithCreatedBy"
+                v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                type="button"
+                variant="secondary"
+                class=""
+                @click="close()"
+              >
+                Close
+              </b-button>
+              <b-button
+                v-if="!isUserSameWithCreatedBy"
+                v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                :disabled="loading"
+                type="button"
+                variant="success"
                 class="mr-1"
-              />
-              Approve
-            </b-button>
-            <b-button
-              v-if="isApproving"
-              v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-              :disabled="loading"
-              type="button"
-              variant="danger"
-              @click="reject"
-            >
-              <b-spinner
-                v-if="rejectLoading"
-                small
-                class="mr-1"
-              />
-              Reject
-            </b-button>
+                @click="approve"
+              >
+                <b-spinner
+                  v-if="approveLoading"
+                  small
+                  class="mr-1"
+                />
+                Approve
+              </b-button>
+              <b-button
+                v-if="!isUserSameWithCreatedBy"
+                v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                :disabled="loading"
+                type="button"
+                variant="danger"
+                @click="reject"
+              >
+                <b-spinner
+                  v-if="rejectLoading"
+                  small
+                  class="mr-1"
+                />
+                Reject
+              </b-button>
+            </template>
             <b-button
               v-else
               v-ripple.400="'rgba(255, 255, 255, 0.15)'"
@@ -165,7 +183,11 @@ export default {
     resourceFormModal,
   ],
   data() {
+    const userData = localStorage.getItem('userData')
+    const user = userData ? JSON.parse(userData) : {}
+
     return {
+      user,
       loading: false,
       approveLoading: false,
       rejectLoading: false,
@@ -183,6 +205,9 @@ export default {
     },
     canSave() {
       return !this.isApproving
+    },
+    isUserSameWithCreatedBy() {
+      return this.gameEdit.created_by.id === this.user.id
     },
     editFieldTitle() {
       let action = this.isApproving ? 'Approve' : 'Edit'
