@@ -100,12 +100,6 @@
                 class="align-middle text-body"
               />
             </template>
-            <!-- <b-dropdown-item
-              :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
-            >
-              <feather-icon icon="FileTextIcon" />
-              <span class="align-middle ml-50">Details</span>
-            </b-dropdown-item> -->
 
             <b-dropdown-item
               @click="$refs.marketScheduleModal.setMarketSchedule(data.item)"
@@ -114,26 +108,21 @@
               <span class="align-middle ml-50">Set Market Schedule</span>
             </b-dropdown-item>
 
-            <!-- <b-dropdown-item @click="remove(data.item, data)">
-              <feather-icon icon="TrashIcon" />
-              <span class="align-middle ml-50">Delete</span>
-            </b-dropdown-item> -->
-
-            <!-- <b-dropdown-item
-              v-if="!data.item.is_active"
-              @click="setActive(data.item, true)"
+            <b-dropdown-item
+              v-if="data.item.status === 'offline'"
+              @click="setOnlineStatus(data.item, 'online')"
             >
               <feather-icon icon="CheckSquareIcon" />
-              <span class="align-middle ml-50">Set Active</span>
+              <span class="align-middle ml-50">Set Online</span>
             </b-dropdown-item>
 
             <b-dropdown-item
-              v-if="data.item.is_active"
-              @click="setActive(data.item, false)"
+              v-else
+              @click="setOnlineStatus(data.item, 'offline')"
             >
               <feather-icon icon="XSquareIcon" />
-              <span class="align-middle ml-50">Set Inactive</span>
-            </b-dropdown-item> -->
+              <span class="align-middle ml-50">Set Offline</span>
+            </b-dropdown-item>
           </b-dropdown>
         </template>
       </b-table>
@@ -296,6 +285,12 @@ export default {
       return {
         include: 'market_schedule',
       }
+    },
+    setOnlineStatus(item, status) {
+      this.$http.post(`api/admin/markets/${item.id}/set_online_status`, {
+        status,
+      })
+      this.$refs.resourceTable.refresh()
     },
   },
 }
