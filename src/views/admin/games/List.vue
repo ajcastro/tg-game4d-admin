@@ -293,8 +293,8 @@ export default {
       resourceId: null,
       model: Game,
       ...makeTable({
-        sortBy: 'date',
-        sortDesc: true,
+        sortBy: 'market_name',
+        sortDesc: false,
         columns: [
           {
             key: 'market_code',
@@ -351,6 +351,9 @@ export default {
   methods: {
     fetchRowsParams() {
       return {
+        filter: {
+          open: true,
+        },
         append: 'result_day_text',
         include: 'market, pending_edit_date.created_by, pending_edit_close_time.created_by, pending_edit_market_result.created_by',
       }
