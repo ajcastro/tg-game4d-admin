@@ -79,20 +79,21 @@
 
         <!-- Column: edit_date -->
         <template #cell(edit_date)="data">
+          {{ data.value }}
           <b-button
+            v-if="!data.item.pending_edit_date"
             variant="secondary"
-            class="btn-icon edit-icon-btn"
+            class="btn-icon float-right"
             size="sm"
             title="Edit Date"
-            :disabled="data.item.pending_edit_date"
             @click="editGame(data.item, 'date')"
           >
             <feather-icon icon="EditIcon" />
           </b-button>
           <b-button
-            v-if="data.item.pending_edit_date"
+            v-else
             variant="success"
-            class="btn-icon"
+            class="btn-icon float-right"
             size="sm"
             @click="approveGameEdit(data.item, data.item.pending_edit_date)"
           >
@@ -102,20 +103,21 @@
 
         <!-- Column: edit_close_time -->
         <template #cell(edit_close_time)="data">
+          {{ data.value }}
           <b-button
+            v-if="!data.item.pending_edit_close_time"
             variant="secondary"
-            class="btn-icon edit-icon-btn"
+            class="btn-icon float-right"
             size="sm"
             title="Edit Close Time"
-            :disabled="data.item.pending_edit_close_time"
             @click="editGame(data.item, 'close_time')"
           >
             <feather-icon icon="EditIcon" />
           </b-button>
           <b-button
-            v-if="data.item.pending_edit_close_time"
+            v-else
             variant="success"
-            class="btn-icon"
+            class="btn-icon float-right"
             size="sm"
             @click="approveGameEdit(data.item, data.item.pending_edit_close_time)"
           >
@@ -125,20 +127,21 @@
 
         <!-- Column: input_result -->
         <template #cell(input_result)="data">
+          {{ data.value }}
           <b-button
+            v-if="!data.item.pending_edit_market_result"
             variant="secondary"
-            class="btn-icon edit-icon-btn"
+            class="btn-icon float-right"
             size="sm"
             title="Input Result"
-            :disabled="data.item.pending_edit_market_result"
             @click="editGame(data.item, 'market_result')"
           >
             <feather-icon icon="EditIcon" />
           </b-button>
           <b-button
-            v-if="data.item.pending_edit_market_result"
+            v-else
             variant="success"
-            class="btn-icon"
+            class="btn-icon float-right"
             size="sm"
             @click="approveGameEdit(data.item, data.item.pending_edit_market_result)"
           >
@@ -321,9 +324,24 @@ export default {
             key: 'market_result', label: 'Result', sortable: true, thAttr: { width: '8%' },
           },
 
-          { key: 'edit_date', label: 'Date', thAttr: { width: '8%' } },
-          { key: 'edit_close_time', label: 'Close Time', thAttr: { width: '8%' } },
-          { key: 'input_result', label: 'Result', thAttr: { width: '8%' } },
+          {
+            key: 'edit_date',
+            label: 'Date',
+            thAttr: { width: '12%' },
+            formatter: (value, key, item) => (item.pending_edit_date ? dayjs(item.pending_edit_date.date).format('DD-MMM-YYYY') : ''),
+          },
+          {
+            key: 'edit_close_time',
+            label: 'Close Time',
+            thAttr: { width: '8%' },
+            formatter: (value, key, item) => (item.pending_edit_close_time ? item.pending_edit_close_time.close_time : ''),
+          },
+          {
+            key: 'input_result',
+            label: 'Result',
+            thAttr: { width: '8%' },
+            formatter: (value, key, item) => (item.pending_edit_market_result ? item.pending_edit_market_result.market_result : ''),
+          },
         ],
       }),
     }

@@ -88,14 +88,30 @@
               :disabled="loading"
               type="button"
               variant="success"
+              class="mr-1"
               @click="approve"
             >
               <b-spinner
-                v-if="loading"
+                v-if="approveLoading"
                 small
                 class="mr-1"
               />
               Approve
+            </b-button>
+            <b-button
+              v-if="isApproving"
+              v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+              :disabled="loading"
+              type="button"
+              variant="danger"
+              @click="reject"
+            >
+              <b-spinner
+                v-if="rejectLoading"
+                small
+                class="mr-1"
+              />
+              Reject
             </b-button>
             <b-button
               v-else
@@ -151,6 +167,8 @@ export default {
   data() {
     return {
       loading: false,
+      approveLoading: false,
+      rejectLoading: false,
       form: {},
       errors: {},
       model: Game,
@@ -202,6 +220,7 @@ export default {
     async approve() {
       try {
         this.loading = true
+        this.approveLoading = true
         await this.$http.post(`api/admin/games/${this.gameEdit.game_id}/game_edits/${this.gameEdit.id}/approve`)
         this.$notifySuccess('Successfully Approved and Applied Changes!')
         this.$emit('save')
@@ -212,7 +231,11 @@ export default {
         }
       } finally {
         this.loading = false
+        this.approveLoading = false
       }
+    },
+    reject() {
+
     },
     populateForm(data) {
       return {
