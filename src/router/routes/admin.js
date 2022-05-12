@@ -64,4 +64,13 @@ export default [
       action: 'read',
     },
   },
+  {
+    path: '/games/list',
+    name: 'games',
+    component: () => import('@/views/admin/games/List.vue'),
+    meta: {
+      resource: 'Game',
+      action: 'read',
+    },
+  },
 ]
