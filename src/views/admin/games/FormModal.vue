@@ -85,7 +85,7 @@
             <b-button
               v-if="isApproving"
               v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-              :disabled="loading || !$can('approve', 'GameEdit')"
+              :disabled="loading"
               type="button"
               variant="success"
               @click="approve"
@@ -200,12 +200,19 @@ export default {
       return this
     },
     async approve() {
-      this.loading = true
-      await this.$http.post(`api/admin/games/${this.gameEdit.game_id}/game_edits/${this.gameEdit.id}/approve`)
-      this.$notifySuccess('Successfully Approved and Applied Changes!')
-      this.loading = false
-      this.$emit('save')
-      this.close()
+      try {
+        this.loading = true
+        await this.$http.post(`api/admin/games/${this.gameEdit.game_id}/game_edits/${this.gameEdit.id}/approve`)
+        this.$notifySuccess('Successfully Approved and Applied Changes!')
+        this.$emit('save')
+        this.close()
+      } catch (err) {
+        if (err.response && err.response.status === 422) {
+          this.errors = { ...err.response.data.errors }
+        }
+      } finally {
+        this.loading = false
+      }
     },
     populateForm(data) {
       return {

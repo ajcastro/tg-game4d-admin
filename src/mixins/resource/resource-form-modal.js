@@ -82,8 +82,7 @@ export default {
           this.$emit('created', res)
         }
       } catch (err) {
-        if (!err.response) return
-        if (err.response.status === 422) {
+        if (err.response && err.response.status === 422) {
           this.errors = { ...err.response.data.errors }
         }
       } finally {
