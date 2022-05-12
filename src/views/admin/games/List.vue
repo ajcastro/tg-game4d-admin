@@ -84,6 +84,7 @@
             class="btn-icon edit-icon-btn"
             size="sm"
             title="Edit Date"
+            @click="editGame(data.item, 'date')"
           >
             <feather-icon icon="EditIcon" />
           </b-button>
@@ -104,6 +105,7 @@
             class="btn-icon edit-icon-btn"
             size="sm"
             title="Edit Close Time"
+            @click="editGame(data.item, 'close_time')"
           >
             <feather-icon icon="EditIcon" />
           </b-button>
@@ -124,6 +126,7 @@
             class="btn-icon edit-icon-btn"
             size="sm"
             title="Input Result"
+            @click="editGame(data.item, 'market_result')"
           >
             <feather-icon icon="EditIcon" />
           </b-button>
@@ -325,6 +328,10 @@ export default {
         append: 'result_day_text',
         include: 'market',
       }
+    },
+    editGame(item, field) {
+      this.$refs.formModal.editting(field)
+      this.edit(item)
     },
   },
 }

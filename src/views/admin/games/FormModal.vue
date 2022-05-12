@@ -2,16 +2,19 @@
   <div>
     <b-modal
       ref="bModal"
-      :title="(isCreating ? 'Add' : 'Edit') + ' Game'"
+      :title="editFieldTitle"
       hide-footer
       no-close-on-backdrop
       @hidden="resetForm()"
-      @show="(getResource())"
     >
+      <!-- @show="(getResource())" -->
       <b-form @submit.prevent="save">
         <b-row>
           <!-- date -->
-          <b-col cols="12">
+          <b-col
+            v-if="editField === 'date'"
+            cols="12"
+          >
             <b-form-group
               label="Date"
               label-for="v-date"
@@ -28,7 +31,10 @@
           </b-col>
 
           <!-- close_time -->
-          <b-col cols="12">
+          <b-col
+            v-if="editField === 'close_time'"
+            cols="12"
+          >
             <b-form-group
               label="Close Time"
               label-for="v-close_time"
@@ -43,24 +49,11 @@
             </b-form-group>
           </b-col>
 
-          <!-- result_time -->
-          <b-col cols="12">
-            <b-form-group
-              label="Result Time"
-              label-for="v-result_time"
-            >
-              <b-form-input
-                id="v-result_time"
-                v-model="form.result_time"
-                :readonly="!canSave"
-                @input="errors.result_time = []"
-              />
-              <input-errors :errors="errors.result_time" />
-            </b-form-group>
-          </b-col>
-
           <!-- market_result -->
-          <b-col cols="12">
+          <b-col
+            v-if="editField === 'market_result'"
+            cols="12"
+          >
             <b-form-group
               label="Market Result"
               label-for="v-market_result"
@@ -136,6 +129,7 @@ export default {
       form: {},
       errors: {},
       model: Game,
+      editField: null,
 
     }
   },
@@ -143,13 +137,35 @@ export default {
     canSave() {
       return true
     },
+    editFieldTitle() {
+      if (this.editField === 'date') {
+        return 'Edit Date'
+      }
+      if (this.editField === 'close_time') {
+        return 'Edit Close Time'
+      }
+      if (this.editField === 'market_result') {
+        return 'Input Result'
+      }
+      return ''
+    },
   },
   methods: {
+    editting(field) {
+      this.editField = field
+    },
     populateForm(data) {
       return {
         ...data,
         date: dayjs(data.date).format('YYYY-MM-DD'),
       }
+    },
+    newModel(attributes) {
+      const params = {
+        id: attributes.id,
+      }
+      params[this.editField] = attributes[this.editField] || ''
+      return new this.model(params)
     },
   },
 }
