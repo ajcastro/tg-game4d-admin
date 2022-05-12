@@ -286,8 +286,8 @@ export default {
         include: 'market_schedule',
       }
     },
-    setOnlineStatus(item, status) {
-      this.$http.post(`api/admin/markets/${item.id}/set_online_status`, {
+    async setOnlineStatus(item, status) {
+      await this.$http.post(`api/admin/markets/${item.id}/set_online_status`, {
         status,
       })
       this.$refs.resourceTable.refresh()
