@@ -51,6 +51,8 @@
         ref="resourceTable"
         class="position-relative"
         responsive
+        bordered
+        small
         primary-key="id"
         show-empty
         empty-text="No matching records found"
@@ -107,9 +109,34 @@
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">Edit</span>
             </b-dropdown-item>
-
           </b-dropdown>
         </template>
+
+        <!-- Column: edit -->
+        <template #cell(edit)="data">
+          <b-button
+            variant="secondary"
+            size="sm"
+            class=""
+            @click="edit(data.item)"
+          >
+            <span class="text-nowrap">Edit</span>
+          </b-button>
+        </template>
+
+        <!-- Column: approve_edit -->
+        <template #cell(approve_edit)="data">
+          <b-button
+            v-if="$can('approve_new_deposits', 'MemberTransaction')"
+            variant="success"
+            size="sm"
+            class=""
+            @click="edit(data.item)"
+          >
+            <span class="text-nowrap">Approve</span>
+          </b-button>
+        </template>
+
       </b-table>
       <div class="mx-2 mb-2">
         <b-row>
@@ -216,12 +243,14 @@ export default {
     resourceTable,
   ],
   data() {
+    const userData = localStorage.getItem('userData')
+    const user = userData ? JSON.parse(userData) : {}
+
     return {
       resourceId: null,
       model: Game,
       ...makeTable({
         columns: [
-          { key: 'actions' },
           {
             key: 'market_code',
             sortable: true,
@@ -246,6 +275,12 @@ export default {
           { key: 'close_time', sortable: true },
           { key: 'result_time', sortable: true },
           { key: 'market_result', sortable: true },
+          { key: 'edit', thClass: 'text-center', tdClass: 'text-center' },
+          {
+            key: 'approve_edit',
+            thClass: user.is_admin ? 'text-center' : 'hidden',
+            tdClass: user.is_admin ? 'text-center' : 'hidden',
+          },
         ],
       }),
     }
