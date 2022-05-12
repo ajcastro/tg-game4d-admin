@@ -85,7 +85,7 @@
             <b-button
               v-if="isApproving"
               v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-              :disabled="loading"
+              :disabled="loading || !$can('approve', 'GameEdit')"
               type="button"
               variant="success"
               @click="approve"

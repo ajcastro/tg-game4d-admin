@@ -84,6 +84,7 @@
             class="btn-icon edit-icon-btn"
             size="sm"
             title="Edit Date"
+            :disabled="data.item.pending_edit_date"
             @click="editGame(data.item, 'date')"
           >
             <feather-icon icon="EditIcon" />
@@ -106,6 +107,7 @@
             class="btn-icon edit-icon-btn"
             size="sm"
             title="Edit Close Time"
+            :disabled="data.item.pending_edit_close_time"
             @click="editGame(data.item, 'close_time')"
           >
             <feather-icon icon="EditIcon" />
@@ -128,6 +130,7 @@
             class="btn-icon edit-icon-btn"
             size="sm"
             title="Input Result"
+            :disabled="data.item.pending_edit_market_result"
             @click="editGame(data.item, 'market_result')"
           >
             <feather-icon icon="EditIcon" />
