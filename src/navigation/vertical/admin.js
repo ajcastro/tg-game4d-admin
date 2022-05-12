@@ -7,37 +7,25 @@ export default [
   //   action: 'view',
   // },
   {
-    title: 'Users Management',
+    title: 'Games',
+    icon: 'BoxIcon',
+    route: 'games',
+    resource: 'Game',
+    action: 'read',
+  },
+  {
+    title: 'Users',
     icon: 'UsersIcon',
-    children: [
-      {
-        title: 'Users',
-        icon: 'MinusIcon',
-        route: 'users',
-        resource: 'User',
-        action: 'read',
-      },
-      // {
-      //   title: 'Roles',
-      //   icon: 'MinusIcon',
-      //   route: 'roles',
-      //   resource: 'Role',
-      //   action: 'read',
-      // },
-    ],
+    route: 'users',
+    resource: 'User',
+    action: 'read',
   },
 
   {
-    title: '4D Setting',
-    icon: 'SettingsIcon',
-    children: [
-      {
-        title: 'Market List',
-        icon: 'MinusIcon',
-        route: 'markets',
-        resource: 'Market',
-        action: 'read',
-      },
-    ],
+    title: 'Market List',
+    icon: 'ListIcon',
+    route: 'markets',
+    resource: 'Market',
+    action: 'read',
   },
 ]
