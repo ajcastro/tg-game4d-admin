@@ -44,21 +44,35 @@
             </b-form-group>
           </b-col>
 
-          <!-- email -->
+          <!-- phone -->
           <b-col cols="12">
             <b-form-group
-              label="Email"
-              label-for="v-email"
+              label="Phone"
+              label-for="v-phone"
             >
               <b-form-input
-                id="v-email"
-                v-model="form.email"
+                id="v-phone"
+                v-model="form.phone"
                 autocomplete="off"
                 :state="null"
                 :readonly="!canSave"
-                @input="errors.email = []"
+                @input="errors.phone = []"
               />
-              <input-errors :errors="errors.email" />
+              <input-errors :errors="errors.phone" />
+            </b-form-group>
+          </b-col>
+
+          <!-- is_admin -->
+          <b-col cols="12">
+            <b-form-group
+              label="Is Admin?"
+              label-for="v-is_admin"
+            >
+              <b-form-checkbox
+                id="v-is_admin"
+                v-model="form.is_admin"
+              />
+              <input-errors :errors="errors.is_admin" />
             </b-form-group>
           </b-col>
 
@@ -129,7 +143,7 @@
 /* eslint-disable new-cap */
 import Ripple from 'vue-ripple-directive'
 import {
-  BRow, BCol, BFormGroup, BFormInput, BForm, BButton, BSpinner,
+  BRow, BCol, BFormGroup, BFormInput, BForm, BButton, BSpinner, BFormCheckbox,
 } from 'bootstrap-vue'
 import User from '@/models/User'
 import InputErrors from '@/components/InputErrors.vue'
@@ -144,6 +158,7 @@ export default {
     BForm,
     BButton,
     BSpinner,
+    BFormCheckbox,
 
     InputErrors,
   },

@@ -68,7 +68,7 @@
         :per-page="perPage"
         :current-page="currentPage"
       >
-        <!-- Column: Status -->
+        <!-- Column: is_active -->
         <template #cell(is_active)="data">
           <b-badge
             pill
@@ -76,6 +76,18 @@
             class="text-capitalize"
           >
             {{ data.item.is_active ? 'Active' : 'Inactive' }}
+          </b-badge>
+        </template>
+
+        <!-- Column: is_admin -->
+        <template #cell(is_admin)="data">
+          <b-badge
+            v-if="data.item.is_admin"
+            pill
+            :variant="`light-${resolveIsActiveVariant(data.item.is_admin)}`"
+            class="text-capitalize"
+          >
+            {{ data.item.is_admin ? 'Admin' : '' }}
           </b-badge>
         </template>
 
@@ -249,18 +261,19 @@ export default {
         columns: [
           { key: 'actions' },
           { key: 'username', sortable: true },
-          { key: 'email', sortable: true },
+          { key: 'phone', sortable: true },
           { key: 'is_active', sortable: true },
-          {
-            key: 'created_by',
-            sortable: true,
-            formatter: (value, key, item) => item.created_by.name,
-          },
-          {
-            key: 'created_at',
-            sortable: true,
-            formatter: value => dayjs(value).format('DD MMM YYYY, hh:mm a'),
-          },
+          { key: 'is_admin', sortable: true },
+          // {
+          //   key: 'created_by',
+          //   sortable: true,
+          //   formatter: (value, key, item) => item.created_by.name,
+          // },
+          // {
+          //   key: 'created_at',
+          //   sortable: true,
+          //   formatter: value => dayjs(value).format('DD MMM YYYY, hh:mm a'),
+          // },
           {
             key: 'updated_by',
             sortable: true,
