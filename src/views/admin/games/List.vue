@@ -312,7 +312,7 @@ export default {
           {
             key: 'date',
             sortable: true,
-            formatter: value => dayjs(value).format('YYYY-MM-DD'),
+            formatter: value => dayjs(value).format('DD-MMM-YYYY'),
             thAttr: { width: '10%' },
           },
           { key: 'close_time', sortable: true, thAttr: { width: '8%' } },
