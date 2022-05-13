@@ -64,6 +64,17 @@
         :per-page="perPage"
         :current-page="currentPage"
       >
+        <!-- Column: flag -->
+        <template #cell(flag)="data">
+          <div>
+            <b-img
+              class="mb-1 mb-sm-0"
+              width="50"
+              :src="data.item.flag_url"
+            />
+          </div>
+        </template>
+
         <!-- Column: Status -->
         <template #cell(is_active)="data">
           <b-badge
@@ -214,6 +225,7 @@ import {
   BDropdownItem,
   BPagination,
   BBadge,
+  BImg,
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
 import { makeTable } from '@/helpers/table'
@@ -234,6 +246,7 @@ export default {
     BDropdownItem,
     BPagination,
     BBadge,
+    BImg,
 
     vSelect,
 
@@ -250,6 +263,7 @@ export default {
       ...makeTable({
         columns: [
           { key: 'actions' },
+          { key: 'flag', sortable: false },
           { key: 'code', sortable: true },
           { key: 'name', sortable: true },
           { key: 'status', sortable: true },
@@ -290,6 +304,7 @@ export default {
   methods: {
     fetchRowsParams() {
       return {
+        append: 'flag_url',
         include: 'market_schedule',
       }
     },

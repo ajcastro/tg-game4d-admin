@@ -56,6 +56,22 @@
             </b-form-group>
           </b-col>
 
+          <!-- flag -->
+          <b-col cols="12">
+            <b-form-group
+              label="Flag Image"
+              label-for="v-flag"
+            >
+              <b-form-file
+                id="v-flag"
+                v-model="form.flag"
+                accept="image/*"
+                @input="errors.flag = []"
+              />
+              <input-errors :errors="errors.flag" />
+            </b-form-group>
+          </b-col>
+
           <!-- submit and reset -->
           <b-col
             cols="12"
@@ -86,7 +102,7 @@
 /* eslint-disable new-cap */
 import Ripple from 'vue-ripple-directive'
 import {
-  BRow, BCol, BFormGroup, BFormInput, BForm, BButton, BSpinner,
+  BRow, BCol, BFormGroup, BFormInput, BForm, BButton, BSpinner, BFormFile,
 } from 'bootstrap-vue'
 import Market from '@/models/Market'
 import InputErrors from '@/components/InputErrors.vue'
@@ -101,6 +117,7 @@ export default {
     BForm,
     BButton,
     BSpinner,
+    BFormFile,
 
     InputErrors,
   },
@@ -117,6 +134,13 @@ export default {
       errors: {},
       model: Market,
     }
+  },
+  methods: {
+    populateForm(data) {
+      // see https://stackoverflow.com/a/44396079
+      const { flag, ...form } = data
+      return form
+    },
   },
 }
 </script>
