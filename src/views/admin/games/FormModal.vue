@@ -54,10 +54,11 @@
               label="Close Time"
               label-for="v-close_time"
             >
-              <b-form-input
+              <b-form-timepicker
                 id="v-close_time"
                 v-model="form.close_time"
                 :readonly="!canSave"
+                locale="en"
                 @input="errors.close_time = []"
               />
               <input-errors :errors="errors.close_time" />
@@ -155,9 +156,10 @@
 
 <script>
 /* eslint-disable new-cap */
+/* eslint-disable camelcase */
 import Ripple from 'vue-ripple-directive'
 import {
-  BRow, BCol, BFormGroup, BFormInput, BForm, BButton, BSpinner,
+  BRow, BCol, BFormGroup, BFormInput, BForm, BButton, BSpinner, BFormTimepicker,
 } from 'bootstrap-vue'
 import Game from '@/models/Game'
 import InputErrors from '@/components/InputErrors.vue'
@@ -173,6 +175,7 @@ export default {
     BForm,
     BButton,
     BSpinner,
+    BFormTimepicker,
 
     InputErrors,
   },
@@ -273,7 +276,16 @@ export default {
         id: attributes.id,
       }
       params[this.editField] = attributes[this.editField] || ''
+      if (this.editField === 'close_time') {
+        params[this.editField] = this.formatCloseTime(params[this.editField])
+      }
       return new this.model(params)
+    },
+    formatCloseTime(close_time) {
+      if (close_time.length >= 5) {
+        return close_time.substr(0, 5)
+      }
+      return close_time
     },
     resetForm() {
       this.$emit('update:resource-id', null)
