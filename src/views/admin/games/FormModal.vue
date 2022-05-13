@@ -77,7 +77,9 @@
               <b-form-input
                 id="v-market_result"
                 v-model="form.market_result"
+                v-mask="'####'"
                 :readonly="!canSave"
+                placeholder="####"
                 @input="errors.market_result = []"
               />
               <input-errors :errors="errors.market_result" />
@@ -166,6 +168,7 @@ import Game from '@/models/Game'
 import InputErrors from '@/components/InputErrors.vue'
 import resourceFormModal from '@/mixins/resource/resource-form-modal'
 import dayjs from 'dayjs'
+import { mask } from 'vue-the-mask'
 
 export default {
   components: {
@@ -182,6 +185,7 @@ export default {
   },
   directives: {
     Ripple,
+    mask,
   },
   mixins: [
     resourceFormModal,
