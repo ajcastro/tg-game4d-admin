@@ -202,6 +202,7 @@
       ref="formModal"
       :resource-id.sync="resourceId"
       @save="$refs.resourceTable.refresh()"
+      @created="(item) => $refs.marketScheduleModal.setMarketSchedule(item)"
     />
 
     <market-schedule-modal
