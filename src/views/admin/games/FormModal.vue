@@ -78,8 +78,8 @@
                 id="v-market_result"
                 v-model="form.market_result"
                 v-mask="'####'"
-                :readonly="!canSave"
                 placeholder="####"
+                :readonly="!canSave"
                 @input="errors.market_result = []"
               />
               <input-errors :errors="errors.market_result" />
