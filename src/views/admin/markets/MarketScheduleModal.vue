@@ -49,11 +49,11 @@
               label="Close Time"
               label-for="v-close_time"
             >
-              <b-form-input
+              <b-form-timepicker
                 id="v-close_time"
                 v-model="form.close_time"
-                :state="null"
                 :readonly="!canSave"
+                locale="en"
                 @input="errors.close_time = []"
               />
               <input-errors :errors="errors.close_time" />
@@ -66,11 +66,11 @@
               label="Result Time"
               label-for="v-result_time"
             >
-              <b-form-input
+              <b-form-timepicker
                 id="v-result_time"
                 v-model="form.result_time"
-                :state="null"
                 :readonly="!canSave"
+                locale="en"
                 @input="errors.result_time = []"
               />
               <input-errors :errors="errors.result_time" />
@@ -107,7 +107,7 @@
 /* eslint-disable new-cap */
 import Ripple from 'vue-ripple-directive'
 import {
-  BRow, BCol, BFormGroup, BFormInput, BForm, BButton, BSpinner, BFormCheckbox, BFormCheckboxGroup,
+  BRow, BCol, BFormGroup, BForm, BButton, BSpinner, BFormCheckbox, BFormCheckboxGroup, BFormTimepicker,
 } from 'bootstrap-vue'
 import InputErrors from '@/components/InputErrors.vue'
 import resourceFormModal from '@/mixins/resource/resource-form-modal'
@@ -118,10 +118,10 @@ export default {
     BRow,
     BCol,
     BFormGroup,
-    BFormInput,
     BForm,
     BFormCheckbox,
     BFormCheckboxGroup,
+    BFormTimepicker,
     BButton,
     BSpinner,
 
