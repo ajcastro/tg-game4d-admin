@@ -14,6 +14,13 @@ export default [
     action: 'read',
   },
   {
+    title: 'Market List',
+    icon: 'ListIcon',
+    route: 'markets',
+    resource: 'Market',
+    action: 'read',
+  },
+  {
     title: 'Users',
     icon: 'UsersIcon',
     route: 'users',
@@ -21,11 +28,4 @@ export default [
     action: 'read',
   },
 
-  {
-    title: 'Market List',
-    icon: 'ListIcon',
-    route: 'markets',
-    resource: 'Market',
-    action: 'read',
-  },
 ]
