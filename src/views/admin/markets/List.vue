@@ -112,12 +112,12 @@
               />
             </template>
 
-            <b-dropdown-item
+            <!-- <b-dropdown-item
               @click="edit(data.item, data)"
             >
               <feather-icon icon="EditIcon" />
               <span class="align-middle ml-50">Edit</span>
-            </b-dropdown-item>
+            </b-dropdown-item> -->
 
             <b-dropdown-item
               @click="$refs.marketScheduleModal.setMarketSchedule(data.item)"
