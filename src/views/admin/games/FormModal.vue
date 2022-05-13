@@ -107,7 +107,7 @@
                 type="button"
                 variant="success"
                 class="mr-1"
-                @click="approve"
+                @click="approve()"
               >
                 <b-spinner
                   v-if="approveLoading"
@@ -157,6 +157,7 @@
 <script>
 /* eslint-disable new-cap */
 /* eslint-disable camelcase */
+/* eslint-disable no-unused-expressions */
 import Ripple from 'vue-ripple-directive'
 import {
   BRow, BCol, BFormGroup, BFormInput, BForm, BButton, BSpinner, BFormTimepicker,
@@ -245,12 +246,17 @@ export default {
       this.form = form
       return this
     },
-    async approve() {
+    async approve(action = 'approve') {
       try {
         this.loading = true
-        this.approveLoading = true
-        await this.$http.post(`api/admin/games/${this.gameEdit.game_id}/game_edits/${this.gameEdit.id}/approve`)
-        this.$notifySuccess('Successfully Approved and Applied Changes!')
+        this.approveLoading = action === 'approve'
+        this.rejectLoading = action === 'reject'
+
+        await this.$http.post(`api/admin/games/${this.gameEdit.game_id}/game_edits/${this.gameEdit.id}/approve`, { action })
+
+        action === 'approve' && this.$notifySuccess('Successfully Approved and Applied Changes!')
+        action === 'reject' && this.$notifySuccess('Successfully Rejected Changes!')
+
         this.$emit('save')
         this.close()
       } catch (err) {
@@ -260,10 +266,11 @@ export default {
       } finally {
         this.loading = false
         this.approveLoading = false
+        this.rejectLoading = false
       }
     },
     reject() {
-
+      this.approve('reject')
     },
     populateForm(data) {
       return {
