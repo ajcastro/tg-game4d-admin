@@ -320,10 +320,9 @@ export default {
           },
           { key: 'close_time', sortable: true, thAttr: { width: '8%' } },
           { key: 'result_time', sortable: true, thAttr: { width: '8%' } },
-          {
-            key: 'market_result', label: 'Result', sortable: true, thAttr: { width: '8%' },
-          },
-
+          // {
+          //   key: 'market_result', label: 'Result', sortable: true, thAttr: { width: '8%' },
+          // },
           {
             key: 'edit_date',
             label: 'Date',
