@@ -36,12 +36,12 @@
                 class="d-inline-block mr-1"
                 placeholder="Search by code or name..."
               />
-              <!-- <b-button
+              <b-button
                 variant="primary"
                 @click="add()"
               >
-                <span class="text-nowrap">Add Client</span>
-              </b-button> -->
+                <span class="text-nowrap">New Market</span>
+              </b-button>
             </div>
           </b-col>
         </b-row>
@@ -100,6 +100,13 @@
                 class="align-middle text-body"
               />
             </template>
+
+            <b-dropdown-item
+              @click="edit(data.item, data)"
+            >
+              <feather-icon icon="EditIcon" />
+              <span class="align-middle ml-50">Edit</span>
+            </b-dropdown-item>
 
             <b-dropdown-item
               @click="$refs.marketScheduleModal.setMarketSchedule(data.item)"

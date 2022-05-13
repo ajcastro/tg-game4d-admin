@@ -2,7 +2,7 @@
   <div>
     <b-modal
       ref="bModal"
-      :title="(isCreating ? 'Add' : 'Edit') + ' Client'"
+      :title="(isCreating ? 'New' : 'Edit') + ' Market'"
       hide-footer
       no-close-on-backdrop
       @hidden="resetForm()"
@@ -19,40 +19,40 @@
               <b-form-input
                 id="v-code"
                 v-model="form.code"
-                :state="null"
-                :disabled="!isCreating"
+                @input="errors.code = []"
               />
               <input-errors :errors="errors.code" />
             </b-form-group>
           </b-col>
 
-          <!-- percentage_share -->
+          <!-- name -->
           <b-col cols="12">
             <b-form-group
-              label="Percentage Share"
-              label-for="v-percentage_share"
+              label="Name"
+              label-for="v-name"
             >
               <b-form-input
-                id="v-percentage_share"
-                v-model="form.percentage_share"
+                id="v-name"
+                v-model="form.name"
+                @input="errors.name = []"
               />
-              <input-errors :errors="errors.percentage_share" />
+              <input-errors :errors="errors.name" />
             </b-form-group>
           </b-col>
 
-          <!-- remarks -->
+          <!-- period -->
           <b-col cols="12">
             <b-form-group
-              label="Remarks"
-              label-for="v-remarks"
+              label="Period"
+              label-for="v-period"
             >
-              <b-form-textarea
-                id="v-remarks"
-                v-model="form.remarks"
-                placeholder=""
-                rows="2"
+              <b-form-input
+                id="v-period"
+                v-model="form.period"
+                type="number"
+                @input="errors.period = []"
               />
-              <input-errors :errors="errors.remarks" />
+              <input-errors :errors="errors.period" />
             </b-form-group>
           </b-col>
 
@@ -86,9 +86,9 @@
 /* eslint-disable new-cap */
 import Ripple from 'vue-ripple-directive'
 import {
-  BRow, BCol, BFormGroup, BFormInput, BForm, BButton, BFormTextarea, BSpinner,
+  BRow, BCol, BFormGroup, BFormInput, BForm, BButton, BSpinner,
 } from 'bootstrap-vue'
-import Client from '@/models/Client'
+import Market from '@/models/Market'
 import InputErrors from '@/components/InputErrors.vue'
 import resourceFormModal from '@/mixins/resource/resource-form-modal'
 
@@ -100,7 +100,6 @@ export default {
     BFormInput,
     BForm,
     BButton,
-    BFormTextarea,
     BSpinner,
 
     InputErrors,
@@ -116,7 +115,7 @@ export default {
       loading: false,
       form: {},
       errors: {},
-      model: Client,
+      model: Market,
     }
   },
 }
