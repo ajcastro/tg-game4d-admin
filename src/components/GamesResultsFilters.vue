@@ -12,6 +12,35 @@
           md="4"
           class="mb-md-0 mb-2"
         >
+          <label>Market</label>
+          <v-select
+            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+            :value="value.market_ids"
+            :options="marketOptions"
+            label="name"
+            multiple
+            class="w-100"
+            :reduce="val => val.id"
+            @input="(val) => $emit('input', {...value, market_ids: val})"
+          />
+        </b-col>
+        <b-col
+          cols="12"
+          md="2"
+          class="mb-md-0 mb-2"
+        >
+          <label>Period</label>
+          <b-form-input
+            id="v-period"
+            :value="value.period"
+            @input="(val) => $emit('input', {...value, period: val})"
+          />
+        </b-col>
+        <b-col
+          cols="12"
+          md="3"
+          class="mb-md-0 mb-2"
+        >
           <label>Date Range</label>
           <flat-pickr
             v-model="dateRange"
@@ -22,7 +51,7 @@
         </b-col>
         <b-col
           cols="12"
-          md="4"
+          md="2"
           class="mb-md-0 mb-2"
         >
           <label> &nbsp; </label>
@@ -42,7 +71,7 @@
 
 <script>
 import {
-  BCard, BCardHeader, BCardBody, BRow, BCol, BButton,
+  BCard, BCardHeader, BCardBody, BRow, BCol, BButton, BFormInput,
 } from 'bootstrap-vue'
 import dayjs from 'dayjs'
 import flatPickr from 'vue-flatpickr-component'
@@ -56,6 +85,7 @@ export default {
     BCardHeader,
     BCardBody,
     BButton,
+    BFormInput,
     flatPickr,
     vSelect,
   },
@@ -72,15 +102,20 @@ export default {
   data() {
     return {
       dateRange: null,
-      gameCategoryOptions: [],
+      marketOptions: [],
       originalFilters: this.value,
     }
   },
   computed: {
   },
   mounted() {
+    this.getMarketOptions()
   },
   methods: {
+    async getMarketOptions() {
+      const { data } = await this.$http.get('api/admin/markets', { params: { paginate: false, fields: { markets: 'id,name' } } })
+      this.marketOptions = data.data
+    },
     async reset() {
       this.dateRange = null
       await this.$nextTick()

@@ -35,11 +35,11 @@
             md="6"
           >
             <div class="d-flex align-items-center justify-content-end">
-              <b-form-input
+              <!-- <b-form-input
                 v-model="filter.search"
                 class="d-inline-block mr-1"
                 placeholder="Search by code or name..."
-              />
+              /> -->
               <!-- <b-button
                 variant="primary"
                 @click="add()"
@@ -300,6 +300,8 @@ export default {
       model: Game,
       ...makeTable({
         filter: {
+          market_ids: [],
+          period: '',
           search: '',
           date_range: '',
         },
@@ -318,20 +320,15 @@ export default {
           },
           { key: 'period', sortable: true },
           {
-            key: 'result_day',
-            sortable: true,
-            formatter: (value, key, item) => (item.result_day_text),
-          },
-          {
             key: 'date',
             sortable: true,
             formatter: value => dayjs(value).format('DD-MMM-YYYY'),
             thAttr: { width: '10%' },
           },
-          { key: 'close_time', sortable: true, thAttr: { width: '8%' } },
-          { key: 'result_time', sortable: true, thAttr: { width: '8%' } },
+          { key: 'close_time', sortable: true },
+          { key: 'result_time', sortable: true },
           {
-            key: 'market_result', label: 'Result', sortable: true, thAttr: { width: '8%' },
+            key: 'market_result', label: 'Result', sortable: true,
           },
         ],
       }),
