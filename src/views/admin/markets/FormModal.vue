@@ -56,6 +56,21 @@
             </b-form-group>
           </b-col>
 
+          <!-- website -->
+          <b-col cols="12">
+            <b-form-group
+              label="Website"
+              label-for="v-website"
+            >
+              <b-form-input
+                id="v-website"
+                v-model="form.website"
+                @input="errors.website = []"
+              />
+              <input-errors :errors="errors.website" />
+            </b-form-group>
+          </b-col>
+
           <!-- flag -->
           <b-col cols="12">
             <b-form-group

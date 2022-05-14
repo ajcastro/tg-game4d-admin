@@ -293,6 +293,7 @@ export default {
             sortable: true,
             formatter: (value, key, item) => (item.market_schedule.result_time),
           },
+          { key: 'website', sortable: true },
         ],
       }),
     }
