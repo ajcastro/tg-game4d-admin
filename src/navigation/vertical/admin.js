@@ -14,6 +14,13 @@ export default [
     action: 'read',
   },
   {
+    title: 'Games Results',
+    icon: 'AwardIcon',
+    route: 'games.results',
+    resource: 'GameResult',
+    action: 'read',
+  },
+  {
     title: 'Market List',
     icon: 'ListIcon',
     route: 'markets',
