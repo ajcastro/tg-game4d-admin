@@ -82,4 +82,13 @@ export default [
       action: 'read',
     },
   },
+  {
+    path: '/bets/list',
+    name: 'bets.list',
+    component: () => import('@/views/admin/bets-list/List.vue'),
+    meta: {
+      resource: 'BetList',
+      action: 'read',
+    },
+  },
 ]

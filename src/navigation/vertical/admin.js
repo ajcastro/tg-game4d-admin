@@ -21,6 +21,13 @@ export default [
     action: 'read',
   },
   {
+    title: 'Bets List',
+    icon: 'BarChart2Icon',
+    route: 'bets.list',
+    resource: 'BetList',
+    action: 'read',
+  },
+  {
     title: 'Market List',
     icon: 'ListIcon',
     route: 'markets',
