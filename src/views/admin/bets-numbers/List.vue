@@ -268,7 +268,7 @@ import {
 import vSelect from 'vue-select'
 import { makeTable } from '@/helpers/table'
 import resourceTable from '@/mixins/resource/resource-table'
-import GameTransaction from '@/models/GameTransaction'
+import BetNumber from '@/models/BetNumber'
 import dayjs from 'dayjs'
 import BetsListFilters from '@/components/BetsListFilters.vue'
 import FormModal from './FormModal.vue'
@@ -297,25 +297,13 @@ export default {
   data() {
     return {
       resourceId: null,
-      model: GameTransaction,
+      model: BetNumber,
       ...makeTable({
         filter: {
           market_ids: [],
           game_codes: [],
         },
         columns: [
-          {
-            key: 'created_at',
-            label: 'Date',
-            sortable: true,
-            formatter: (value, key, item) => dayjs(item.created_at).format('DD-MMM-YYYY'),
-            thAttr: { width: '10%' },
-          },
-          {
-            key: 'username',
-            sortable: false,
-            formatter: (value, key, item) => (item.game.market.code),
-          },
           {
             key: 'market_code',
             sortable: false,
@@ -327,31 +315,19 @@ export default {
           },
           {
             key: 'number',
-            sortable: false,
+            sortable: true,
           },
           {
             key: 'bet',
+            label: 'Total Bet',
             sortable: true,
             formatter: value => this.$options.filters.currency(value),
           },
           {
             key: 'pay',
+            label: 'Total Pay',
             sortable: true,
             formatter: value => this.$options.filters.currency(value),
-          },
-          {
-            key: 'disc',
-            sortable: false,
-            formatter: (value, key, item) => `${item.game_setting.percentage_discount} %`,
-          },
-          {
-            key: 'win',
-            sortable: false,
-            formatter: (value, key, item) => `${item.game_setting.win_multiplier} x`,
-          },
-          {
-            key: 'status',
-            sortable: false,
           },
         ],
       }),

@@ -28,6 +28,13 @@ export default [
     action: 'read',
   },
   {
+    title: 'Bets Numbers',
+    icon: 'AlignLeftIcon',
+    route: 'bets.numbers',
+    resource: 'BetNumber',
+    action: 'read',
+  },
+  {
     title: 'Market List',
     icon: 'ListIcon',
     route: 'markets',
@@ -41,5 +48,4 @@ export default [
     resource: 'User',
     action: 'read',
   },
-
 ]

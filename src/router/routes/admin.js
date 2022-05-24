@@ -91,4 +91,13 @@ export default [
       action: 'read',
     },
   },
+  {
+    path: '/bets/numbers',
+    name: 'bets.numbers',
+    component: () => import('@/views/admin/bets-numbers/List.vue'),
+    meta: {
+      resource: 'BetList',
+      action: 'read',
+    },
+  },
 ]
